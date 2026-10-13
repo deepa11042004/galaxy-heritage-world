@@ -1,0 +1,452 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// 1. USERS, ROLES & SESSIONS (RBAC & AUTHENTICATION)
+// ============================================================================
+
+model User {
+  id           String     @id @default(uuid()) @db.VarChar(36)
+  email        String     @unique @db.VarChar(191)
+  passwordHash String     @map("password_hash") @db.VarChar(255)
+  name         String     @db.VarChar(191)
+  phone        String?    @db.VarChar(30)
+  isActive     Boolean    @default(true) @map("is_active")
+  resetToken   String?    @map("reset_token") @db.VarChar(255)
+  resetExpires DateTime?  @map("reset_expires")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+
+  userRoles    UserRole[]
+  sessions     Session[]
+  auditLogs    AuditLog[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Role {
+  id          String     @id @default(uuid()) @db.VarChar(36)
+  name        String     @unique @db.VarChar(50) // SUPER_ADMIN, ADMIN, EDITOR, SALES, SUPPORT
+  description String?    @db.VarChar(255)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  userRoles   UserRole[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  userId    String   @map("user_id") @db.VarChar(36)
+  roleId    String   @map("role_id") @db.VarChar(36)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@index([userId])
+  @@index([roleId])
+  @@map("user_roles")
+}
+
+model Session {
+  id           String   @id @default(uuid()) @db.VarChar(36)
+  userId       String   @map("user_id") @db.VarChar(36)
+  refreshToken String   @unique @map("refresh_token") @db.VarChar(500)
+  ipAddress    String?  @map("ip_address") @db.VarChar(45)
+  userAgent    String?  @map("user_agent") @db.VarChar(255)
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+// ============================================================================
+// 2. PAGES & STATIC CMS CONTENT
+// ============================================================================
+
+model Page {
+  id              String    @id @default(uuid()) @db.VarChar(36)
+  slug            String    @unique @db.VarChar(191)
+  title           String    @db.VarChar(255)
+  subtitle        String?   @db.VarChar(500)
+  contentHtml     String    @map("content_html") @db.LongText
+  metaTitle       String?   @map("meta_title") @db.VarChar(255)
+  metaDescription String?   @map("meta_description") @db.Text
+  sourceUrl       String?   @map("source_url") @db.VarChar(500)
+  isPublished     Boolean   @default(true) @map("is_published")
+  deletedAt       DateTime? @map("deleted_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([slug, isPublished])
+  @@map("pages")
+}
+
+// ============================================================================
+// 3. DESTINATIONS, HOTELS, PACKAGES, ITINERARIES, ACTIVITIES
+// ============================================================================
+
+enum DestinationType {
+  DOMESTIC
+  INTERNATIONAL
+}
+
+model Destination {
+  id              String          @id @default(uuid()) @db.VarChar(36)
+  slug            String          @unique @db.VarChar(191)
+  name            String          @db.VarChar(191)
+  region          String          @db.VarChar(100)
+  country         String          @default("India") @db.VarChar(100)
+  type            DestinationType @default(DOMESTIC)
+  tagline         String?         @db.VarChar(255)
+  description     String          @db.Text
+  heroImageUrl    String          @map("hero_image_url") @db.VarChar(500)
+  gallery         Json?
+  highlights      Json?
+  bestTimeToVisit String?         @map("best_time_to_visit") @db.VarChar(150)
+  sourceUrl       String?         @map("source_url") @db.VarChar(500)
+  featured        Boolean         @default(false)
+  isPublished     Boolean         @default(true) @map("is_published")
+  metaTitle       String?         @map("meta_title") @db.VarChar(255)
+  metaDescription String?         @map("meta_description") @db.Text
+  deletedAt       DateTime?       @map("deleted_at")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  hotels          Hotel[]
+  packages        Package[]
+  itineraries     Itinerary[]
+
+  @@index([type, isPublished, featured])
+  @@index([slug])
+  @@map("destinations")
+}
+
+enum HotelCategory {
+  ASSOCIATED
+  INTERNAL
+  EXCHANGE
+}
+
+model Hotel {
+  id            String        @id @default(uuid()) @db.VarChar(36)
+  slug          String        @unique @db.VarChar(191)
+  name          String        @db.VarChar(191)
+  destinationId String?       @map("destination_id") @db.VarChar(36)
+  locationName  String        @map("location_name") @db.VarChar(191)
+  state         String?       @db.VarChar(100)
+  country       String        @default("India") @db.VarChar(100)
+  category      HotelCategory @default(ASSOCIATED)
+  ratingStars   Int           @default(4) @map("rating_stars")
+  imageUrl      String        @map("image_url") @db.VarChar(500)
+  gallery       Json?
+  amenities     Json?
+  description   String        @db.Text
+  sourceUrl     String?       @map("source_url") @db.VarChar(500)
+  featured      Boolean       @default(false)
+  isPublished   Boolean       @default(true) @map("is_published")
+  deletedAt     DateTime?     @map("deleted_at")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+
+  destination   Destination?  @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+
+  @@index([category, isPublished, featured])
+  @@index([destinationId])
+  @@map("hotels")
+}
+
+model Package {
+  id             String           @id @default(uuid()) @db.VarChar(36)
+  slug           String           @unique @db.VarChar(191)
+  title          String           @db.VarChar(255)
+  subtitle       String?          @db.VarChar(255)
+  destinationId  String?          @map("destination_id") @db.VarChar(36)
+  locationLabel  String           @map("location_label") @db.VarChar(191)
+  durationDays   Int              @map("duration_days")
+  durationNights Int              @map("duration_nights")
+  priceStarting  Decimal?         @map("price_starting") @db.Decimal(10, 2)
+  priceLabel     String?          @map("price_label") @db.VarChar(100)
+  category       String           @default("Holiday Package") @db.VarChar(100)
+  heroImageUrl   String           @map("hero_image_url") @db.VarChar(500)
+  overview       String           @db.Text
+  inclusions     Json?
+  exclusions     Json?
+  highlights     Json?
+  sourceUrl      String?          @map("source_url") @db.VarChar(500)
+  featured       Boolean          @default(false)
+  isPublished    Boolean          @default(true) @map("is_published")
+  deletedAt      DateTime?        @map("deleted_at")
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+
+  destination    Destination?     @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  features       PackageFeature[]
+
+  @@index([isPublished, featured])
+  @@index([destinationId])
+  @@map("packages")
+}
+
+model PackageFeature {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  packageId String   @map("package_id") @db.VarChar(36)
+  label     String   @db.VarChar(255)
+  iconName  String?  @map("icon_name") @db.VarChar(100)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  package   Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([packageId])
+  @@map("package_features")
+}
+
+model Itinerary {
+  id             String         @id @default(uuid()) @db.VarChar(36)
+  slug           String         @unique @db.VarChar(191)
+  title          String         @db.VarChar(255)
+  badgeText      String?        @map("badge_text") @db.VarChar(100)
+  destinationId  String?        @map("destination_id") @db.VarChar(36)
+  locationLabel  String         @map("location_label") @db.VarChar(191)
+  durationDays   Int            @map("duration_days")
+  durationNights Int            @map("duration_nights")
+  heroImageUrl   String         @map("hero_image_url") @db.VarChar(500)
+  summary        String         @db.Text
+  overview       String         @db.Text
+  inclusions     Json?
+  featured       Boolean        @default(false)
+  isPublished    Boolean        @default(true) @map("is_published")
+  deletedAt      DateTime?      @map("deleted_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  destination    Destination?   @relation(fields: [destinationId], references: [id], onDelete: SetNull)
+  days           ItineraryDay[]
+
+  @@index([isPublished, featured])
+  @@index([destinationId])
+  @@map("itineraries")
+}
+
+model ItineraryDay {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  itineraryId  String    @map("itinerary_id") @db.VarChar(36)
+  dayNumber    Int       @map("day_number")
+  title        String    @db.VarChar(255)
+  description  String    @db.Text
+  meals        String?   @db.VarChar(150)
+  stayLocation String?   @map("stay_location") @db.VarChar(150)
+  createdAt    DateTime  @default(now()) @map("created_at")
+
+  itinerary    Itinerary @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+
+  @@index([itineraryId, dayNumber])
+  @@map("itinerary_days")
+}
+
+model Activity {
+  id            String    @id @default(uuid()) @db.VarChar(36)
+  slug          String    @unique @db.VarChar(191)
+  title         String    @db.VarChar(255)
+  category      String    @default("Day Outing & Picnic") @db.VarChar(100)
+  locationLabel String    @map("location_label") @db.VarChar(191)
+  durationLabel String    @default("Full Day (9:00 AM - 5:00 PM)") @map("duration_label") @db.VarChar(150)
+  imageUrl      String    @map("image_url") @db.VarChar(500)
+  description   String    @db.Text
+  highlights    Json?
+  inclusions    Json?
+  sourceUrl     String?   @map("source_url") @db.VarChar(500)
+  featured      Boolean   @default(false)
+  isPublished   Boolean   @default(true) @map("is_published")
+  deletedAt     DateTime? @map("deleted_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@index([isPublished, featured])
+  @@map("activities")
+}
+
+// ============================================================================
+// 4. MEDIA ASSETS & CONTENT LINKS
+// ============================================================================
+
+model MediaAsset {
+  id           String         @id @default(uuid()) @db.VarChar(36)
+  mediaCode    String?        @unique @map("media_code") @db.VarChar(50)
+  filename     String         @db.VarChar(255)
+  originalUrl  String?        @map("original_url") @db.VarChar(500)
+  storagePath  String         @map("storage_path") @db.VarChar(500)
+  mimeType     String         @map("mime_type") @db.VarChar(100)
+  fileSize     Int?           @map("file_size")
+  altText      String?        @map("alt_text") @db.VarChar(255)
+  width        Int?
+  height       Int?
+  category     String         @default("general") @db.VarChar(100)
+  sourcePage   String?        @map("source_page") @db.VarChar(500)
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+
+  contentLinks ContentMedia[]
+
+  @@index([category])
+  @@map("media_assets")
+}
+
+model ContentMedia {
+  id           String     @id @default(uuid()) @db.VarChar(36)
+  mediaAssetId String     @map("media_asset_id") @db.VarChar(36)
+  entityType   String     @map("entity_type") @db.VarChar(50) // destination, hotel, package, activity, page
+  entityId     String     @map("entity_id") @db.VarChar(36)
+  role         String     @default("gallery") @db.VarChar(50) // hero, gallery, thumbnail
+  sortOrder    Int        @default(0) @map("sort_order")
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  mediaAsset   MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+
+  @@index([entityType, entityId])
+  @@map("content_media")
+}
+
+// ============================================================================
+// 5. FAQS, TESTIMONIALS, ENQUIRIES, VOUCHERS & SETTINGS
+// ============================================================================
+
+model Faq {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  question    String   @db.VarChar(500)
+  answer      String   @db.Text
+  category    String   @default("General") @db.VarChar(100)
+  sortOrder   Int      @default(0) @map("sort_order")
+  isPublished Boolean  @default(true) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([category, isPublished, sortOrder])
+  @@map("faqs")
+}
+
+model Testimonial {
+  id               String   @id @default(uuid()) @db.VarChar(36)
+  customerName     String   @map("customer_name") @db.VarChar(150)
+  customerLocation String?  @map("customer_location") @db.VarChar(150)
+  rating           Int      @default(5)
+  comment          String   @db.Text
+  tripTitle        String?  @map("trip_title") @db.VarChar(191)
+  avatarUrl        String?  @map("avatar_url") @db.VarChar(500)
+  isVerified       Boolean  @default(true) @map("is_verified")
+  isPublished      Boolean  @default(true) @map("is_published")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([isPublished, isVerified])
+  @@map("testimonials")
+}
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  CLOSED
+  SPAM
+}
+
+model Enquiry {
+  id                  String        @id @default(uuid()) @db.VarChar(36)
+  referenceNumber     String        @unique @map("reference_number") @db.VarChar(50)
+  name                String        @db.VarChar(191)
+  email               String        @db.VarChar(191)
+  phone               String        @db.VarChar(30)
+  city                String        @db.VarChar(100)
+  ageGroup            String?       @map("age_group") @db.VarChar(30)
+  destinationInterest String?       @map("destination_interest") @db.VarChar(191)
+  packageInterest     String?       @map("package_interest") @db.VarChar(191)
+  travelDates         String?       @map("travel_dates") @db.VarChar(100)
+  travelersCount      Int?          @map("travelers_count")
+  message             String?       @db.Text
+  sourcePage          String?       @map("source_page") @db.VarChar(255)
+  status              EnquiryStatus @default(NEW)
+  consent             Boolean       @default(true)
+  ipAddress           String?       @map("ip_address") @db.VarChar(45)
+  userAgent           String?       @map("user_agent") @db.VarChar(255)
+  notes               String?       @db.Text
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@map("enquiries")
+}
+
+model VoucherRedemption {
+  id                   String   @id @default(uuid()) @db.VarChar(36)
+  referenceNumber      String   @unique @map("reference_number") @db.VarChar(50)
+  voucherCode          String   @map("voucher_code") @db.VarChar(80)
+  name                 String   @db.VarChar(191)
+  email                String   @db.VarChar(191)
+  phone                String   @db.VarChar(30)
+  city                 String   @db.VarChar(100)
+  preferredDestination String   @map("preferred_destination") @db.VarChar(191)
+  preferredDates       String?  @map("preferred_dates") @db.VarChar(100)
+  message              String?  @db.Text
+  status               String   @default("PENDING_VERIFICATION") @db.VarChar(50)
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@index([voucherCode])
+  @@map("voucher_redemptions")
+}
+
+model NewsletterSubscription {
+  id           String    @id @default(uuid()) @db.VarChar(36)
+  email        String    @unique @db.VarChar(191)
+  name         String?   @db.VarChar(120)
+  isActive     Boolean   @default(true) @map("is_active")
+  subscribedAt DateTime  @default(now()) @map("subscribed_at")
+  unsubscribed DateTime? @map("unsubscribed_at")
+
+  @@map("newsletter_subscriptions")
+}
+
+model SiteSetting {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  settingKey  String   @unique @map("setting_key") @db.VarChar(100)
+  settingVal  String   @map("setting_val") @db.Text
+  groupName   String   @default("general") @map("group_name") @db.VarChar(50)
+  isPublic    Boolean  @default(true) @map("is_public")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([groupName, isPublic])
+  @@map("site_settings")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  userId     String?  @map("user_id") @db.VarChar(36)
+  action     String   @db.VarChar(100)
+  entityType String   @map("entity_type") @db.VarChar(50)
+  entityId   String?  @map("entity_id") @db.VarChar(100)
+  details    Json?
+  ipAddress  String?  @map("ip_address") @db.VarChar(45)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([entityType, createdAt])
+  @@index([userId])
+  @@map("audit_logs")
+}

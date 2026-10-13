@@ -1,0 +1,118 @@
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'galaxyheritageworld.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'plus.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+      },
+    ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/about-us',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/domestic-destinations',
+        destination: '/destinations?type=DOMESTIC',
+        permanent: true,
+      },
+      {
+        source: '/international-destinations',
+        destination: '/destinations?type=INTERNATIONAL',
+        permanent: true,
+      },
+      {
+        source: '/internal-excahnge',
+        destination: '/destinations?type=INTERNATIONAL',
+        permanent: true,
+      },
+      {
+        source: '/get-in-touch',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/activities',
+        destination: '/day-activities',
+        permanent: true,
+      },
+      {
+        source: '/booking',
+        destination: '/vacation-packages',
+        permanent: true,
+      },
+      {
+        source: '/complaint-board',
+        destination: '/reviews-and-complaints',
+        permanent: true,
+      },
+      {
+        source: '/galaxy-holiday-world-complaints-escalation-matrix',
+        destination: '/reviews-and-complaints#escalation',
+        permanent: true,
+      },
+      {
+        source: '/ghw-review-and-complaints-faq-by-customers',
+        destination: '/reviews-and-complaints#faqs',
+        permanent: true,
+      },
+      {
+        source: '/member-login',
+        destination: '/login',
+        permanent: true,
+      },
+      {
+        source: '/member',
+        destination: '/login',
+        permanent: true,
+      },
+      {
+        source: '/crm',
+        destination: '/admin',
+        permanent: true,
+      },
+      {
+        source: '/uttarakhand',
+        destination: '/destinations/uttarakhand',
+        permanent: true,
+      },
+      {
+        source: '/himachal-pradesh',
+        destination: '/destinations/himachal-pradesh',
+        permanent: true,
+      },
+      {
+        source: '/south-india',
+        destination: '/destinations/south-india',
+        permanent: true,
+      },
+      {
+        source: '/rajasthan',
+        destination: '/destinations/rajasthan',
+        permanent: true,
+      },
+      {
+        source: '/goa',
+        destination: '/destinations/goa',
+        permanent: true,
+      },
+    ];
+  },
+};
+
+export default nextConfig;
