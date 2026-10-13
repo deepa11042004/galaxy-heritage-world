@@ -9,6 +9,7 @@
     "apps/web"
   ],
   "scripts": {
+    "start": "npm --workspace=apps/web run start",
     "dev:api": "npm --workspace=apps/api run dev",
     "dev:web": "npm --workspace=apps/web run dev",
     "build:shared": "npm --workspace=packages/shared run build",
