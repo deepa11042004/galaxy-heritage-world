@@ -90,7 +90,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
         id: user.id,
         email: user.email,
         name: user.name,
-        roles: user.userRoles.map((ur: any) => ur.role.name),
+        roles: user.userRoles.map((ur) => ur.role.name),
       },
     });
   } catch (error) {
@@ -165,7 +165,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction): 
         id: session.user.id,
         email: session.user.email,
         name: session.user.name,
-        roles: session.user.userRoles.map((ur: any) => ur.role.name),
+        roles: session.user.userRoles.map((ur) => ur.role.name),
       },
     });
   } catch (error) {

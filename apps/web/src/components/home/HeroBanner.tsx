@@ -23,7 +23,7 @@ export function HeroBanner() {
       {/* Background Image with Dark & Luxury Gold Gradient Overlays */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg"
+          src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_high-scaled.jpg"
           alt="Luxury Resort Experience - Galaxy Heritage World"
           fill
           priority

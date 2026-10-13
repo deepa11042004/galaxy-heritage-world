@@ -14,7 +14,7 @@
     "build:shared": "npm --workspace=packages/shared run build",
     "build:api": "npm --workspace=apps/api run build",
     "build:web": "npm --workspace=apps/web run build",
-    "build": "npm run build:shared && npm run db:generate && npm run build:api && npm run build:web",
+    "build": "npm run build:shared && npm run build:api && npm run build:web",
     "db:generate": "npm --workspace=apps/api run db:generate",
     "db:migrate": "npm --workspace=apps/api run db:migrate",
     "db:seed": "npm --workspace=apps/api run db:seed",

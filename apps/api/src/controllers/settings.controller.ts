@@ -18,7 +18,7 @@ export async function getSettings(req: Request, res: Response, next: NextFunctio
     });
 
     const settingsMap: Record<string, string> = {};
-    settings.forEach((s: any) => {
+    settings.forEach((s) => {
       settingsMap[s.settingKey] = s.settingVal;
     });
 
