@@ -52,13 +52,13 @@ export default function LoginPage() {
     <div className="bg-[#FAF7F2] min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-[#D4AF37]/20">
         <div className="text-center mb-8">
-          <div className="relative w-44 h-12 mx-auto mb-4">
+          <div className="relative w-56 h-18 mx-auto mb-4">
             <Image
-              src="/media/galaxy-heritage-world/shared/logos/ghw-new-logo-e17899330439.png"
+              src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
               alt="Galaxy Heritage World"
               fill
               className="object-contain"
-              sizes="176px"
+              sizes="224px"
             />
           </div>
           <h1 className="font-serif text-2xl font-bold text-gray-900">

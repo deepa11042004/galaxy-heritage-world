@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Users,
   Compass,
@@ -89,17 +90,29 @@ export default function AdminDashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-gray-200">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Administrative Console</span>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="relative w-48 sm:w-56 h-16 shrink-0">
+              <Image
+                src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
+                alt="Galaxy Heritage World"
+                fill
+                className="object-contain object-left scale-105"
+                sizes="224px"
+              />
+            </Link>
+            <div className="h-10 w-px bg-gray-200 hidden sm:block" />
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Administrative Console</span>
+              </div>
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900">
+                Galaxy Heritage World Dashboard
+              </h1>
+              <p className="text-xs text-gray-500 mt-1">
+                Logged in as: <strong className="text-gray-900">{user?.email || 'admin@galaxyheritageworld.com'}</strong>
+              </p>
             </div>
-            <h1 className="font-serif text-3xl font-bold text-gray-900">
-              Galaxy Heritage World Dashboard
-            </h1>
-            <p className="text-xs text-gray-500 mt-1">
-              Logged in as: <strong className="text-gray-900">{user?.email || 'admin@galaxyheritageworld.com'}</strong>
-            </p>
           </div>
 
           <div className="flex items-center gap-3">

@@ -104,15 +104,15 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <div className="relative w-40 sm:w-48 h-12">
+          <Link href="/" className="flex items-center gap-3 py-1">
+            <div className="relative w-48 sm:w-60 h-16 sm:h-20">
               <Image
-                src="/media/galaxy-heritage-world/shared/logos/ghw-new-logo-e17899330439.png"
+                src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                 alt="Galaxy Heritage World - Luxury Travel"
                 fill
                 priority
-                className="object-contain object-left"
-                sizes="(max-width: 640px) 160px, 192px"
+                className="object-contain object-left scale-105"
+                sizes="(max-width: 640px) 200px, 240px"
               />
             </div>
           </Link>

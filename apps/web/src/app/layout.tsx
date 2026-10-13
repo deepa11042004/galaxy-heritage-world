@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     images: ['/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg'],
   },
   icons: {
-    icon: '/media/galaxy-heritage-world/shared/logos/ghw-new-logo-e17899330439.png',
+    icon: '/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png',
   },
 };
 

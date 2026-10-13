@@ -45,13 +45,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 pb-12 border-b border-gray-800/80">
           {/* Column 1: Brand & Registration */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="inline-block relative w-44 h-12">
+            <Link href="/" className="inline-block relative w-56 h-18">
               <Image
-                src="/media/galaxy-heritage-world/shared/logos/ghw-new-logo-e17899330439.png"
+                src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                 alt="Galaxy Heritage World"
                 fill
-                className="object-contain object-left brightness-0 invert"
-                sizes="176px"
+                className="object-contain object-left scale-105"
+                sizes="224px"
               />
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
