@@ -45,4 +45,4 @@ COPY --from=builder /app/node_modules ./node_modules
 EXPOSE 3000
 
 WORKDIR /app/apps/web
-CMD ["npm", "start"]
+CMD ["npx", "next", "start", "-p", "3000", "-H", "0.0.0.0"]
