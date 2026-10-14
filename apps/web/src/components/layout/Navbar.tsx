@@ -90,10 +90,13 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Floating Dark Pill Navbar Bar without background wrapper */}
+      {/* Floating Pill Navbar Bar without background wrapper */}
       <div className="w-full transition-all duration-300 py-3 pointer-events-none">
         <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="pointer-events-auto relative flex items-center justify-between bg-[#141517] text-white rounded-full pl-5 pr-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.65)] border border-white/15 transition-all duration-300">
+          <nav
+            style={{ backgroundColor: '#f5f7f8' }}
+            className="pointer-events-auto relative flex items-center justify-between bg-[#f5f7f8] text-gray-800 rounded-full pl-5 pr-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-gray-200/80 transition-all duration-300"
+          >
             {/* Left Group: Logo + Desktop Links right next to it */}
             <div className="flex items-center gap-3 xl:gap-5">
               {/* Brand Logo with transparent background */}
@@ -108,18 +111,18 @@ export function Navbar() {
                     alt="Galaxy Heritage World"
                     fill
                     priority
-                    className="object-contain object-left scale-110 brightness-125 contrast-105 drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]"
+                    className="object-contain object-left scale-110 drop-shadow-[0_2px_6px_rgba(0,0,0,0.12)]"
                     sizes="(max-width: 640px) 150px, 170px"
                   />
                 </div>
               </Link>
 
               {/* Desktop Navigation Links directly following the logo */}
-              <div className="hidden lg:flex items-center gap-3 xl:gap-5 text-[13px] xl:text-[13.5px] font-medium tracking-wide text-gray-200 whitespace-nowrap">
+              <div className="hidden lg:flex items-center gap-3 xl:gap-5 text-[13px] xl:text-[13.5px] font-semibold tracking-wide text-gray-700 whitespace-nowrap">
               <Link
                 href="/"
-                className={`transition-colors duration-150 hover:text-white px-1 py-1 ${
-                  pathname === '/' ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Home
@@ -127,8 +130,8 @@ export function Navbar() {
 
               <Link
                 href="/about"
-                className={`transition-colors duration-150 hover:text-white px-1 py-1 ${
-                  pathname === '/about' ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/about' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 About Us
@@ -142,12 +145,12 @@ export function Navbar() {
               >
                 <Link
                   href="/destinations"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-white px-1 py-1 ${
-                    pathname.startsWith('/destinations') ? 'text-[#D4AF37] font-semibold' : ''
+                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                    pathname.startsWith('/destinations') ? 'text-[#D4AF37]' : ''
                   }`}
                 >
                   <span>Destinations</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-all duration-200 ${destinationsOpen ? 'rotate-180 text-white' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${destinationsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
                 </Link>
 
                 {destinationsOpen && (
@@ -180,8 +183,8 @@ export function Navbar() {
 
               <Link
                 href="/vacation-packages"
-                className={`transition-colors duration-150 hover:text-white px-1 py-1 ${
-                  pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Vacation Packages
@@ -195,36 +198,36 @@ export function Navbar() {
               >
                 <Link
                   href="/hotels-resorts"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-white px-1 py-1 ${
-                    pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37] font-semibold' : ''
+                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                    pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37]' : ''
                   }`}
                 >
                   <span>Hotels & Resorts</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-gray-400 transition-all duration-200 ${resortsOpen ? 'rotate-180 text-white' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${resortsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
                 </Link>
 
                 {resortsOpen && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50">
-                    <div className="bg-[#1C1E22] rounded-2xl shadow-2xl border border-white/10 p-3 text-white animate-in fade-in-50 zoom-in-95 duration-200">
+                    <div className="bg-white rounded-2xl shadow-[0_20px_45px_rgba(0,0,0,0.25)] border border-gray-100 p-3 text-gray-800 animate-in fade-in-50 zoom-in-95 duration-200">
                       <div className="space-y-1">
                         <Link
                           href="/hotels-resorts?category=ASSOCIATED"
-                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
                         >
                           <Palmtree className="w-4 h-4 text-[#D4AF37]" />
                           <span>Associated Partner Resorts</span>
                         </Link>
                         <Link
                           href="/hotels-resorts?category=INTERNAL"
-                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
                         >
                           <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                           <span>Internal Luxury Properties</span>
                         </Link>
-                        <div className="border-t border-white/10 my-1 pt-1">
+                        <div className="border-t border-gray-100 my-1 pt-1">
                           <Link
                             href="/hotels-resorts"
-                            className="block px-3 py-1.5 text-xs text-[#D4AF37] font-semibold hover:underline"
+                            className="block px-3 py-1.5 text-xs text-blue-600 font-semibold hover:underline"
                           >
                             View All 43+ Properties &rarr;
                           </Link>
@@ -237,8 +240,8 @@ export function Navbar() {
 
               <Link
                 href="/day-activities"
-                className={`transition-colors duration-150 hover:text-white px-1 py-1 ${
-                  pathname.startsWith('/day-activities') ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname.startsWith('/day-activities') ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Day Outings
@@ -246,8 +249,8 @@ export function Navbar() {
 
               <Link
                 href="/travel-desk"
-                className={`transition-colors duration-150 hover:text-white px-1 py-1 ${
-                  pathname === '/travel-desk' ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/travel-desk' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Travel Desk
@@ -257,13 +260,13 @@ export function Navbar() {
 
           {/* Right: Pill CTA Button */}
           <div className="hidden sm:flex items-center shrink-0 ml-4">
-            {/* White solid pill CTA button matching initial aesthetic */}
+            {/* Contrast dark pill CTA button */}
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-gray-900 hover:bg-gray-100 rounded-full text-xs font-bold tracking-wide shadow-lg transition-all duration-200 hover:shadow-xl active:scale-95 whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#141517] text-white hover:bg-black rounded-full text-xs font-bold tracking-wide shadow-md transition-all duration-200 hover:shadow-lg active:scale-95 whitespace-nowrap"
             >
               <span>Enquire Now</span>
-              <ArrowRight className="w-3.5 h-3.5 text-gray-900" />
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
             </Link>
           </div>
 
@@ -271,13 +274,13 @@ export function Navbar() {
             <div className="flex lg:hidden items-center gap-1.5 pr-1">
               <Link
                 href="/contact"
-                className="sm:hidden px-3.5 py-1.5 bg-white text-gray-900 rounded-full text-xs font-bold shadow"
+                className="sm:hidden px-3.5 py-1.5 bg-[#141517] text-white rounded-full text-xs font-bold shadow"
               >
                 Enquire
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-white hover:text-[#D4AF37]"
+                className="p-2 text-gray-700 hover:text-black"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
