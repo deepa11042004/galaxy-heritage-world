@@ -1,23 +1,8 @@
-'use client';
-
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React from 'react';
 import Image from 'next/image';
-import {
-  Compass,
-  MapPin,
-  Calendar,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  Award,
-  Users,
-} from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export function HeroBanner() {
-  const [destinationQuery, setDestinationQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
-
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
       {/* Background Image with Dark & Luxury Gold Gradient Overlays */}
@@ -47,69 +32,12 @@ export function HeroBanner() {
         </h1>
 
         {/* Subtitle */}
-        <p className="text-sm sm:text-lg text-gray-300 max-w-2xl leading-relaxed mb-10">
+        <p className="text-sm sm:text-lg text-gray-300 max-w-2xl leading-relaxed mb-6">
           Discover handpicked luxury resorts, bespoke family holiday packages, and seamless travel desk privileges with authentic hospitality and guaranteed transparency.
         </p>
 
-        {/* Floating Search & Discovery Bar */}
-        <div className="w-full max-w-4xl bg-white rounded-2xl sm:rounded-full p-2 sm:p-2.5 shadow-2xl border border-white/20 backdrop-blur-md flex flex-col sm:flex-row items-stretch sm:items-center gap-2 text-gray-800 text-left">
-          {/* Destination input */}
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-100">
-            <MapPin className="w-5 h-5 text-[#D4AF37] shrink-0" />
-            <div className="w-full">
-              <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                Where to?
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Goa, Manali, Jaipur..."
-                value={destinationQuery}
-                onChange={(e) => setDestinationQuery(e.target.value)}
-                className="w-full text-xs sm:text-sm font-semibold text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Holiday Type select */}
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-100">
-            <Compass className="w-5 h-5 text-[#D4AF37] shrink-0" />
-            <div className="w-full">
-              <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                Experience
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full text-xs sm:text-sm font-semibold text-gray-800 bg-transparent focus:outline-none cursor-pointer"
-              >
-                <option value="ALL">All Travel Experiences</option>
-                <option value="DOMESTIC">Domestic Holidays</option>
-                <option value="INTERNATIONAL">International Exchange</option>
-                <option value="ACTIVITIES">Day Outings & Picnics</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Explore Button */}
-          <Link
-            href={
-              selectedCategory === 'ACTIVITIES'
-                ? '/day-activities'
-                : selectedCategory === 'DOMESTIC'
-                ? '/destinations?type=DOMESTIC'
-                : selectedCategory === 'INTERNATIONAL'
-                ? '/destinations?type=INTERNATIONAL'
-                : '/destinations'
-            }
-            className="sm:w-auto px-7 py-3.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold uppercase tracking-wider rounded-xl sm:rounded-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200 group shrink-0"
-          >
-            <span>Explore Now</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
         {/* Trust Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-14 text-center max-w-4xl w-full border-t border-white/10 pt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-6 text-center max-w-4xl w-full border-t border-white/10 pt-8">
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-2xl font-bold">
               43+
