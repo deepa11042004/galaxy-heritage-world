@@ -97,11 +97,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/itineraries" className="hover:text-white transition-colors">
-                  Curated Itineraries
-                </Link>
-              </li>
-              <li>
                 <Link href="/day-activities" className="hover:text-white transition-colors">
                   Day Picnics & Farms
                 </Link>

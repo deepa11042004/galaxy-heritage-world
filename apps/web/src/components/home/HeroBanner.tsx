@@ -1,131 +1,167 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import {
-  Compass,
-  MapPin,
-  Calendar,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  Award,
-  Users,
-} from 'lucide-react';
+import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+
+const heroSlides = [
+  {
+    src: '/media/galaxy-heritage-world/faq/images/177.jpg',
+    alt: 'Majestic Pagoda and Mount Fuji in Spring - International Escapes',
+    tag: 'Iconic Destinations',
+  },
+  {
+    src: '/media/galaxy-heritage-world/faq/images/1073.jpg',
+    alt: 'Golden Sunset Luxury Beach Resort Pool - Coastal Retreats',
+    tag: 'Coastal Luxury',
+  },
+  {
+    src: '/media/galaxy-heritage-world/faq/images/4900.jpg',
+    alt: 'Tropical Palm Resort & Serene Swimming Pool - Leisure Holidays',
+    tag: 'Tropical Escapes',
+  },
+  {
+    src: '/media/galaxy-heritage-world/faq/images/18726.jpg',
+    alt: 'Grand Heritage Palace Resort with Sprawling Infinity Pool - Heritage Stays',
+    tag: 'Palatial Stays',
+  },
+];
 
 export function HeroBanner() {
-  const [destinationQuery, setDestinationQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('ALL');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Swipe gesture handling for mobile
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  }, []);
+
+  // Auto-play slider every 5.5 seconds
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) {
+      nextSlide();
+    } else if (distance < -50) {
+      prevSlide();
+    }
+  };
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center bg-[#0B1320] text-white overflow-hidden">
-      {/* Background Image with Dark & Luxury Gold Gradient Overlays */}
+    <section
+      className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-32 pb-14 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-20 select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Background Slides with Crossfade Animation */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_high-scaled.jpg"
-          alt="Luxury Resort Experience - Galaxy Heritage World"
-          fill
-          priority
-          className="object-cover object-center opacity-40 scale-105 transition-transform duration-10000"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-[#0B1320]/60 to-transparent" />
-        <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#0B1320]/40 to-[#0B1320]" />
+        {heroSlides.map((slide, index) => {
+          const isActive = index === currentSlide;
+          return (
+            <div
+              key={slide.src}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                isActive ? 'opacity-100 z-0' : 'opacity-0 pointer-events-none'
+              }`}
+            >
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
+                  isActive ? 'scale-105' : 'scale-100'
+                }`}
+                sizes="100vw"
+              />
+            </div>
+          );
+        })}
+
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center flex flex-col items-center">
+      {/* Slider Left & Right Navigation Arrows */}
+      <button
+        type="button"
+        id="hero-prev-btn"
+        onClick={prevSlide}
+        aria-label="Previous slide"
+        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
+      >
+        <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-0.5" />
+      </button>
+
+      <button
+        type="button"
+        id="hero-next-btn"
+        onClick={nextSlide}
+        aria-label="Next slide"
+        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
+      >
+        <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
+      </button>
+
+      {/* Hero Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center mt-3 sm:mt-5 lg:mt-6">
         {/* Top Luxury Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-6 animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/60 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4 sm:mb-5 shadow-lg animate-in fade-in slide-in-from-top-4 duration-700">
           <Sparkles className="w-3.5 h-3.5" />
           <span>India&apos;s Premium Holiday & Hospitality Network</span>
         </div>
 
         {/* Main Headline */}
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl leading-tight sm:leading-tight mb-6">
-          Crafting Unforgettable Journeys Across <span className="text-[#D4AF37] italic">India</span> & The World
+        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl leading-tight sm:leading-tight mb-4 sm:mb-5 drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)]">
+          Crafting Unforgettable Journeys Across <span className="text-[#D4AF37] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">India</span> & The World
         </h1>
 
         {/* Subtitle */}
-        <p className="text-sm sm:text-lg text-gray-300 max-w-2xl leading-relaxed mb-10">
+        <p className="text-sm sm:text-base lg:text-lg text-white font-medium max-w-2xl leading-relaxed mb-5 sm:mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
           Discover handpicked luxury resorts, bespoke family holiday packages, and seamless travel desk privileges with authentic hospitality and guaranteed transparency.
         </p>
 
-        {/* Floating Search & Discovery Bar */}
-        <div className="w-full max-w-4xl bg-white rounded-2xl sm:rounded-full p-2 sm:p-2.5 shadow-2xl border border-white/20 backdrop-blur-md flex flex-col sm:flex-row items-stretch sm:items-center gap-2 text-gray-800 text-left">
-          {/* Destination input */}
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-100">
-            <MapPin className="w-5 h-5 text-[#D4AF37] shrink-0" />
-            <div className="w-full">
-              <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                Where to?
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Goa, Manali, Jaipur..."
-                value={destinationQuery}
-                onChange={(e) => setDestinationQuery(e.target.value)}
-                className="w-full text-xs sm:text-sm font-semibold text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Holiday Type select */}
-          <div className="flex-1 flex items-center gap-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-gray-100">
-            <Compass className="w-5 h-5 text-[#D4AF37] shrink-0" />
-            <div className="w-full">
-              <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                Experience
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full text-xs sm:text-sm font-semibold text-gray-800 bg-transparent focus:outline-none cursor-pointer"
-              >
-                <option value="ALL">All Travel Experiences</option>
-                <option value="DOMESTIC">Domestic Holidays</option>
-                <option value="INTERNATIONAL">International Exchange</option>
-                <option value="ACTIVITIES">Day Outings & Picnics</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Search Button */}
-          <Link
-            href={`/search?q=${encodeURIComponent(destinationQuery || 'all')}`}
-            className="sm:w-auto px-7 py-3.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold uppercase tracking-wider rounded-xl sm:rounded-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200 group shrink-0"
-          >
-            <span>Explore Now</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        {/* Trust Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mt-14 text-center max-w-4xl w-full border-t border-white/10 pt-8">
-          <div className="flex flex-col items-center">
-            <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-2xl font-bold">
-              43+
-            </div>
-            <span className="text-xs text-gray-400 mt-0.5">Associated Resorts</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-2xl font-bold">
-              100%
-            </div>
-            <span className="text-xs text-gray-400 mt-0.5">Escalation Transparency</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-2xl font-bold">
-              24/7
-            </div>
-            <span className="text-xs text-gray-400 mt-0.5">Travel Concierge</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <div className="flex items-center gap-1.5 text-[#D4AF37] font-serif text-2xl font-bold">
-              1800-843
-            </div>
-            <span className="text-xs text-gray-400 mt-0.5">Toll-Free Assistance</span>
-          </div>
+        {/* Slide Indicators */}
+        <div className="flex items-center justify-center gap-2.5 mt-2 sm:mt-3 z-20">
+          {heroSlides.map((slide, idx) => (
+            <button
+              key={slide.src}
+              type="button"
+              id={`hero-dot-${idx}`}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === currentSlide
+                  ? 'w-8 bg-[#D4AF37] shadow-[0_0_10px_rgba(212,175,55,0.7)]'
+                  : 'w-2 bg-white/40 hover:bg-white/80'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
