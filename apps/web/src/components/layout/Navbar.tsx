@@ -18,7 +18,6 @@ import {
   Compass,
   MapPin,
   Palmtree,
-  Calendar,
   Ticket,
 } from 'lucide-react';
 
@@ -104,199 +103,219 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 py-1">
-            <div className="relative w-48 sm:w-60 h-16 sm:h-20">
+          <Link href="/" className="flex-shrink-0">
+            <div className="relative w-32 sm:w-40 h-12 sm:h-16">
               <Image
                 src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                 alt="Galaxy Heritage World - Luxury Travel"
                 fill
                 priority
                 className="object-contain object-left scale-105"
-                sizes="(max-width: 640px) 200px, 240px"
+                sizes="(max-width: 640px) 128px, 160px"
               />
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium text-gray-800">
-            <Link
-              href="/"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname === '/' ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              Home
-            </Link>
-
-            <Link
-              href="/about"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname === '/about' ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              About Us
-            </Link>
-
-            {/* Destinations Dropdown */}
-            <div
-              className="relative group py-2"
-              onMouseEnter={() => setDestinationsOpen(true)}
-              onMouseLeave={() => setDestinationsOpen(false)}
-            >
-              <Link
-                href="/destinations"
-                className={`flex items-center gap-1 hover:text-[#D4AF37] transition-colors ${
-                  pathname.startsWith('/destinations') ? 'text-[#D4AF37] font-semibold' : ''
-                }`}
-              >
-                <span>Destinations</span>
-                <ChevronDown className="w-3.5 h-3.5 text-gray-500 group-hover:rotate-180 transition-transform" />
-              </Link>
-
-              {destinationsOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-3 animate-in fade-in-50 zoom-in-95 duration-200">
-                  <div className="space-y-1">
-                    <Link
-                      href="/destinations?type=DOMESTIC"
-                      className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
-                    >
-                      <MapPin className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Domestic Getaways (Goa, Rajasthan, Himachal)</span>
-                    </Link>
-                    <Link
-                      href="/destinations?type=INTERNATIONAL"
-                      className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
-                    >
-                      <Compass className="w-4 h-4 text-[#D4AF37]" />
-                      <span>International Holidays & Exchange</span>
-                    </Link>
-                    <div className="border-t border-gray-100 my-1 pt-1">
-                      <Link
-                        href="/destinations"
-                        className="block px-3 py-1.5 text-xs text-blue-600 font-medium hover:underline"
-                      >
-                        Explore All Destinations &rarr;
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/vacation-packages"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              Vacation Packages
-            </Link>
-
-            {/* Hotels & Resorts Dropdown */}
-            <div
-              className="relative group py-2"
-              onMouseEnter={() => setResortsOpen(true)}
-              onMouseLeave={() => setResortsOpen(false)}
-            >
-              <Link
-                href="/hotels-resorts"
-                className={`flex items-center gap-1 hover:text-[#D4AF37] transition-colors ${
-                  pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37] font-semibold' : ''
-                }`}
-              >
-                <span>Hotels & Resorts</span>
-                <ChevronDown className="w-3.5 h-3.5 text-gray-500 group-hover:rotate-180 transition-transform" />
-              </Link>
-
-              {resortsOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-3 animate-in fade-in-50 zoom-in-95 duration-200">
-                  <div className="space-y-1">
-                    <Link
-                      href="/hotels-resorts?category=ASSOCIATED"
-                      className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
-                    >
-                      <Palmtree className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Associated Partner Resorts</span>
-                    </Link>
-                    <Link
-                      href="/hotels-resorts?category=INTERNAL"
-                      className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
-                    >
-                      <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Internal Luxury Properties</span>
-                    </Link>
-                    <div className="border-t border-gray-100 my-1 pt-1">
-                      <Link
-                        href="/hotels-resorts"
-                        className="block px-3 py-1.5 text-xs text-blue-600 font-medium hover:underline"
-                      >
-                        View All 43+ Properties &rarr;
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              href="/itineraries"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname.startsWith('/itineraries') ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              Itineraries
-            </Link>
-
-            <Link
-              href="/day-activities"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname.startsWith('/day-activities') ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              Day Outings
-            </Link>
-
-            <Link
-              href="/travel-desk"
-              className={`hover:text-[#D4AF37] transition-colors ${
-                pathname === '/travel-desk' ? 'text-[#D4AF37] font-semibold' : ''
-              }`}
-            >
-              Travel Desk
-            </Link>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Cylindrical Pill Navigation Container */}
+          <div className="hidden lg:flex items-center bg-white/80 backdrop-blur-sm border border-gray-200 rounded-full px-2 py-1.5 shadow-lg hover:shadow-xl transition-all duration-300">
+            {/* Search Button */}
             <Link
               href="/search"
               aria-label="Search site"
-              className="p-2 text-gray-600 hover:text-[#D4AF37] hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2.5 text-gray-600 hover:text-[#D4AF37] transition-colors flex-shrink-0"
             >
               <Search className="w-4 h-4" />
             </Link>
 
+            <div className="w-px h-6 bg-gray-200 mx-1 flex-shrink-0"></div>
+
+            {/* Navigation Links */}
+            <div className="flex items-center gap-0 text-sm font-medium text-gray-800 px-2">
+              <Link
+                href="/"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname === '/'
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/about"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname === '/about'
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                About Us
+              </Link>
+
+              {/* Destinations Dropdown */}
+              <div
+                className="relative group"
+                onMouseEnter={() => setDestinationsOpen(true)}
+                onMouseLeave={() => setDestinationsOpen(false)}
+              >
+                <Link
+                  href="/destinations"
+                  className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${
+                    pathname.startsWith('/destinations')
+                      ? 'text-white bg-[#D4AF37] font-semibold'
+                      : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                  }`}
+                >
+                  <span>Destinations</span>
+                  <ChevronDown className="w-3 h-3 group-hover:rotate-180 transition-transform" />
+                </Link>
+
+                {destinationsOpen && (
+                  <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-3 animate-in fade-in-50 zoom-in-95 duration-200 mt-1 z-50">
+                    <div className="space-y-1">
+                      <Link
+                        href="/destinations?type=DOMESTIC"
+                        className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
+                      >
+                        <MapPin className="w-4 h-4 text-[#D4AF37]" />
+                        <span>Domestic Getaways (Goa, Rajasthan, Himachal)</span>
+                      </Link>
+                      <Link
+                        href="/destinations?type=INTERNATIONAL"
+                        className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
+                      >
+                        <Compass className="w-4 h-4 text-[#D4AF37]" />
+                        <span>International Holidays & Exchange</span>
+                      </Link>
+                      <div className="border-t border-gray-100 my-1 pt-1">
+                        <Link
+                          href="/destinations"
+                          className="block px-3 py-1.5 text-xs text-blue-600 font-medium hover:underline"
+                        >
+                          Explore All Destinations &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/vacation-packages"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname.startsWith('/vacation-packages')
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                Vacation Packages
+              </Link>
+
+              {/* Hotels & Resorts Dropdown */}
+              <div
+                className="relative group"
+                onMouseEnter={() => setResortsOpen(true)}
+                onMouseLeave={() => setResortsOpen(false)}
+              >
+                <Link
+                  href="/hotels-resorts"
+                  className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap flex items-center gap-1 ${
+                    pathname.startsWith('/hotels-resorts')
+                      ? 'text-white bg-[#D4AF37] font-semibold'
+                      : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                  }`}
+                >
+                  <span>Hotels & Resorts</span>
+                  <ChevronDown className="w-3 h-3 group-hover:rotate-180 transition-transform" />
+                </Link>
+
+                {resortsOpen && (
+                  <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-gray-100 p-3 animate-in fade-in-50 zoom-in-95 duration-200 mt-1 z-50">
+                    <div className="space-y-1">
+                      <Link
+                        href="/hotels-resorts?category=ASSOCIATED"
+                        className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
+                      >
+                        <Palmtree className="w-4 h-4 text-[#D4AF37]" />
+                        <span>Associated Partner Resorts</span>
+                      </Link>
+                      <Link
+                        href="/hotels-resorts?category=INTERNAL"
+                        className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-lg transition-colors"
+                      >
+                        <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                        <span>Internal Luxury Properties</span>
+                      </Link>
+                      <div className="border-t border-gray-100 my-1 pt-1">
+                        <Link
+                          href="/hotels-resorts"
+                          className="block px-3 py-1.5 text-xs text-blue-600 font-medium hover:underline"
+                        >
+                          View All 43+ Properties &rarr;
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                href="/itineraries"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname.startsWith('/itineraries')
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                Itineraries
+              </Link>
+
+              <Link
+                href="/day-activities"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname.startsWith('/day-activities')
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                Day Outings
+              </Link>
+
+              <Link
+                href="/travel-desk"
+                className={`px-3 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  pathname === '/travel-desk'
+                    ? 'text-white bg-[#D4AF37] font-semibold'
+                    : 'hover:text-[#D4AF37] hover:bg-gray-100'
+                }`}
+              >
+                Travel Desk
+              </Link>
+            </div>
+
+            <div className="w-px h-6 bg-gray-200 mx-1 flex-shrink-0"></div>
+
+            {/* Action CTAs Inside Pill */}
             <Link
               href="/redeem-voucher"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3.5 py-2 border border-[#D4AF37] text-[#9A7D18] hover:bg-[#D4AF37] hover:text-white rounded-full transition-all duration-200"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3 py-2 text-[#9A7D18] hover:text-white hover:bg-[#D4AF37] rounded-full transition-all duration-200 flex-shrink-0"
             >
               <Ticket className="w-3.5 h-3.5" />
-              <span>Redeem Voucher</span>
+              <span>Redeem</span>
             </Link>
 
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-full shadow hover:shadow-md transition-all duration-200 group"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-full transition-all duration-200 flex-shrink-0 group"
             >
-              <span>Enquire Now</span>
-              <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs group-hover:translate-x-0.5 transition-transform">
-                &rarr;
-              </span>
+              <span>Enquire</span>
+              <span className="group-hover:translate-x-0.5 transition-transform">→</span>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex sm:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <Link
               href="/search"
               aria-label="Search"
