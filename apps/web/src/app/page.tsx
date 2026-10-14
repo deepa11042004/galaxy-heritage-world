@@ -1,6 +1,5 @@
 import React from 'react';
 import { HeroBanner } from '@/components/home/HeroBanner';
-import { PartnerMarquee } from '@/components/home/PartnerMarquee';
 import { DestinationShowcase } from '@/components/home/DestinationShowcase';
 import { PackageCards } from '@/components/home/PackageCards';
 import { ResortShowcase } from '@/components/home/ResortShowcase';
@@ -54,7 +53,6 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <HeroBanner />
-      <PartnerMarquee />
       <DestinationShowcase destinations={destinations} />
       <PackageCards packages={packages} />
       <ResortShowcase hotels={hotels} />
