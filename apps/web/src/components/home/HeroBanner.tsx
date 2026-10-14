@@ -73,7 +73,7 @@ export function HeroBanner() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 select-none"
+      className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-40 pb-20 sm:pt-48 sm:pb-24 lg:pt-56 lg:pb-28 select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={onTouchStart}
@@ -117,7 +117,7 @@ export function HeroBanner() {
         id="hero-prev-btn"
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
+        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer mt-6"
       >
         <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-0.5" />
       </button>
@@ -127,13 +127,13 @@ export function HeroBanner() {
         id="hero-next-btn"
         onClick={nextSlide}
         aria-label="Next slide"
-        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
+        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer mt-6"
       >
         <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
       </button>
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center mt-12 sm:mt-16 lg:mt-20">
         {/* Top Luxury Pill Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/60 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-6 shadow-lg animate-in fade-in slide-in-from-top-4 duration-700">
           <Sparkles className="w-3.5 h-3.5" />
