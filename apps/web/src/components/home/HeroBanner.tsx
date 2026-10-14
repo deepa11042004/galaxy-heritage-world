@@ -105,10 +105,6 @@ export function HeroBanner() {
           );
         })}
 
-        {/* Cinematic Luxury Dark & Gold Vignette Overlays for Maximum Legibility */}
-        <div className="absolute inset-0 z-[1] bg-black/45" />
-        <div className="absolute inset-0 z-[1] bg-gradient-to-t from-[#0B1320] via-black/40 to-black/60" />
-        <div className="absolute inset-0 z-[1] bg-radial-at-c from-transparent via-[#0B1320]/30 to-[#0B1320]/80" />
       </div>
 
       {/* Slider Left & Right Navigation Arrows */}
@@ -141,12 +137,12 @@ export function HeroBanner() {
         </div>
 
         {/* Main Headline */}
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl leading-tight sm:leading-tight mb-4 sm:mb-5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
-          Crafting Unforgettable Journeys Across <span className="text-[#D4AF37] italic">India</span> & The World
+        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl leading-tight sm:leading-tight mb-4 sm:mb-5 drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)]">
+          Crafting Unforgettable Journeys Across <span className="text-[#D4AF37] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">India</span> & The World
         </h1>
 
         {/* Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-gray-200 max-w-2xl leading-relaxed mb-5 sm:mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+        <p className="text-sm sm:text-base lg:text-lg text-white font-medium max-w-2xl leading-relaxed mb-5 sm:mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
           Discover handpicked luxury resorts, bespoke family holiday packages, and seamless travel desk privileges with authentic hospitality and guaranteed transparency.
         </p>
 
