@@ -7,7 +7,6 @@ import {
   Palmtree,
   Headphones,
   Ticket,
-  CheckCircle,
   ArrowRight,
 } from 'lucide-react';
 
@@ -39,6 +38,29 @@ const pillars = [
   },
 ];
 
+const stats = [
+  {
+    value: '43+',
+    title: 'Associated Resorts',
+    description: 'Handpicked partner retreats across India & abroad',
+  },
+  {
+    value: '100%',
+    title: 'Escalation Transparency',
+    description: 'Dedicated customer care & direct resolution',
+  },
+  {
+    value: '24/7',
+    title: 'Travel Concierge',
+    description: 'Round-the-clock bespoke holiday planning',
+  },
+  {
+    value: '1800-843',
+    title: 'Toll-Free Assistance',
+    description: 'Toll-Free 1800-843-6114 direct reservation desk',
+  },
+];
+
 export function WhyChooseUs() {
   return (
     <section className="py-20 bg-[#0B1320] text-white relative overflow-hidden">
@@ -59,6 +81,7 @@ export function WhyChooseUs() {
           </p>
         </div>
 
+        {/* 4 Cards already there - kept intact */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
@@ -97,6 +120,30 @@ export function WhyChooseUs() {
               </div>
             );
           })}
+        </div>
+
+        {/* Headings & Stats Added Below the 4 Cards */}
+        <div className="mt-16 pt-12 border-t border-white/10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
+            {stats.map((stat, idx) => (
+              <div
+                key={stat.title}
+                className={`flex flex-col items-center text-center group ${
+                  idx > 0 ? 'pt-6 sm:pt-0 sm:pl-6' : ''
+                }`}
+              >
+                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#D4AF37] tracking-tight leading-none mb-2.5 transition-transform duration-300 group-hover:scale-105">
+                  {stat.value}
+                </div>
+                <h4 className="text-base sm:text-lg font-bold text-white tracking-wide">
+                  {stat.title}
+                </h4>
+                <p className="text-xs text-gray-400 mt-1.5 leading-relaxed max-w-xs">
+                  {stat.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
