@@ -11,14 +11,11 @@ import {
   Menu,
   X,
   ChevronDown,
-  Search,
   Sparkles,
-  ShieldCheck,
   User,
   Compass,
   MapPin,
   Palmtree,
-  Ticket,
   ArrowRight,
 } from 'lucide-react';
 
@@ -31,7 +28,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 30) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -47,9 +44,15 @@ export function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 w-full transition-all duration-300">
-      {/* Top Announcement Bar */}
-      <div className="bg-[#0B1320] text-gray-300 text-xs py-2 px-4 border-b border-gray-800">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300">
+      {/* Top Announcement Bar with smooth dark transparency */}
+      <div
+        className={`w-full text-xs py-2 px-4 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-[#0B1320]/95 backdrop-blur-md border-b border-white/10 text-gray-300'
+            : 'bg-black/35 backdrop-blur-sm border-b border-white/10 text-gray-200'
+        }`}
+      >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <a
@@ -77,13 +80,6 @@ export function Navbar() {
               CIN: <strong className="text-gray-300">U74999DL2022PTC407515</strong>
             </span>
             <Link
-              href="/reviews-and-complaints"
-              className="flex items-center gap-1 text-[#D4AF37] hover:underline"
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Escalation Matrix</span>
-            </Link>
-            <Link
               href="/login"
               className="flex items-center gap-1 text-white hover:text-[#D4AF37] transition-colors"
             >
@@ -94,38 +90,42 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Floating Dark Pill Navbar Bar */}
+      {/* Floating Dark Pill Navbar Bar without white background */}
       <div
         className={`w-full transition-all duration-300 ${
-          isScrolled ? 'py-2.5 backdrop-blur-md bg-white/70 shadow-sm' : 'py-3.5'
+          isScrolled
+            ? 'py-2 bg-black/40 backdrop-blur-md shadow-lg'
+            : 'py-3.5 bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <nav className="relative flex items-center justify-between bg-[#141517] text-white rounded-full pl-2 pr-2 py-1.5 sm:pl-3 sm:pr-3 sm:py-2 shadow-[0_12px_36px_rgba(0,0,0,0.35)] border border-white/10 transition-all duration-300">
-            {/* Left: Circular White Logo Badge like the reference image planet badge */}
-            <Link
-              href="/"
-              aria-label="Galaxy Heritage World Home"
-              className="group shrink-0 flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white shadow-md overflow-hidden p-1 transition-transform duration-200 hover:scale-105"
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
-                  alt="Galaxy Heritage World"
-                  fill
-                  priority
-                  className="object-contain"
-                  sizes="48px"
-                />
-              </div>
-            </Link>
-
-            {/* Middle: Desktop Navigation Links (Unchanged URLs & dropdowns) */}
-            <div className="hidden lg:flex items-center gap-5 xl:gap-7 text-[13.5px] font-medium tracking-wide text-gray-200">
+        <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8">
+          <nav className="relative flex items-center justify-between bg-[#f5f7f8]/95 backdrop-blur-xl text-gray-800 rounded-full pl-4 pr-3 py-2 shadow-[0_16px_40px_rgba(0,0,0,0.35)] border border-white/60 transition-all duration-300">
+            {/* Left Group: Logo + Desktop Links right next to it */}
+            <div className="flex items-center gap-3 xl:gap-5">
+              {/* Brand Logo with transparent background */}
               <Link
                 href="/"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname === '/' ? 'text-[#D4AF37] font-semibold' : ''
+                aria-label="Galaxy Heritage World Home"
+                className="group shrink-0 flex items-center h-11 sm:h-12 transition-transform duration-200 hover:scale-105"
+              >
+                <div className="relative w-36 sm:w-40 h-10 sm:h-11">
+                  <Image
+                    src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
+                    alt="Galaxy Heritage World"
+                    fill
+                    priority
+                    className="object-contain object-left scale-110 drop-shadow-[0_2px_6px_rgba(0,0,0,0.12)]"
+                    sizes="(max-width: 640px) 150px, 170px"
+                  />
+                </div>
+              </Link>
+
+              {/* Desktop Navigation Links directly following the logo */}
+              <div className="hidden lg:flex items-center gap-3 xl:gap-5 text-[13px] xl:text-[13.5px] font-semibold tracking-wide text-gray-700 whitespace-nowrap">
+              <Link
+                href="/"
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Home
@@ -133,8 +133,8 @@ export function Navbar() {
 
               <Link
                 href="/about"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname === '/about' ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/about' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 About Us
@@ -142,43 +142,41 @@ export function Navbar() {
 
               {/* Destinations Dropdown */}
               <div
-                className="relative group py-1"
+                className="relative py-2"
                 onMouseEnter={() => setDestinationsOpen(true)}
                 onMouseLeave={() => setDestinationsOpen(false)}
               >
                 <Link
                   href="/destinations"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-white ${
-                    pathname.startsWith('/destinations') ? 'text-[#D4AF37] font-semibold' : ''
+                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                    pathname.startsWith('/destinations') ? 'text-[#D4AF37]' : ''
                   }`}
                 >
                   <span>Destinations</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:rotate-180 group-hover:text-white transition-all" />
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${destinationsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
                 </Link>
 
                 {destinationsOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-[#1C1E22] rounded-2xl shadow-2xl border border-white/10 p-3 text-white animate-in fade-in-50 zoom-in-95 duration-200">
-                    <div className="space-y-1">
-                      <Link
-                        href="/destinations?type=DOMESTIC"
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
-                      >
-                        <MapPin className="w-4 h-4 text-[#D4AF37]" />
-                        <span>Domestic Getaways (Goa, Rajasthan, Himachal)</span>
-                      </Link>
-                      <Link
-                        href="/destinations?type=INTERNATIONAL"
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
-                      >
-                        <Compass className="w-4 h-4 text-[#D4AF37]" />
-                        <span>International Holidays & Exchange</span>
-                      </Link>
-                      <div className="border-t border-white/10 my-1 pt-1">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-2xl shadow-[0_20px_45px_rgba(0,0,0,0.25)] border border-gray-100 py-2.5 px-2 animate-in fade-in-50 zoom-in-95 duration-200">
+                      <div className="flex flex-col space-y-0.5 text-left">
                         <Link
-                          href="/destinations"
-                          className="block px-3 py-1.5 text-xs text-[#D4AF37] font-semibold hover:underline"
+                          href="/destinations?type=DOMESTIC"
+                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
                         >
-                          Explore All Destinations &rarr;
+                          Domestic Destinations
+                        </Link>
+                        <Link
+                          href="/destinations?type=INTERNATIONAL"
+                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
+                        >
+                          International Destinations
+                        </Link>
+                        <Link
+                          href="/destinations?type=INTERNATIONAL#exchange"
+                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
+                        >
+                          Exchange
                         </Link>
                       </div>
                     </div>
@@ -188,8 +186,8 @@ export function Navbar() {
 
               <Link
                 href="/vacation-packages"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Vacation Packages
@@ -197,44 +195,46 @@ export function Navbar() {
 
               {/* Hotels & Resorts Dropdown */}
               <div
-                className="relative group py-1"
+                className="relative py-2"
                 onMouseEnter={() => setResortsOpen(true)}
                 onMouseLeave={() => setResortsOpen(false)}
               >
                 <Link
                   href="/hotels-resorts"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-white ${
-                    pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37] font-semibold' : ''
+                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                    pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37]' : ''
                   }`}
                 >
                   <span>Hotels & Resorts</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:rotate-180 group-hover:text-white transition-all" />
+                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${resortsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
                 </Link>
 
                 {resortsOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-[#1C1E22] rounded-2xl shadow-2xl border border-white/10 p-3 text-white animate-in fade-in-50 zoom-in-95 duration-200">
-                    <div className="space-y-1">
-                      <Link
-                        href="/hotels-resorts?category=ASSOCIATED"
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
-                      >
-                        <Palmtree className="w-4 h-4 text-[#D4AF37]" />
-                        <span>Associated Partner Resorts</span>
-                      </Link>
-                      <Link
-                        href="/hotels-resorts?category=INTERNAL"
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-gray-200 hover:bg-white/10 hover:text-[#D4AF37] rounded-xl transition-colors"
-                      >
-                        <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                        <span>Internal Luxury Properties</span>
-                      </Link>
-                      <div className="border-t border-white/10 my-1 pt-1">
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50">
+                    <div className="bg-white rounded-2xl shadow-[0_20px_45px_rgba(0,0,0,0.25)] border border-gray-100 p-3 text-gray-800 animate-in fade-in-50 zoom-in-95 duration-200">
+                      <div className="space-y-1">
                         <Link
-                          href="/hotels-resorts"
-                          className="block px-3 py-1.5 text-xs text-[#D4AF37] font-semibold hover:underline"
+                          href="/hotels-resorts?category=ASSOCIATED"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
                         >
-                          View All 43+ Properties &rarr;
+                          <Palmtree className="w-4 h-4 text-[#D4AF37]" />
+                          <span>Associated Partner Resorts</span>
                         </Link>
+                        <Link
+                          href="/hotels-resorts?category=INTERNAL"
+                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
+                        >
+                          <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                          <span>Internal Luxury Properties</span>
+                        </Link>
+                        <div className="border-t border-gray-100 my-1 pt-1">
+                          <Link
+                            href="/hotels-resorts"
+                            className="block px-3 py-1.5 text-xs text-blue-600 font-semibold hover:underline"
+                          >
+                            View All 43+ Properties &rarr;
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -242,18 +242,9 @@ export function Navbar() {
               </div>
 
               <Link
-                href="/itineraries"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname.startsWith('/itineraries') ? 'text-[#D4AF37] font-semibold' : ''
-                }`}
-              >
-                Itineraries
-              </Link>
-
-              <Link
                 href="/day-activities"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname.startsWith('/day-activities') ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname.startsWith('/day-activities') ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Day Outings
@@ -261,60 +252,38 @@ export function Navbar() {
 
               <Link
                 href="/travel-desk"
-                className={`transition-colors duration-150 hover:text-white ${
-                  pathname === '/travel-desk' ? 'text-[#D4AF37] font-semibold' : ''
+                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
+                  pathname === '/travel-desk' ? 'text-[#D4AF37]' : ''
                 }`}
               >
                 Travel Desk
               </Link>
             </div>
+          </div>
 
-            {/* Right: Actions with Distinct Pill Badge CTA (matching right pill in reference) */}
-            <div className="hidden sm:flex items-center gap-2">
-              <Link
-                href="/search"
-                aria-label="Search site"
-                className="p-2 text-gray-300 hover:text-[#D4AF37] hover:bg-white/10 rounded-full transition-colors"
-              >
-                <Search className="w-4 h-4" />
-              </Link>
-
-              <Link
-                href="/redeem-voucher"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3.5 py-2 border border-[#D4AF37]/70 text-[#E5C158] hover:bg-[#D4AF37] hover:text-black rounded-full transition-all duration-200"
-              >
-                <Ticket className="w-3.5 h-3.5" />
-                <span>Redeem Voucher</span>
-              </Link>
-
-              {/* High-contrast solid white pill CTA button matching reference button */}
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white text-gray-900 hover:bg-gray-100 rounded-full text-xs font-bold tracking-wide shadow-md transition-all duration-200 hover:shadow-lg active:scale-95"
-              >
-                <span>Enquire Now</span>
-                <ArrowRight className="w-3.5 h-3.5 text-gray-900" />
-              </Link>
-            </div>
+          {/* Right: Pill CTA Button firmly inside the pill */}
+          <div className="hidden sm:flex items-center shrink-0 ml-4">
+            {/* Sleek contrast pill CTA button */}
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#141517] text-white hover:bg-black rounded-full text-xs font-bold tracking-wide shadow-md transition-all duration-200 hover:shadow-lg active:scale-95 whitespace-nowrap"
+            >
+              <span>Enquire Now</span>
+              <ArrowRight className="w-3.5 h-3.5 text-white" />
+            </Link>
+          </div>
 
             {/* Mobile Actions & Menu Toggle */}
             <div className="flex lg:hidden items-center gap-1.5 pr-1">
               <Link
                 href="/contact"
-                className="sm:hidden px-3.5 py-1.5 bg-white text-gray-900 rounded-full text-xs font-bold shadow"
+                className="sm:hidden px-3.5 py-1.5 bg-[#141517] text-white rounded-full text-xs font-bold shadow"
               >
                 Enquire
               </Link>
-              <Link
-                href="/search"
-                aria-label="Search"
-                className="p-2 text-gray-300 hover:text-[#D4AF37]"
-              >
-                <Search className="w-4 h-4" />
-              </Link>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-gray-300 hover:text-white"
+                className="p-2 text-gray-700 hover:text-black"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -326,7 +295,7 @@ export function Navbar() {
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="max-w-7xl mx-auto px-3 sm:px-6 mt-2 lg:hidden">
-            <div className="bg-[#141517] rounded-3xl border border-white/10 px-5 pt-5 pb-6 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto text-white">
+            <div className="bg-[#141517]/95 backdrop-blur-2xl rounded-3xl border border-white/10 px-5 pt-5 pb-6 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto text-white">
               <div className="flex flex-col space-y-2 text-sm font-medium text-gray-300">
                 <Link
                   href="/"
@@ -340,12 +309,26 @@ export function Navbar() {
                 >
                   About Us
                 </Link>
-                <Link
-                  href="/destinations"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
-                  Destinations (Domestic & International)
-                </Link>
+                <div className="pl-2 border-l-2 border-white/10 space-y-1">
+                  <Link
+                    href="/destinations?type=DOMESTIC"
+                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                  >
+                    Domestic Destinations
+                  </Link>
+                  <Link
+                    href="/destinations?type=INTERNATIONAL"
+                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                  >
+                    International Destinations
+                  </Link>
+                  <Link
+                    href="/destinations?type=INTERNATIONAL#exchange"
+                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                  >
+                    Exchange
+                  </Link>
+                </div>
                 <Link
                   href="/vacation-packages"
                   className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
@@ -357,12 +340,6 @@ export function Navbar() {
                   className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
                 >
                   Hotels & Resorts (43+ Properties)
-                </Link>
-                <Link
-                  href="/itineraries"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
-                  Holiday Itineraries
                 </Link>
                 <Link
                   href="/day-activities"
@@ -397,12 +374,6 @@ export function Navbar() {
               </div>
 
               <div className="pt-4 border-t border-white/10 flex flex-col gap-2.5">
-                <Link
-                  href="/redeem-voucher"
-                  className="text-center py-2.5 px-4 rounded-full border border-[#D4AF37] text-[#E5C158] font-semibold text-xs uppercase tracking-wider hover:bg-[#D4AF37] hover:text-black transition-colors"
-                >
-                  Redeem Holiday Voucher
-                </Link>
                 <Link
                   href="/contact"
                   className="text-center py-2.5 px-4 rounded-full bg-white text-gray-900 font-bold text-xs uppercase tracking-wider shadow hover:bg-gray-100 transition-colors"

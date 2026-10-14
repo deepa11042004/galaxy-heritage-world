@@ -19,7 +19,7 @@ export function HeroBanner() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center bg-[#0B1320] text-white overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
       {/* Background Image with Dark & Luxury Gold Gradient Overlays */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -27,14 +27,14 @@ export function HeroBanner() {
           alt="Luxury Resort Experience - Galaxy Heritage World"
           fill
           priority
-          className="object-cover object-center opacity-40 scale-105 transition-transform duration-10000"
+          className="object-cover object-center opacity-45 scale-105 transition-transform duration-10000"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-[#0B1320]/60 to-transparent" />
-        <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#0B1320]/40 to-[#0B1320]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-[#0B1320]/50 to-[#0B1320]/30" />
+        <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#0B1320]/30 to-[#0B1320]/80" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         {/* Top Luxury Pill Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-6 animate-in fade-in slide-in-from-top-4 duration-700">
           <Sparkles className="w-3.5 h-3.5" />
@@ -90,9 +90,17 @@ export function HeroBanner() {
             </div>
           </div>
 
-          {/* Search Button */}
+          {/* Explore Button */}
           <Link
-            href={`/search?q=${encodeURIComponent(destinationQuery || 'all')}`}
+            href={
+              selectedCategory === 'ACTIVITIES'
+                ? '/day-activities'
+                : selectedCategory === 'DOMESTIC'
+                ? '/destinations?type=DOMESTIC'
+                : selectedCategory === 'INTERNATIONAL'
+                ? '/destinations?type=INTERNATIONAL'
+                : '/destinations'
+            }
             className="sm:w-auto px-7 py-3.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs sm:text-sm font-semibold uppercase tracking-wider rounded-xl sm:rounded-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200 group shrink-0"
           >
             <span>Explore Now</span>
