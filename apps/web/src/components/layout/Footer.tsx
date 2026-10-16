@@ -38,7 +38,7 @@ export function Footer() {
           <div className="grid grid-cols-1 gap-10 border-b border-line pb-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
             {/* Column 1: Brand & Registration */}
             <div className="space-y-5 sm:col-span-2">
-              <Link href="/" className="inline-block rounded-2xl bg-[#C2C2C2] p-2"><span className="relative block h-14 w-48">
+              <Link href="/" className="inline-block rounded-2xl bg-transparent p-2"><span className="relative block h-14 w-48">
                 <Image
                   src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                   alt="Galaxy Heritage World"
@@ -50,7 +50,7 @@ export function Footer() {
               <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
                 Galaxy Heritage World is India&apos;s premier luxury holiday and hospitality membership provider, delivering bespoke vacations, verified 4-star and 5-star associated resorts, and memorable family getaways across India and international destinations.
               </p>
-              <div className="card max-w-sm space-y-1 bg-[#C2C2C2] p-4 text-xs text-ink-muted">
+              <div className="card max-w-sm space-y-1 bg-transparent p-4 text-xs text-ink-muted">
                 <div>
                   <strong className="font-semibold text-ink">Corporate Entity:</strong> GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED
                 </div>
