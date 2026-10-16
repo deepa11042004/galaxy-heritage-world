@@ -26,7 +26,7 @@ export default function AboutPage() {
         subtitle="Galaxy Heritage World was founded on a simple principle: every Indian family deserves world-class hospitality, audited accommodations, and complete booking transparency."
       />
 
-      <div className="container-page section space-y-16 md:space-y-20">
+      <div className="container-page section section-plain space-y-16 md:space-y-20">
         {/* Corporate Profile Card */}
         <div className="card p-3 sm:p-4">
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
@@ -62,6 +62,58 @@ export default function AboutPage() {
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>
+          </div>
+        </div>
+
+        {/* About Us Story */}
+        <div className="rounded-hero border-4 border-divider bg-white p-7 sm:p-10 lg:p-12">
+          <div className="mx-auto max-w-4xl space-y-6 text-sm leading-relaxed text-ink-muted sm:text-base">
+            <div className="space-y-2">
+              <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">About Us – Galaxy Heritage World</h2>
+              <h3 className="text-base font-semibold text-ink sm:text-lg">A Unit of GHW Hospitality Private Limited</h3>
+            </div>
+
+            <p>
+              <strong className="font-semibold text-ink">Galaxy Heritage World</strong> is a hospitality and holiday company dedicated to creating memorable travel experiences and making every journey truly special. With a passion for exploration, comfort, and exceptional hospitality, we aim to bring people closer to the destinations, cultures, and experiences that make life extraordinary.
+            </p>
+
+            <p>
+              Our vision is to redefine the way people travel by offering thoughtfully designed holiday experiences across India, Asia, and destinations around the world. From serene hill stations and pristine beaches to vibrant cities, heritage destinations, and peaceful nature retreats, we open doors to a world of possibilities for every kind of traveller.
+            </p>
+
+            <p>
+              At Galaxy Heritage World, we believe that a holiday is more than just a stay—it is about creating lasting memories, spending quality time with loved ones, discovering new cultures, and embracing the joy of travel. Whether it is a family vacation, a romantic getaway, a weekend escape, a group holiday, or a special celebration, we strive to make every experience comfortable, seamless, and memorable.
+            </p>
+
+            <p>Our commitment to hospitality is built on three fundamental pillars:</p>
+
+            <ul className="space-y-4">
+              <li>
+                <strong className="font-semibold text-ink">People</strong> – Dedicated professionals who believe in delivering warm, personalised service and building lasting relationships with our members.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">Experiences</strong> – Thoughtfully curated holidays designed to inspire exploration, create meaningful connections, and turn every journey into a cherished memory.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">Destinations</strong> – A diverse world of travel opportunities, from scenic landscapes and relaxing beach escapes to cultural landmarks and exciting international destinations.
+              </li>
+            </ul>
+
+            <p>
+              Together, these pillars form the foundation of our commitment to delivering exceptional hospitality and memorable holiday experiences.
+            </p>
+
+            <p>
+              At Galaxy Heritage World, we continuously strive to combine the warmth of Indian hospitality with modern comfort, convenience, and service excellence. We believe every traveller deserves the opportunity to explore the world, discover something new, and create stories worth sharing.
+            </p>
+
+            <p>
+              As we continue to grow, our mission remains focused on making holidays more accessible, enriching, and rewarding through quality hospitality, personalised attention, and a passion for excellence.
+            </p>
+
+            <p className="font-semibold text-ink">
+              Welcome to Galaxy Heritage World – Where Every Journey Creates a Memory, Every Destination Inspires Discovery, and Every Holiday Becomes a Celebration of Life.
+            </p>
           </div>
         </div>
 
