@@ -50,7 +50,7 @@ export function EnquiryFormSection() {
   return (
     <section id="enquiry" className="section bg-white">
       <div className="container-page">
-        <div className="relative overflow-hidden rounded-hero bg-surface p-5 sm:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-hero bg-[#575547] p-5 sm:p-10 lg:p-14">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
             {/* Left Column: Visual copy & Contact Details */}
             <div className="space-y-6 px-1 pt-3 sm:px-0 sm:pt-0 lg:col-span-5">
@@ -59,22 +59,22 @@ export function EnquiryFormSection() {
                 <span>Dedicated Holiday Consultant</span>
               </div>
 
-              <h2 className="heading-section">
-                Plan Your Bespoke <span className="text-ink-muted">Vacation With Us</span>
+              <h2 className="heading-section text-white">
+                Plan Your Bespoke <span className="text-white/60">Vacation With Us</span>
               </h2>
 
-              <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
+              <p className="text-sm leading-relaxed text-white/80 sm:text-base">
                 Whether you are planning a relaxed family beach escape in Goa, a heritage tour across Rajasthan, or redeeming an authorized holiday voucher, our travel specialists are here to customize your complete itinerary.
               </p>
 
-              <div className="space-y-4 border-t border-line pt-6">
+              <div className="space-y-4 border-t border-white/20 pt-6">
                 <div className="flex items-center gap-3">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-white">
                     <PhoneCall className="h-[18px] w-[18px] text-ink" />
                   </div>
                   <div>
-                    <div className="text-xs font-medium text-ink-muted">Toll Free Support</div>
-                    <a href="tel:18008436114" className="text-sm font-semibold text-ink hover:text-accent-strong">
+                    <div className="text-xs font-medium text-white/70">Toll Free Support</div>
+                    <a href="tel:18008436114" className="text-sm font-semibold text-white hover:text-accent">
                       1800-843-6114
                     </a>
                   </div>
@@ -85,10 +85,10 @@ export function EnquiryFormSection() {
                     <Mail className="h-[18px] w-[18px] text-ink" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-xs font-medium text-ink-muted">Customer Helpdesk</div>
+                    <div className="text-xs font-medium text-white/70">Customer Helpdesk</div>
                     <a
                       href="mailto:info@galaxyheritageworld.com"
-                      className="break-all text-sm font-semibold text-ink hover:text-accent-strong"
+                      className="break-all text-sm font-semibold text-white hover:text-accent"
                     >
                       info@galaxyheritageworld.com
                     </a>
@@ -100,8 +100,8 @@ export function EnquiryFormSection() {
                     <ShieldCheck className="h-[18px] w-[18px] text-ink" />
                   </div>
                   <div>
-                    <div className="text-xs font-medium text-ink-muted">Registered Office</div>
-                    <span className="text-sm text-ink">Ram Nagar, Kaushambi, Ghaziabad, UP 201012</span>
+                    <div className="text-xs font-medium text-white/70">Registered Office</div>
+                    <span className="text-sm text-white">Ram Nagar, Kaushambi, Ghaziabad, UP 201012</span>
                   </div>
                 </div>
               </div>
