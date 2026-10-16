@@ -2,15 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import {
-  HelpCircle,
-  ChevronDown,
-  Search,
-  PhoneCall,
-  ShieldCheck,
-  ArrowRight,
-} from 'lucide-react';
+import { HelpCircle, ChevronDown, Search, PhoneCall, ShieldCheck } from 'lucide-react';
 import { getFaqs } from '@/lib/api';
+import { cn } from '@/lib/utils';
+import { PageHero } from '@/components/ui/PageHero';
+import { buttonVariants } from '@/components/ui/button';
 
 export default function FaqPage() {
   const [faqs, setFaqs] = useState<any[]>([]);
@@ -41,116 +37,101 @@ export default function FaqPage() {
   });
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-12 sm:py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Help Center</span>
-          </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
-            Frequently Asked Questions
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-3 leading-relaxed">
-            Find immediate answers regarding resort check-in, voucher conditions, booking timeframes, and customer support.
-          </p>
-
+    <div>
+      {/* Header */}
+      <PageHero
+        icon={HelpCircle}
+        eyebrow="Help Center"
+        title={
+          <>
+            Frequently Asked <span className="text-ink-muted">Questions</span>
+          </>
+        }
+        subtitle="Find immediate answers regarding resort check-in, voucher conditions, booking timeframes, and customer support."
+      >
+        <div className="mx-auto max-w-2xl">
           {/* Search bar */}
           <div className="relative mt-8">
-            <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="absolute top-1/2 left-5 h-5 w-5 -translate-y-1/2 text-ink-subtle" />
             <input
               type="text"
               placeholder="Search by topic, e.g. vouchers, check-in, refund, Goa..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 bg-white text-sm rounded-full border border-gray-200 shadow-sm focus:outline-none focus:border-[#D4AF37]"
+              className="w-full rounded-full border border-line bg-white py-4 pr-5 pl-13 text-sm text-ink transition-shadow placeholder:text-ink-subtle focus:border-ink/30 focus:ring-4 focus:ring-accent/35 focus:outline-none"
             />
           </div>
 
           {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
+                type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                  selectedCategory === cat
-                    ? 'bg-[#0B1320] text-white shadow'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
+                data-active={selectedCategory === cat}
+                className="chip"
               >
                 {cat === 'ALL' ? 'All Questions' : cat}
               </button>
             ))}
           </div>
         </div>
+      </PageHero>
 
+      <div className="container-narrow section">
         {/* FAQs Accordion */}
-        <div className="space-y-3 mb-16">
+        <div className="mb-16 space-y-3">
           {loading ? (
-            <div className="text-center py-12 text-sm text-gray-500">
-              Loading questions...
-            </div>
+            <div className="py-12 text-center text-sm text-ink-muted">Loading questions...</div>
           ) : filtered.length > 0 ? (
             filtered.map((faq, idx) => {
               const isOpen = openIndex === idx;
+              const panelId = `faq-panel-${faq.id}`;
               return (
-                <div
-                  key={faq.id}
-                  className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm transition-all duration-200"
-                >
+                <div key={faq.id} className="accordion-item" data-open={isOpen}>
                   <button
+                    type="button"
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
-                    className="w-full text-left px-6 py-4.5 flex items-center justify-between gap-4 font-semibold text-sm sm:text-base text-gray-900 hover:text-[#2563EB] transition-colors"
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    className="accordion-trigger"
                   >
                     <span>{faq.question}</span>
-                    <ChevronDown
-                      className={`w-5 h-5 text-gray-400 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-[#2563EB]' : ''
-                      }`}
-                    />
+                    <span className={cn('accordion-icon', isOpen && 'rotate-180 border-accent bg-accent')}>
+                      <ChevronDown />
+                    </span>
                   </button>
 
                   {isOpen && (
-                    <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 animate-in fade-in duration-200">
+                    <div id={panelId} className="accordion-panel">
                       <p>{faq.answer}</p>
-                      <div className="mt-3 text-[10px] font-bold uppercase tracking-wider text-[#D4AF37]">
-                        Category: {faq.category}
-                      </div>
+                      <div className="pill-muted mt-4">Category: {faq.category}</div>
                     </div>
                   )}
                 </div>
               );
             })
           ) : (
-            <div className="bg-white rounded-2xl p-8 text-center text-sm text-gray-500">
+            <div className="rounded-card bg-surface p-8 text-center text-sm text-ink-muted">
               No questions found matching your search. Try another keyword or call our desk.
             </div>
           )}
         </div>
 
         {/* Still Have Questions Banner */}
-        <div className="bg-[#0B1320] text-white rounded-3xl p-8 sm:p-12 text-center flex flex-col items-center">
-          <h2 className="font-serif text-2xl font-bold text-white mb-2">
-            Still Have Questions?
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-300 max-w-md mb-6">
+        <div className="flex flex-col items-center rounded-hero bg-ink px-6 py-12 text-center text-white sm:px-12">
+          <h2 className="heading-section mb-3 text-white">Still Have Questions?</h2>
+          <p className="mb-8 max-w-md text-sm text-white/70">
             Our customer assistance and travel desk team is available Monday to Saturday to clarify any questions.
           </p>
-          <div className="flex flex-wrap gap-4">
-            <a
-              href="tel:18008436114"
-              className="px-6 py-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-full text-xs font-semibold flex items-center gap-2 shadow"
-            >
-              <PhoneCall className="w-4 h-4" />
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="tel:18008436114" className={buttonVariants()}>
+              <PhoneCall />
               <span>Call Toll Free: 1800-843-6114</span>
             </a>
-            <Link
-              href="/reviews-and-complaints"
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white rounded-full text-xs font-semibold flex items-center gap-2 border border-white/20"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+            <Link href="/reviews-and-complaints" className={buttonVariants({ variant: 'ghostLight' })}>
+              <ShieldCheck className="text-accent" />
               <span>Escalation Matrix</span>
             </Link>
           </div>

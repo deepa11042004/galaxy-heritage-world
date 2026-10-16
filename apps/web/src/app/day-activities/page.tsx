@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Palmtree, Clock, MapPin, ArrowRight, Sun, Sparkles } from 'lucide-react';
+import { Clock, MapPin, ArrowRight, Sun } from 'lucide-react';
 import { getActivities } from '@/lib/api';
+import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
   title: 'Day Activities & Family Picnics | Galaxy Heritage World',
@@ -17,70 +18,54 @@ export default async function DayActivitiesPage() {
   const activities = res.data || [];
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-12 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <Sun className="w-3.5 h-3.5" />
-            <span>Weekend Escapes</span>
-          </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
-            Day Outings, Picnics & Water Parks
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-3 leading-relaxed">
-            Recharge with a full day of rural fun, cultural performances, pottery, tractor rides, adventure rope courses, and unlimited authentic food.
-          </p>
-        </div>
+    <div>
+      <PageHero
+        icon={Sun}
+        eyebrow="Weekend Escapes"
+        title={
+          <>
+            Day Outings, <span className="text-ink-muted">Picnics & Water Parks</span>
+          </>
+        }
+        subtitle="Recharge with a full day of rural fun, cultural performances, pottery, tractor rides, adventure rope courses, and unlimited authentic food."
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container-page section">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {activities.map((act: any) => (
-            <Link
-              key={act.id}
-              href={`/day-activities/${act.slug}`}
-              className="luxury-card rounded-2xl overflow-hidden block group shadow-sm hover:shadow-xl transition-all duration-300 bg-white flex flex-col justify-between"
-            >
-              <div className="relative h-60 w-full overflow-hidden">
+            <Link key={act.id} href={`/day-activities/${act.slug}`} className="group flex flex-col">
+              <div className="media-frame aspect-[4/3]">
                 <Image
                   src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
                   alt={act.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
 
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/95 text-[#0B1320]">
-                    {act.category}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <div className="flex items-center gap-1.5 text-xs text-gray-200">
-                    <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>{act.locationLabel}</span>
-                  </div>
+                  <span className="pill">{act.category}</span>
                 </div>
               </div>
 
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <h2 className="font-serif text-xl font-bold text-gray-900 group-hover:text-[#2563EB] transition-colors leading-snug mb-2">
-                    {act.title}
-                  </h2>
-                  <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed mb-4">
-                    {act.description}
-                  </p>
+              <div className="flex flex-1 flex-col pt-4">
+                <div className="flex-1">
+                  <div className="meta mb-1.5">
+                    <MapPin />
+                    <span>{act.locationLabel}</span>
+                  </div>
+                  <h2 className="text-xl font-semibold leading-snug tracking-tight text-ink">{act.title}</h2>
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-muted">{act.description}</p>
                 </div>
 
-                <div className="pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
-                  <div className="flex items-center gap-1.5 text-gray-500">
-                    <Clock className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <div className="mt-5 flex items-center justify-between border-t border-line pt-4 text-xs">
+                  <div className="meta">
+                    <Clock />
                     <span>{act.durationLabel}</span>
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                  <span className="link-arrow">
                     <span>Details & Pass</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight />
                   </span>
                 </div>
               </div>

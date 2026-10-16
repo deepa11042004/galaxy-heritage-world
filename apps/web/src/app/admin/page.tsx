@@ -86,10 +86,10 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-10">
+    <div className="page-offset min-h-screen pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-line">
           <div className="flex items-center gap-4">
             <Link href="/" className="relative w-48 sm:w-56 h-16 shrink-0">
               <Image
@@ -102,15 +102,15 @@ export default function AdminDashboardPage() {
             </Link>
             <div className="h-10 w-px bg-gray-200 hidden sm:block" />
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">
+              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-strong mb-1">
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Administrative Console</span>
               </div>
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900">
+              <h1 className="text-2xl sm:text-3xl font-bold text-ink">
                 Galaxy Heritage World Dashboard
               </h1>
               <p className="text-xs text-gray-500 mt-1">
-                Logged in as: <strong className="text-gray-900">{user?.email || 'admin@galaxyheritageworld.com'}</strong>
+                Logged in as: <strong className="text-ink">{user?.email || 'admin@galaxyheritageworld.com'}</strong>
               </p>
             </div>
           </div>
@@ -119,13 +119,13 @@ export default function AdminDashboardPage() {
             <Link
               href="/"
               target="_blank"
-              className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-50 shadow-sm"
+              className="btn btn-outline btn-sm"
             >
               View Live Website &rarr;
             </Link>
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-[#0B1320] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 hover:bg-gray-800 transition-colors"
+              className="btn btn-dark btn-sm"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -135,53 +135,53 @@ export default function AdminDashboardPage() {
 
         {/* Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm">
+          <div className="p-6 bg-white rounded-card border border-line shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
                 <Users className="w-5 h-5" />
               </div>
               <span className="text-[10px] uppercase font-bold text-gray-400">Total Leads</span>
             </div>
-            <div className="font-serif text-3xl font-bold text-gray-900">
+            <div className="text-3xl font-bold text-ink">
               {stats.enquiriesCount}
             </div>
             <div className="text-xs text-gray-500 mt-1">Enquiries & Contact Leads</div>
           </div>
 
-          <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm">
+          <div className="p-6 bg-white rounded-card border border-line shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                 <Palmtree className="w-5 h-5" />
               </div>
               <span className="text-[10px] uppercase font-bold text-gray-400">Properties</span>
             </div>
-            <div className="font-serif text-3xl font-bold text-gray-900">
+            <div className="text-3xl font-bold text-ink">
               {stats.hotelsCount}
             </div>
             <div className="text-xs text-gray-500 mt-1">Associated 43+ Resorts</div>
           </div>
 
-          <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm">
+          <div className="p-6 bg-white rounded-card border border-line shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
                 <Compass className="w-5 h-5" />
               </div>
               <span className="text-[10px] uppercase font-bold text-gray-400">Destinations</span>
             </div>
-            <div className="font-serif text-3xl font-bold text-gray-900">
+            <div className="text-3xl font-bold text-ink">
               {stats.destinationsCount}
             </div>
             <div className="text-xs text-gray-500 mt-1">Domestic & International</div>
           </div>
 
-          <div className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm">
+          <div className="p-6 bg-white rounded-card border border-line shadow-sm">
             <div className="flex items-center justify-between mb-3">
               <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
                 <Package className="w-5 h-5" />
               </div>
               <span className="text-[10px] uppercase font-bold text-gray-400">Packages</span>
             </div>
-            <div className="font-serif text-3xl font-bold text-gray-900">
+            <div className="text-3xl font-bold text-ink">
               {stats.packagesCount}
             </div>
             <div className="text-xs text-gray-500 mt-1">Published Vacation Tours</div>
@@ -192,70 +192,70 @@ export default function AdminDashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <Link
             href="/admin/enquiries"
-            className="p-6 bg-white rounded-3xl border border-[#D4AF37]/30 shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
+            className="p-6 bg-white rounded-card border border-accent shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
           >
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-1">
+              <div className="text-xs font-bold uppercase tracking-wider text-accent-strong mb-1">
                 Leads Management
               </div>
-              <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#2563EB] transition-colors">
+              <h3 className="text-lg font-bold text-ink group-hover:text-accent-strong transition-colors">
                 Customer Enquiries & Grievances
               </h3>
               <p className="text-xs text-gray-500 mt-1">
                 View submitted leads, update status, add notes
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-accent-strong group-hover:translate-x-1 transition-all" />
           </Link>
 
           <Link
             href="/admin/vouchers"
-            className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
+            className="p-6 bg-white rounded-card border border-line shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
           >
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">
                 Vouchers
               </div>
-              <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#2563EB] transition-colors">
+              <h3 className="text-lg font-bold text-ink group-hover:text-accent-strong transition-colors">
                 Voucher Redemptions
               </h3>
               <p className="text-xs text-gray-500 mt-1">
                 Verify voucher codes, beneficiary check-in dates
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-accent-strong group-hover:translate-x-1 transition-all" />
           </Link>
 
           <a
             href="http://localhost:4000/api/v1/docs"
             target="_blank"
             rel="noreferrer"
-            className="p-6 bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
+            className="p-6 bg-white rounded-card border border-line shadow-sm hover:shadow-md transition-all group flex items-center justify-between"
           >
             <div>
               <div className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">
                 OpenAPI Docs
               </div>
-              <h3 className="font-serif text-lg font-bold text-gray-900 group-hover:text-[#2563EB] transition-colors">
+              <h3 className="text-lg font-bold text-ink group-hover:text-accent-strong transition-colors">
                 Swagger REST API Docs
               </h3>
               <p className="text-xs text-gray-500 mt-1">
                 Inspect endpoints at /api/v1/docs
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-[#2563EB] group-hover:translate-x-1 transition-all" />
+            <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-accent-strong group-hover:translate-x-1 transition-all" />
           </a>
         </div>
 
         {/* Recent Enquiries Table */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-sm">
+        <div className="bg-white rounded-card p-6 sm:p-8 border border-line shadow-sm">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-serif text-xl font-bold text-gray-900">
+            <h2 className="text-xl font-bold text-ink">
               Recent Customer Enquiries
             </h2>
             <Link
               href="/admin/enquiries"
-              className="text-xs font-semibold text-[#2563EB] hover:underline"
+              className="text-xs font-semibold text-accent-strong hover:underline"
             >
               View All Enquiries &rarr;
             </Link>
@@ -265,7 +265,7 @@ export default function AdminDashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-gray-100 text-gray-400 uppercase tracking-wider text-[10px]">
+                  <tr className="border-b border-line text-gray-400 uppercase tracking-wider text-[10px]">
                     <th className="pb-3">Reference</th>
                     <th className="pb-3">Customer Name</th>
                     <th className="pb-3">Contact</th>
@@ -274,13 +274,13 @@ export default function AdminDashboardPage() {
                     <th className="pb-3">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-line">
                   {recentEnquiries.map((enq) => (
-                    <tr key={enq.id} className="hover:bg-[#FAF7F2] transition-colors">
-                      <td className="py-3 font-mono font-bold text-[#0B1320]">
+                    <tr key={enq.id} className="hover:bg-surface transition-colors">
+                      <td className="py-3 font-mono font-bold text-ink">
                         {enq.referenceNumber}
                       </td>
-                      <td className="py-3 font-semibold text-gray-900">
+                      <td className="py-3 font-semibold text-ink">
                         {enq.name}
                       </td>
                       <td className="py-3 text-gray-600">

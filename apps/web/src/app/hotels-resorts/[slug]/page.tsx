@@ -1,18 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  Star,
-  MapPin,
-  Check,
-  Palmtree,
-  ArrowRight,
-  PhoneCall,
-  ShieldCheck,
-  Sparkles,
-} from 'lucide-react';
+import { Star, MapPin, Check, ArrowRight, PhoneCall, ShieldCheck, Sparkles } from 'lucide-react';
 import { getHotelBySlug } from '@/lib/api';
+import { PageHero } from '@/components/ui/PageHero';
+import { buttonVariants } from '@/components/ui/button';
 
 export const revalidate = 60;
 
@@ -45,69 +37,56 @@ export default async function HotelDetailPage({
   const hotel = res.data;
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen">
+    <div>
       {/* Hero Header */}
-      <div className="relative h-[55vh] min-h-[400px] w-full bg-[#0B1320] flex items-end">
-        <Image
-          src={hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png'}
-          alt={hotel.name}
-          fill
-          priority
-          className="object-cover opacity-50"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-black/30 to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-[#D4AF37] uppercase tracking-wider mb-2">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" />
+      <PageHero
+        image={{
+          src: hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png',
+          alt: hotel.name,
+        }}
+        meta={
+          <>
+            <span className="pill-glass">
+              <MapPin className="h-3.5 w-3.5" />
               {hotel.locationName}{hotel.state ? `, ${hotel.state}` : ''}
             </span>
-            <span>&bull;</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white font-bold">
+            <span className="text-white/60">&bull;</span>
+            <span className="pill-glass">
               {hotel.category === 'ASSOCIATED' ? 'Associated Partner Resort' : 'Luxury Internal'}
             </span>
-            <span>&bull;</span>
-            <span className="flex items-center gap-1 text-amber-400">
-              <Star className="w-3.5 h-3.5 fill-amber-400" />
+            <span className="text-white/60">&bull;</span>
+            <span className="pill-glass">
+              <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
               {hotel.ratingStars}.0 Star Rated
             </span>
-          </div>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-2">
-            {hotel.name}
-          </h1>
-        </div>
-      </div>
+          </>
+        }
+        title={hotel.name}
+      />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="container-page section">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Left Column: Description & Amenities */}
-          <div className="lg:col-span-8 space-y-10">
-            <div className="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm space-y-4">
-              <h2 className="font-serif text-2xl font-bold text-gray-900">
-                Property Overview
-              </h2>
-              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+          <div className="space-y-6 lg:col-span-8">
+            <div className="card space-y-4 p-6 sm:p-8">
+              <h2 className="text-2xl font-medium text-ink sm:text-3xl">Property Overview</h2>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-muted sm:text-base">
                 {hotel.description}
               </p>
             </div>
 
             {/* Amenities */}
             {Array.isArray(hotel.amenities) && hotel.amenities.length > 0 && (
-              <div className="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm">
-                <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">
-                  Verified Resort Amenities & Facilities
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="card p-6 sm:p-8">
+                <h3 className="mb-5 text-xl font-semibold text-ink">Verified Resort Amenities & Facilities</h3>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                   {hotel.amenities.map((amenity: string, idx: number) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-[#FAF7F2] border border-gray-100 flex items-center gap-3 text-xs sm:text-sm font-medium text-gray-800"
+                      className="flex items-center gap-3 rounded-xl bg-surface p-3.5 text-sm font-medium text-ink"
                     >
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <Check className="h-4 w-4 shrink-0 text-accent-strong" />
                       <span>{amenity}</span>
                     </div>
                   ))}
@@ -117,43 +96,38 @@ export default async function HotelDetailPage({
           </div>
 
           {/* Right Column: Reservation & Concierge Widget */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#D4AF37]/30 shadow-md sticky top-24">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-2">
-                <Sparkles className="w-3.5 h-3.5" />
+          <div className="space-y-6 lg:col-span-4">
+            <div className="card sticky top-[calc(var(--header-h)+1rem)] p-6 shadow-[0_24px_60px_-36px_rgba(14,14,14,0.3)] sm:p-7">
+              <div className="eyebrow mb-4">
+                <Sparkles />
                 <span>Member Privileges</span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-2">
-                Reserve Stay at {hotel.name}
-              </h3>
-              <p className="text-xs text-gray-600 mb-6 leading-relaxed">
+              <h3 className="mb-2 text-xl font-semibold text-ink">Reserve Stay at {hotel.name}</h3>
+              <p className="mb-6 text-sm leading-relaxed text-ink-muted">
                 Connect directly with our travel desk to check available check-in dates, redeem your holiday vouchers, or secure group booking rates.
               </p>
 
-              <div className="space-y-3 mb-6">
+              <div className="mb-6 space-y-3">
                 <Link
                   href={`/contact?hotel=${encodeURIComponent(hotel.name)}`}
-                  className="w-full py-3.5 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow"
+                  className={buttonVariants({ block: true, size: 'lg' })}
                 >
                   <span>Book Reservation Enquiry</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight />
                 </Link>
-                <a
-                  href="tel:18008436114"
-                  className="w-full py-3 px-4 bg-[#0B1320] hover:bg-[#1a2538] text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow"
-                >
-                  <PhoneCall className="w-4 h-4 text-[#D4AF37]" />
+                <a href="tel:18008436114" className={buttonVariants({ variant: 'dark', block: true })}>
+                  <PhoneCall className="text-accent" />
                   <span>Call Toll-Free: 1800-843-6114</span>
                 </a>
               </div>
 
-              <div className="p-4 bg-[#FAF7F2] rounded-xl text-xs text-gray-600 space-y-1.5 border border-gray-100">
+              <div className="inset-box space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <ShieldCheck className="h-4 w-4 shrink-0 text-accent-strong" />
                   <span>Quality-audited guest rooms</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <Check className="h-4 w-4 shrink-0 text-accent-strong" />
                   <span>Toll-free coordinator assistance</span>
                 </div>
               </div>

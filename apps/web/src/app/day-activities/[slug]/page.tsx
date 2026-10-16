@@ -1,18 +1,10 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  Clock,
-  MapPin,
-  Check,
-  PhoneCall,
-  Sparkles,
-  ArrowRight,
-  Sun,
-  ShieldCheck,
-} from 'lucide-react';
+import { Clock, MapPin, Check, PhoneCall, Sparkles, ArrowRight, Sun } from 'lucide-react';
 import { getActivityBySlug } from '@/lib/api';
+import { PageHero } from '@/components/ui/PageHero';
+import { buttonVariants } from '@/components/ui/button';
 
 export const revalidate = 60;
 
@@ -45,66 +37,51 @@ export default async function ActivityDetailPage({
   const act = res.data;
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen">
+    <div>
       {/* Hero Header */}
-      <div className="relative h-[55vh] min-h-[400px] w-full bg-[#0B1320] flex items-end">
-        <Image
-          src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
-          alt={act.title}
-          fill
-          priority
-          className="object-cover opacity-50"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1320] via-black/30 to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
-          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-[#D4AF37] uppercase tracking-wider mb-2">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-3.5 h-3.5" />
+      <PageHero
+        image={{
+          src: act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp',
+          alt: act.title,
+        }}
+        meta={
+          <>
+            <span className="pill-glass">
+              <MapPin className="h-3.5 w-3.5" />
               {act.locationLabel}
             </span>
-            <span>&bull;</span>
-            <span className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />
+            <span className="text-white/60">&bull;</span>
+            <span className="pill-glass">
+              <Clock className="h-3.5 w-3.5" />
               {act.durationLabel}
             </span>
-            <span>&bull;</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white font-bold">
-              {act.category}
-            </span>
-          </div>
-
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white mb-2">
-            {act.title}
-          </h1>
-        </div>
-      </div>
+            <span className="text-white/60">&bull;</span>
+            <span className="pill-glass">{act.category}</span>
+          </>
+        }
+        title={act.title}
+      />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="container-page section">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Left Column */}
-          <div className="lg:col-span-8 space-y-10">
-            <div className="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm space-y-4">
-              <h2 className="font-serif text-2xl font-bold text-gray-900">
-                About The Experience
-              </h2>
-              <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+          <div className="space-y-6 lg:col-span-8">
+            <div className="card space-y-4 p-6 sm:p-8">
+              <h2 className="text-2xl font-medium text-ink sm:text-3xl">About The Experience</h2>
+              <p className="whitespace-pre-line text-sm leading-relaxed text-ink-muted sm:text-base">
                 {act.description}
               </p>
             </div>
 
             {/* Highlights */}
             {Array.isArray(act.highlights) && act.highlights.length > 0 && (
-              <div className="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm">
-                <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">
-                  Activities & Attractions Included
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-gray-700">
+              <div className="card p-6 sm:p-8">
+                <h3 className="mb-5 text-xl font-semibold text-ink">Activities & Attractions Included</h3>
+                <div className="grid grid-cols-1 gap-3 text-sm text-ink-muted sm:grid-cols-2">
                   {act.highlights.map((hl: string, idx: number) => (
                     <div key={idx} className="flex items-start gap-2.5">
-                      <Sparkles className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                      <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-accent-strong" />
                       <span>{hl}</span>
                     </div>
                   ))}
@@ -114,14 +91,12 @@ export default async function ActivityDetailPage({
 
             {/* Inclusions */}
             {Array.isArray(act.inclusions) && act.inclusions.length > 0 && (
-              <div className="bg-white p-8 rounded-3xl border border-gray-200/80 shadow-sm">
-                <h3 className="font-serif text-xl font-bold text-gray-900 mb-6">
-                  Meal & Entry Inclusions
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-gray-700">
+              <div className="card p-6 sm:p-8">
+                <h3 className="mb-5 text-xl font-semibold text-ink">Meal & Entry Inclusions</h3>
+                <div className="grid grid-cols-1 gap-3 text-sm text-ink-muted sm:grid-cols-2">
                   {act.inclusions.map((inc: string, idx: number) => (
                     <div key={idx} className="flex items-start gap-2.5">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-strong" />
                       <span>{inc}</span>
                     </div>
                   ))}
@@ -131,43 +106,38 @@ export default async function ActivityDetailPage({
           </div>
 
           {/* Right Column: Pass Booking */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#D4AF37]/30 shadow-md sticky top-24">
-              <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D4AF37] mb-2">
-                <Sun className="w-3.5 h-3.5" />
+          <div className="space-y-6 lg:col-span-4">
+            <div className="card sticky top-[calc(var(--header-h)+1rem)] p-6 shadow-[0_24px_60px_-36px_rgba(14,14,14,0.3)] sm:p-7">
+              <div className="eyebrow mb-4">
+                <Sun />
                 <span>Day Pass & Outing</span>
               </div>
-              <h3 className="font-serif text-xl font-bold text-gray-900 mb-2">
-                Book Entry Pass for {act.title}
-              </h3>
-              <p className="text-xs text-gray-600 mb-6 leading-relaxed">
+              <h3 className="mb-2 text-xl font-semibold text-ink">Book Entry Pass for {act.title}</h3>
+              <p className="mb-6 text-sm leading-relaxed text-ink-muted">
                 Enjoy special member privileges, family package discounts, and guaranteed pass confirmation.
               </p>
 
-              <div className="space-y-3 mb-6">
+              <div className="mb-6 space-y-3">
                 <Link
                   href={`/contact?activity=${encodeURIComponent(act.title)}`}
-                  className="w-full py-3.5 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow"
+                  className={buttonVariants({ block: true, size: 'lg' })}
                 >
                   <span>Book Outing Passes</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight />
                 </Link>
-                <a
-                  href="tel:18008436114"
-                  className="w-full py-3 px-4 bg-[#0B1320] hover:bg-[#1a2538] text-white rounded-xl text-xs font-semibold flex items-center justify-center gap-2 transition-colors shadow"
-                >
-                  <PhoneCall className="w-4 h-4 text-[#D4AF37]" />
+                <a href="tel:18008436114" className={buttonVariants({ variant: 'dark', block: true })}>
+                  <PhoneCall className="text-accent" />
                   <span>Call Toll-Free: 1800-843-6114</span>
                 </a>
               </div>
 
-              <div className="p-4 bg-[#FAF7F2] rounded-xl text-xs text-gray-600 space-y-1.5 border border-gray-100">
+              <div className="inset-box space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <Check className="h-4 w-4 shrink-0 text-accent-strong" />
                   <span>Breakfast, Lunch & High Tea included</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <Check className="h-4 w-4 shrink-0 text-accent-strong" />
                   <span>Full access to adventure zones</span>
                 </div>
               </div>

@@ -1,21 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
-import {
-  ShieldCheck,
-  PhoneCall,
-  Mail,
-  Clock,
-  MapPin,
-  CheckCircle2,
-  AlertCircle,
-  Send,
-  Building,
-  HelpCircle,
-  ChevronDown,
-} from 'lucide-react';
+import { ShieldCheck, Clock, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 import { submitEnquiry } from '@/lib/api';
+import { cn } from '@/lib/utils';
+import { PageHero } from '@/components/ui/PageHero';
+import { buttonVariants } from '@/components/ui/button';
 
 const escalationLevels = [
   {
@@ -29,7 +19,7 @@ const escalationLevels = [
       { label: 'Working Hours', value: 'Mon - Sat: 10:00 AM - 6:30 PM' },
     ],
     tat: '24 to 48 Hours',
-    badgeColor: 'bg-blue-100 text-blue-800',
+    badgeColor: 'border border-line bg-surface text-ink',
   },
   {
     level: 'Level 2',
@@ -42,7 +32,7 @@ const escalationLevels = [
       { label: 'Escalation Mode', value: 'Written Ticket Reference' },
     ],
     tat: '3 to 5 Business Days',
-    badgeColor: 'bg-amber-100 text-amber-800',
+    badgeColor: 'bg-accent text-ink',
   },
   {
     level: 'Level 3',
@@ -58,7 +48,7 @@ const escalationLevels = [
       { label: 'Corporate CIN', value: 'U74999DL2022PTC407515' },
     ],
     tat: '7 Business Days (Final Resolution)',
-    badgeColor: 'bg-purple-100 text-purple-800',
+    badgeColor: 'bg-ink text-white',
   },
 ];
 
@@ -128,54 +118,45 @@ export default function ReviewsAndComplaintsPage() {
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-12 sm:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Transparency & Accountability</span>
-          </div>
-          <h1 className="font-serif text-3xl sm:text-5xl font-bold text-gray-900 leading-tight">
-            Customer Grievance & Escalation Matrix
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-3 leading-relaxed">
-            At Galaxy Heritage World, we believe in 100% transparency. Our structured 3-tier grievance redressal system ensures your feedback and service concerns are resolved with documented turnaround times.
-          </p>
-        </div>
+    <div>
+      {/* Header */}
+      <PageHero
+        icon={ShieldCheck}
+        eyebrow="Transparency & Accountability"
+        title={
+          <>
+            Customer Grievance & <span className="text-ink-muted">Escalation Matrix</span>
+          </>
+        }
+        subtitle="At Galaxy Heritage World, we believe in 100% transparency. Our structured 3-tier grievance redressal system ensures your feedback and service concerns are resolved with documented turnaround times."
+      />
 
+      <div className="container-page section">
         {/* 3-Tier Escalation Matrix */}
-        <div id="escalation" className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div id="escalation" className="mb-12 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mb-16 lg:gap-5">
           {escalationLevels.map((lvl, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm flex flex-col justify-between"
-            >
+            <div key={idx} className="card card-hover flex flex-col justify-between p-7 sm:p-8">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${lvl.badgeColor}`}>
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
+                  <span className={cn('rounded-full px-3 py-1 text-xs font-semibold', lvl.badgeColor)}>
                     {lvl.level}
                   </span>
-                  <div className="flex items-center gap-1 text-[11px] font-semibold text-gray-500">
-                    <Clock className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <div className="flex items-center gap-1 text-[11px] font-semibold text-ink-muted">
+                    <Clock className="h-3.5 w-3.5 text-accent-strong" />
                     <span>TAT: {lvl.tat}</span>
                   </div>
                 </div>
 
-                <h2 className="font-serif text-xl font-bold text-gray-900 mb-2 leading-snug">
-                  {lvl.title}
-                </h2>
-                <p className="text-xs text-gray-600 leading-relaxed mb-6">
-                  {lvl.description}
-                </p>
+                <h2 className="mb-2 text-xl font-semibold leading-snug text-ink">{lvl.title}</h2>
+                <p className="mb-6 text-sm leading-relaxed text-ink-muted">{lvl.description}</p>
 
-                <div className="space-y-3 pt-4 border-t border-gray-100 text-xs">
+                <div className="space-y-3 rounded-2xl bg-surface p-4 text-xs">
                   {lvl.contacts.map((c, i) => (
                     <div key={i}>
-                      <span className="text-gray-400 block text-[10px] uppercase font-bold">
+                      <span className="block text-[10px] font-semibold uppercase tracking-wider text-ink-subtle">
                         {c.label}
                       </span>
-                      <strong className="text-gray-900 break-words">{c.value}</strong>
+                      <strong className="break-words font-semibold text-ink">{c.value}</strong>
                     </div>
                   ))}
                 </div>
@@ -185,168 +166,142 @@ export default function ReviewsAndComplaintsPage() {
         </div>
 
         {/* Grievance Submission Form */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-gray-200 shadow-md mb-16">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                Register a Grievance or Support Ticket
-              </h2>
-              <p className="text-xs sm:text-sm text-gray-600">
-                Submit your query directly to our central compliance desk. Every submission receives an official reference code.
-              </p>
-            </div>
-
-            {successRef ? (
-              <div className="text-center py-12 space-y-4">
-                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <h3 className="font-serif text-2xl font-bold text-gray-900">
-                  Grievance Ticket Registered
-                </h3>
-                <p className="text-sm text-gray-600">
-                  Your official grievance ticket code is:
+        <div className="mb-12 rounded-hero bg-surface p-3 sm:p-4 lg:mb-16">
+          <div className="card p-6 sm:p-12">
+            <div className="mx-auto max-w-2xl">
+              <div className="mb-10 text-center">
+                <h2 className="heading-section mb-3">Register a Grievance or Support Ticket</h2>
+                <p className="text-sm text-ink-muted">
+                  Submit your query directly to our central compliance desk. Every submission receives an official reference code.
                 </p>
-                <div className="inline-block px-5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl font-mono font-bold text-base text-[#0B1320]">
-                  {successRef}
-                </div>
-                <p className="text-xs text-gray-500 max-w-sm mx-auto">
-                  Our Level 1 Support Desk will review and initiate resolution within 24 to 48 hours.
-                </p>
-                <button
-                  onClick={() => setSuccessRef(null)}
-                  className="mt-4 px-6 py-2.5 bg-[#0B1320] text-white rounded-full text-xs font-semibold"
-                >
-                  Submit Another Note
-                </button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+              {successRef ? (
+                <div className="space-y-4 py-12 text-center">
+                  <div className="success-badge">
+                    <CheckCircle2 className="h-8 w-8" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-ink">Grievance Ticket Registered</h3>
+                  <p className="text-sm text-ink-muted">Your official grievance ticket code is:</p>
+                  <div className="ref-box">{successRef}</div>
+                  <p className="mx-auto max-w-sm text-xs text-ink-subtle">
+                    Our Level 1 Support Desk will review and initiate resolution within 24 to 48 hours.
+                  </p>
+                  <button
+                    onClick={() => setSuccessRef(null)}
+                    className={cn(buttonVariants({ variant: 'dark', size: 'sm' }), 'mt-4')}
+                  >
+                    Submit Another Note
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="label">Full Name *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Suresh Kumar"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="input"
+                      />
+                    </div>
+                    <div>
+                      <label className="label">Email Address *</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. suresh@example.com"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="input"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div>
+                      <label className="label">Phone Number *</label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="e.g. +91 98765 43210"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="input"
+                      />
+                    </div>
+                    <div>
+                      <label className="label">City of Residence *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Delhi, Noida"
+                        value={formData.city}
+                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                        className="input"
+                      />
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      Full Name *
-                    </label>
+                    <label className="label">Booking ID / Voucher Code (Optional)</label>
                     <input
                       type="text"
-                      required
-                      placeholder="e.g. Suresh Kumar"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
+                      placeholder="e.g. GHW-ENQ-12345 or Voucher Code"
+                      value={formData.bookingRef}
+                      onChange={(e) => setFormData({ ...formData, bookingRef: e.target.value })}
+                      className="input"
                     />
                   </div>
+
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
+                    <label className="label">Nature of Concern / Detailed Message *</label>
+                    <textarea
+                      rows={4}
                       required
-                      placeholder="e.g. suresh@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
+                      placeholder="Describe your issue or feedback in detail..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="input"
                     />
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="e.g. +91 98765 43210"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      City of Residence *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Delhi, Noida"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
+                  {error && (
+                    <div className="alert-error">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      <span>{error}</span>
+                    </div>
+                  )}
 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Booking ID / Voucher Code (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. GHW-ENQ-12345 or Voucher Code"
-                    value={formData.bookingRef}
-                    onChange={(e) => setFormData({ ...formData, bookingRef: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">
-                    Nature of Concern / Detailed Message *
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    placeholder="Describe your issue or feedback in detail..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
-                  />
-                </div>
-
-                {error && (
-                  <div className="flex items-center gap-2 p-3 bg-rose-50 text-rose-700 rounded-xl text-xs">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{error}</span>
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full py-3.5 bg-[#0B1320] hover:bg-gray-800 text-white rounded-xl text-xs sm:text-sm font-semibold uppercase tracking-wider shadow transition-all flex items-center justify-center gap-2"
-                >
-                  <span>{submitting ? 'Registering Ticket...' : 'Register Formal Grievance'}</span>
-                  <Send className="w-4 h-4 text-[#D4AF37]" />
-                </button>
-              </form>
-            )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className={buttonVariants({ variant: 'dark', size: 'lg', block: true })}
+                  >
+                    <span>{submitting ? 'Registering Ticket...' : 'Register Formal Grievance'}</span>
+                    <Send className="text-accent" />
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Complaints Board FAQs */}
-        <div id="faqs" className="max-w-3xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="font-serif text-2xl font-bold text-gray-900">
-              Customer Complaint Resolution FAQs
-            </h2>
-            <p className="text-xs text-gray-600 mt-1">
-              Common questions addressed by our Grievance Redressal Board.
-            </p>
+        <div id="faqs" className="mx-auto max-w-3xl">
+          <div className="mb-10 text-center">
+            <h2 className="heading-section">Customer Complaint Resolution FAQs</h2>
+            <p className="mt-3 text-sm text-ink-muted">Common questions addressed by our Grievance Redressal Board.</p>
           </div>
 
           <div className="space-y-3">
             {grievanceFaqs.map((faq, i) => (
-              <div key={i} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                <h3 className="font-serif text-base font-bold text-gray-900 mb-2">
-                  {faq.q}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                  {faq.a}
-                </p>
+              <div key={i} className="rounded-2xl border border-line bg-white p-6">
+                <h3 className="mb-2 text-base font-semibold text-ink">{faq.q}</h3>
+                <p className="text-sm leading-relaxed text-ink-muted">{faq.a}</p>
               </div>
             ))}
           </div>

@@ -77,19 +77,19 @@ export default function AdminEnquiriesPage() {
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen py-10">
+    <div className="page-offset min-h-screen pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-3">
             <Link
               href="/admin"
-              className="p-2 bg-white rounded-xl border border-gray-200 text-gray-600 hover:text-gray-900"
+              className="p-2 bg-white rounded-xl border border-line text-gray-600 hover:text-ink"
             >
               <ArrowLeft className="w-4 h-4" />
             </Link>
             <div>
-              <h1 className="font-serif text-2xl font-bold text-gray-900">
+              <h1 className="text-2xl font-bold text-ink">
                 Customer Enquiries & Leads Management
               </h1>
               <p className="text-xs text-gray-500">
@@ -100,7 +100,7 @@ export default function AdminEnquiriesPage() {
 
           <button
             onClick={fetchEnquiries}
-            className="px-4 py-2 bg-white rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 flex items-center gap-2 hover:bg-gray-50 shadow-sm"
+            className="px-4 py-2 bg-white rounded-xl border border-line text-xs font-semibold text-gray-700 flex items-center gap-2 hover:bg-gray-50 shadow-sm"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Refresh</span>
@@ -108,7 +108,7 @@ export default function AdminEnquiriesPage() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row items-center gap-3 mb-6">
+        <div className="bg-white p-4 rounded-2xl border border-line shadow-sm flex flex-col sm:flex-row items-center gap-3 mb-6">
           <div className="relative flex-1 w-full">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -117,14 +117,14 @@ export default function AdminEnquiriesPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && fetchEnquiries()}
-              className="w-full pl-9 pr-4 py-2 text-xs border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
+              className="w-full pl-9 pr-4 py-2 text-xs border border-line rounded-xl focus:outline-none focus:border-ink/30 focus:ring-4 focus:ring-accent/35"
             />
           </div>
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 text-xs border border-gray-200 rounded-xl bg-white focus:outline-none text-gray-700"
+            className="px-3 py-2 text-xs border border-line rounded-xl bg-white focus:outline-none text-gray-700"
           >
             <option value="">All Statuses</option>
             <option value="NEW">NEW</option>
@@ -136,10 +136,10 @@ export default function AdminEnquiriesPage() {
         </div>
 
         {/* Enquiries Table */}
-        <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-card border border-line shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF7F2] border-b border-gray-200 text-gray-500 uppercase tracking-wider text-[10px]">
+              <thead className="bg-surface border-b border-line text-gray-500 uppercase tracking-wider text-[10px]">
                 <tr>
                   <th className="py-3.5 px-4">Reference</th>
                   <th className="py-3.5 px-4">Customer</th>
@@ -150,15 +150,15 @@ export default function AdminEnquiriesPage() {
                   <th className="py-3.5 px-4 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-line">
                 {enquiries.length > 0 ? (
                   enquiries.map((enq) => (
                     <tr key={enq.id} className="hover:bg-gray-50/70 transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#0B1320]">
+                      <td className="py-3.5 px-4 font-mono font-bold text-ink">
                         {enq.referenceNumber}
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-semibold text-gray-900">{enq.name}</div>
+                        <div className="font-semibold text-ink">{enq.name}</div>
                         <div className="text-[11px] text-gray-500 flex items-center gap-1 mt-0.5">
                           <Phone className="w-3 h-3" />
                           <span>{enq.phone}</span>
@@ -166,7 +166,7 @@ export default function AdminEnquiriesPage() {
                         <div className="text-[11px] text-gray-400">{enq.email}</div>
                       </td>
                       <td className="py-3.5 px-4">
-                        <div className="font-medium text-gray-900">
+                        <div className="font-medium text-ink">
                           {enq.destinationInterest || enq.packageInterest || 'General'}
                         </div>
                         {enq.message && (
@@ -203,7 +203,7 @@ export default function AdminEnquiriesPage() {
                             setNewStatus(enq.status);
                             setNotes(enq.notes || '');
                           }}
-                          className="px-3 py-1.5 bg-gray-100 hover:bg-[#0B1320] hover:text-white rounded-lg text-xs font-semibold transition-colors"
+                          className="px-3 py-1.5 bg-gray-100 hover:bg-ink hover:text-white rounded-lg text-xs font-semibold transition-colors"
                         >
                           Manage
                         </button>
@@ -225,9 +225,9 @@ export default function AdminEnquiriesPage() {
         {/* Modal for Managing Status */}
         {selectedEnquiry && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-gray-100 space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-                <h3 className="font-serif text-lg font-bold text-gray-900">
+            <div className="bg-white rounded-card p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-line space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-line">
+                <h3 className="text-lg font-bold text-ink">
                   Update Lead [ {selectedEnquiry.referenceNumber} ]
                 </h3>
                 <button
@@ -247,7 +247,7 @@ export default function AdminEnquiriesPage() {
                   <strong className="text-gray-700">City:</strong> {selectedEnquiry.city}
                 </div>
                 {selectedEnquiry.message && (
-                  <div className="p-3 bg-[#FAF7F2] rounded-xl text-gray-700 my-2">
+                  <div className="p-3 bg-surface rounded-xl text-gray-700 my-2">
                     &ldquo;{selectedEnquiry.message}&rdquo;
                   </div>
                 )}
@@ -260,7 +260,7 @@ export default function AdminEnquiriesPage() {
                 <select
                   value={newStatus}
                   onChange={(e) => setNewStatus(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-gray-200 rounded-xl"
+                  className="w-full px-3 py-2 text-xs border border-line rounded-xl"
                 >
                   <option value="NEW">NEW</option>
                   <option value="CONTACTED">CONTACTED</option>
@@ -279,7 +279,7 @@ export default function AdminEnquiriesPage() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Record consultant call notes, customer preferences..."
-                  className="w-full px-3 py-2 text-xs border border-gray-200 rounded-xl"
+                  className="w-full px-3 py-2 text-xs border border-line rounded-xl"
                 />
               </div>
 
@@ -287,7 +287,7 @@ export default function AdminEnquiriesPage() {
                 <button
                   onClick={() => handleUpdateStatus(selectedEnquiry.id)}
                   disabled={updating}
-                  className="flex-1 py-2.5 bg-[#0B1320] text-white text-xs font-semibold rounded-xl hover:bg-gray-800 transition-colors"
+                  className="btn btn-dark btn-sm flex-1"
                 >
                   {updating ? 'Saving...' : 'Save Changes'}
                 </button>

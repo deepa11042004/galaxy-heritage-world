@@ -1,60 +1,319 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Marcellus&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-serif: 'Marcellus', 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+/* ------------------------------------------------------------------ */
+/* Design tokens — exposed as Tailwind utilities (bg-accent, text-ink…) */
+/* ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-    --color-gold: #D4AF37;
-    --color-gold-hover: #BF9B27;
-    --color-gold-light: #FBF6E9;
-    --color-navy: #0B1320;
-    --color-cream: #FAF7F2;
+  --color-ink: #0e0e0e;
+  --color-ink-muted: #6b6b6b;
+  --color-ink-subtle: #9a9a9a;
+  --color-canvas: #ffffff;
+  --color-surface: #f7f7f7;
+  --color-line: #ebebeb;
+  --color-accent: #fcba02;
+  --color-accent-hover: #e6a800;
+  --color-accent-strong: #8a5a00;
+  --color-accent-soft: #fff6d6;
+
+  --radius-card: 1.25rem;
+  --radius-hero: 1.75rem;
+
+  --animate-fade-in: fade-in 0.25s ease-out both;
+  --animate-slide-up: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
-  body {
-    font-family: var(--font-sans);
-    background-color: #FAF7F2;
-    color: #1A1A1A;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Fixed header geometry (utility bar + floating nav row) */
+:root {
+  --utility-h: 2.25rem;
+  --nav-h: 5.5rem;
+  --header-h: calc(var(--utility-h) + var(--nav-h));
+}
+
+@layer base {
+  html {
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3, .font-serif {
-    font-family: var(--font-serif);
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  /* Keep in-page anchors (#enquiry, #escalation, #faqs…) clear of the fixed header */
+  [id] {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-accent-strong);
+    outline-offset: 2px;
   }
 }
 
-/* Custom luxury animation keyframes */
+/* ------------------------------------------------------------------ */
+/* Reusable component classes                                          */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Layout */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .container-narrow {
+    @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8;
+  }
+  .section {
+    @apply py-14 md:py-20;
+  }
+  /* Wrapper for rounded hero frames: inset from the edges, starts under the utility bar */
+  .hero-frame-wrap {
+    @apply px-2 sm:px-3;
+    padding-top: calc(var(--utility-h) + 0.75rem);
+  }
+  /* Pages without a hero frame (login, admin) */
+  .page-offset {
+    padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  /* Typography */
+  .heading-hero {
+    font-size: clamp(2.25rem, 1.3rem + 3.8vw, 4.5rem);
+    line-height: 1.05;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+  .heading-page {
+    font-size: clamp(2rem, 1.35rem + 2.6vw, 3.75rem);
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  .heading-section {
+    font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+    line-height: 1.12;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+  .heading-card {
+    @apply text-lg leading-snug font-semibold tracking-tight;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium text-ink;
+    & svg {
+      @apply size-3.5 text-accent-strong;
+    }
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold whitespace-nowrap transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60;
+    & svg {
+      @apply size-4 shrink-0 transition-transform duration-200;
+    }
+    &:hover svg:last-child {
+      transform: translateX(2px);
+    }
+  }
+  .btn-primary {
+    @apply bg-accent text-ink hover:bg-accent-hover;
+  }
+  .btn-dark {
+    @apply bg-ink text-white hover:bg-ink/85;
+  }
+  .btn-outline {
+    @apply border border-line bg-white text-ink hover:border-ink/25 hover:bg-surface;
+  }
+  .btn-ghost-light {
+    @apply border border-white/25 bg-white/10 text-white hover:bg-white/20;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+    & svg {
+      @apply size-3.5;
+    }
+  }
+  .btn-lg {
+    @apply px-7 py-3.5;
+  }
+  .btn-block {
+    @apply w-full;
+  }
+  .icon-btn {
+    @apply inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-line bg-white text-ink transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-white;
+    & svg {
+      @apply size-4;
+    }
+  }
+
+  /* Surfaces */
+  .card {
+    @apply rounded-card border border-line bg-white;
+  }
+  .card-hover {
+    @apply transition-[border-color,box-shadow,transform] duration-300 hover:border-ink/15 hover:shadow-[0_24px_48px_-28px_rgba(14,14,14,0.28)];
+  }
+  .media-frame {
+    @apply relative overflow-hidden rounded-2xl bg-surface;
+  }
+  .inset-box {
+    @apply rounded-xl bg-surface p-4 text-xs leading-relaxed text-ink-muted;
+  }
+
+  /* Chips */
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full bg-white px-2.5 py-1 text-[11px] font-semibold text-ink;
+  }
+  .pill-muted {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface px-2.5 py-0.5 text-[11px] font-medium text-ink-muted;
+  }
+  .pill-accent {
+    @apply inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-1 text-[11px] font-semibold text-ink;
+  }
+  .pill-dark {
+    @apply inline-flex items-center gap-1 rounded-full bg-ink px-2.5 py-1 text-[11px] font-semibold text-white;
+  }
+  .pill-glass {
+    @apply inline-flex items-center gap-1 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-md;
+  }
+
+  /* Filter / segmented control */
+  .segmented {
+    @apply inline-flex flex-wrap items-center justify-center gap-1 rounded-full border border-line bg-white p-1;
+  }
+  .segmented-item {
+    @apply rounded-full px-4 py-2 text-xs font-semibold text-ink-muted transition-colors duration-200 hover:text-ink;
+    &[data-active='true'] {
+      @apply bg-accent text-ink;
+    }
+  }
+
+  /* Standalone filter chips (for lists that wrap onto several lines) */
+  .chip {
+    @apply rounded-full border border-line bg-white px-4 py-2 text-xs font-semibold text-ink-muted transition-colors duration-200 hover:border-ink/25 hover:text-ink;
+    &[data-active='true'] {
+      @apply border-accent bg-accent text-ink;
+    }
+  }
+
+  /* Meta rows (location, duration…) */
+  .meta {
+    @apply flex items-center gap-1.5 text-xs text-ink-muted;
+    & svg {
+      @apply size-3.5 shrink-0 text-ink-subtle;
+    }
+  }
+  .link-arrow {
+    @apply inline-flex items-center gap-1 text-xs font-semibold text-ink transition-colors duration-200 hover:text-accent-strong;
+    & svg {
+      @apply size-3.5 transition-transform duration-200;
+    }
+    &:hover svg,
+    .group:hover & svg {
+      transform: translateX(3px);
+    }
+  }
+
+  /* Forms */
+  .label {
+    @apply mb-1.5 block text-xs font-semibold text-ink;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-ink-subtle focus:border-ink/30 focus:bg-white focus:ring-4 focus:ring-accent/35 focus:outline-none;
+  }
+  .alert-error {
+    @apply flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 p-3 text-xs text-rose-700;
+  }
+  .success-badge {
+    @apply mx-auto flex size-16 items-center justify-center rounded-full bg-accent text-ink;
+  }
+  .ref-box {
+    @apply inline-block rounded-xl border border-line bg-surface px-5 py-2.5 font-mono text-base font-bold text-ink;
+  }
+
+  /* Accordions (FAQ) */
+  .accordion-item {
+    @apply overflow-hidden rounded-2xl border border-line bg-white transition-colors duration-200;
+    &[data-open='true'] {
+      @apply bg-surface;
+    }
+  }
+  .accordion-trigger {
+    @apply flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm font-semibold text-ink sm:px-6 sm:py-5 sm:text-base;
+  }
+  .accordion-icon {
+    @apply inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-line bg-white text-ink transition-transform duration-200;
+    & svg {
+      @apply size-4;
+    }
+  }
+  .accordion-panel {
+    @apply animate-fade-in px-5 pb-5 text-sm leading-relaxed text-ink-muted sm:px-6;
+  }
+
+  /* Long-form legal copy */
+  .prose-legal {
+    @apply space-y-8 text-sm leading-relaxed text-ink-muted;
+    & h2 {
+      @apply mb-2.5 text-lg font-semibold text-ink sm:text-xl;
+    }
+    & p + p {
+      @apply mt-3;
+    }
+    & ul {
+      @apply mt-3 list-disc space-y-1.5 pl-5;
+    }
+    & a {
+      @apply font-semibold text-accent-strong underline underline-offset-2;
+    }
+    & strong {
+      @apply text-ink;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion                                                              */
+/* ------------------------------------------------------------------ */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.05);
-  }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.05); }
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-float {
@@ -75,47 +334,32 @@
   animation-play-state: paused;
 }
 
-/* Luxury card styling */
-.luxury-card {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  background: #FFFFFF;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.luxury-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 35px -10px rgba(11, 19, 32, 0.1), 0 10px 10px -5px rgba(212, 175, 55, 0.05);
-  border-color: rgba(212, 175, 55, 0.4);
-}
-
-/* Gold glow text and borders */
-.text-gold {
-  color: #D4AF37;
-}
-
-.bg-gold {
-  background-color: #D4AF37;
-}
-
-.border-gold {
-  border-color: #D4AF37;
-}
-
-/* Custom subtle scrollbar */
+/* Subtle neutral scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F1ECE1;
+  background: var(--color-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37;
+  background: #cfcfcf;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B89326;
+  background: var(--color-ink-subtle);
 }

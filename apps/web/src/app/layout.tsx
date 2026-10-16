@@ -60,7 +60,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-[#FAF7F2] text-gray-900 antialiased selection:bg-[#D4AF37] selection:text-white">
+      <body className="min-h-screen flex flex-col bg-canvas text-ink antialiased selection:bg-accent selection:text-ink">
         <QueryProvider>
           <Navbar />
           <main className="flex-1">{children}</main>

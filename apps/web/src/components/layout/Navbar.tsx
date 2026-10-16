@@ -13,11 +13,20 @@ import {
   ChevronDown,
   Sparkles,
   User,
-  Compass,
-  MapPin,
   Palmtree,
   ArrowRight,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
+
+const navLinkClass = (active: boolean) =>
+  cn(
+    'flex items-center gap-1 rounded-full px-2 xl:px-3.5 py-2 transition-colors duration-150',
+    active ? 'bg-surface text-ink' : 'text-ink-muted hover:text-ink hover:bg-surface/70'
+  );
+
+const dropdownPanel =
+  'rounded-2xl border border-line bg-white p-2 shadow-[0_24px_48px_-20px_rgba(14,14,14,0.25)] animate-fade-in';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,134 +53,120 @@ export function Navbar() {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300">
-      {/* Top Announcement Bar with smooth dark transparency */}
-      <div
-        className={`w-full text-xs py-2 px-4 transition-all duration-300 ${
-          isScrolled
-            ? 'bg-[#0B1320]/95 backdrop-blur-md border-b border-white/10 text-gray-300'
-            : 'bg-black/35 backdrop-blur-sm border-b border-white/10 text-gray-200'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full">
+      {/* Top utility bar */}
+      <div className="h-[var(--utility-h)] w-full border-b border-line bg-white text-xs text-ink-muted">
+        <div className="mx-auto flex h-full max-w-[92rem] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+          <div className="flex min-w-0 items-center gap-4 sm:gap-6">
             <a
               href="tel:18008436114"
-              className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors"
+              className="flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-ink"
             >
-              <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span className="font-semibold text-white">Toll Free: 1800-843-6114</span>
+              <Phone className="h-3.5 w-3.5 text-accent-strong" />
+              <span className="font-semibold text-ink">Toll Free: 1800-843-6114</span>
             </a>
             <a
               href="mailto:info@galaxyheritageworld.com"
-              className="hidden md:flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors"
+              className="hidden items-center gap-1.5 transition-colors hover:text-ink md:flex"
             >
-              <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
+              <Mail className="h-3.5 w-3.5 text-accent-strong" />
               <span>info@galaxyheritageworld.com</span>
             </a>
-            <div className="hidden lg:flex items-center gap-1.5 text-gray-400">
-              <Clock className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <div className="hidden items-center gap-1.5 lg:flex">
+              <Clock className="h-3.5 w-3.5 text-accent-strong" />
               <span>Mon - Sat: 10:00 AM - 6:30 PM</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="hidden xl:inline text-gray-400">
-              CIN: <strong className="text-gray-300">U74999DL2022PTC407515</strong>
+          <div className="flex shrink-0 items-center gap-4">
+            <span className="hidden xl:inline">
+              CIN: <strong className="font-semibold text-ink">U74999DL2022PTC407515</strong>
             </span>
             <Link
               href="/login"
-              className="flex items-center gap-1 text-white hover:text-[#D4AF37] transition-colors"
+              className="flex items-center gap-1 font-semibold text-ink transition-colors hover:text-accent-strong"
             >
-              <User className="w-3.5 h-3.5" />
+              <User className="h-3.5 w-3.5" />
               <span>Member Login</span>
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Floating Pill Navbar Bar without background wrapper */}
-      <div className="w-full transition-all duration-300 py-3 pointer-events-none">
-        <div className="max-w-[92rem] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Floating pill navbar */}
+      <div className="pointer-events-none w-full pt-5 pb-3 sm:pt-6">
+        <div className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-8">
           <nav
-            style={{ backgroundColor: '#f5f7f8' }}
-            className="pointer-events-auto relative flex items-center justify-between bg-[#f5f7f8] text-gray-800 rounded-full pl-5 pr-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-gray-200/80 transition-all duration-300"
+            className={cn(
+              'pointer-events-auto relative flex items-center justify-between gap-3 rounded-full border bg-white/95 py-1.5 pl-4 pr-1.5 text-ink backdrop-blur-xl transition-all duration-300',
+              isScrolled
+                ? 'border-line shadow-[0_16px_40px_-16px_rgba(14,14,14,0.3)]'
+                : 'border-white/70 shadow-[0_10px_30px_-14px_rgba(14,14,14,0.22)]'
+            )}
           >
-            {/* Left Group: Logo + Desktop Links right next to it */}
-            <div className="flex items-center gap-3 xl:gap-5">
-              {/* Brand Logo with transparent background */}
-              <Link
-                href="/"
-                aria-label="Galaxy Heritage World Home"
-                className="group shrink-0 flex items-center h-11 sm:h-12 transition-transform duration-200 hover:scale-105"
-              >
-                <div className="relative w-36 sm:w-40 h-10 sm:h-11">
-                  <Image
-                    src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
-                    alt="Galaxy Heritage World"
-                    fill
-                    priority
-                    className="object-contain object-left scale-110 drop-shadow-[0_2px_6px_rgba(0,0,0,0.12)]"
-                    sizes="(max-width: 640px) 150px, 170px"
-                  />
-                </div>
-              </Link>
+            {/* Brand logo */}
+            <Link
+              href="/"
+              aria-label="Galaxy Heritage World Home"
+              className="group flex h-10 shrink-0 items-center transition-transform duration-200 hover:scale-[1.03]"
+            >
+              <div className="relative h-10 w-28 xl:w-36">
+                <Image
+                  src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
+                  alt="Galaxy Heritage World"
+                  fill
+                  priority
+                  className="object-contain object-left"
+                  sizes="(max-width: 1280px) 128px, 144px"
+                />
+              </div>
+            </Link>
 
-              {/* Desktop Navigation Links directly following the logo */}
-              <div className="hidden lg:flex items-center gap-3 xl:gap-5 text-[13px] xl:text-[13.5px] font-semibold tracking-wide text-gray-700 whitespace-nowrap">
-              <Link
-                href="/"
-                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                  pathname === '/' ? 'text-[#D4AF37]' : ''
-                }`}
-              >
+            {/* Desktop navigation links */}
+            <div className="hidden flex-1 items-center justify-center gap-0.5 whitespace-nowrap text-[12.5px] font-medium lg:flex xl:text-[13px]">
+              <Link href="/" className={navLinkClass(pathname === '/')}>
                 Home
               </Link>
 
-              <Link
-                href="/about"
-                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                  pathname === '/about' ? 'text-[#D4AF37]' : ''
-                }`}
-              >
+              <Link href="/about" className={navLinkClass(pathname === '/about')}>
                 About Us
               </Link>
 
               {/* Destinations Dropdown */}
               <div
-                className="relative py-2"
+                className="relative py-1"
                 onMouseEnter={() => setDestinationsOpen(true)}
                 onMouseLeave={() => setDestinationsOpen(false)}
               >
-                <Link
-                  href="/destinations"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                    pathname.startsWith('/destinations') ? 'text-[#D4AF37]' : ''
-                  }`}
-                >
+                <Link href="/destinations" className={navLinkClass(pathname.startsWith('/destinations'))}>
                   <span>Destinations</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${destinationsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
+                  <ChevronDown
+                    className={cn(
+                      'h-3.5 w-3.5 text-ink-subtle transition-transform duration-200',
+                      destinationsOpen && 'rotate-180 text-ink'
+                    )}
+                  />
                 </Link>
 
                 {destinationsOpen && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-2xl shadow-[0_20px_45px_rgba(0,0,0,0.25)] border border-gray-100 py-2.5 px-2 animate-in fade-in-50 zoom-in-95 duration-200">
+                  <div className="absolute top-full left-0 z-50 w-64 pt-2">
+                    <div className={dropdownPanel}>
                       <div className="flex flex-col space-y-0.5 text-left">
                         <Link
                           href="/destinations?type=DOMESTIC"
-                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
+                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
                           Domestic Destinations
                         </Link>
                         <Link
                           href="/destinations?type=INTERNATIONAL"
-                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
+                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
                           International Destinations
                         </Link>
                         <Link
                           href="/destinations?type=INTERNATIONAL#exchange"
-                          className="block px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-50 hover:text-[#D4AF37] rounded-xl transition-all"
+                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
                           Exchange
                         </Link>
@@ -183,51 +178,49 @@ export function Navbar() {
 
               <Link
                 href="/vacation-packages"
-                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                  pathname.startsWith('/vacation-packages') ? 'text-[#D4AF37]' : ''
-                }`}
+                className={navLinkClass(pathname.startsWith('/vacation-packages'))}
               >
                 Vacation Packages
               </Link>
 
               {/* Hotels & Resorts Dropdown */}
               <div
-                className="relative py-2"
+                className="relative py-1"
                 onMouseEnter={() => setResortsOpen(true)}
                 onMouseLeave={() => setResortsOpen(false)}
               >
-                <Link
-                  href="/hotels-resorts"
-                  className={`flex items-center gap-1 transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                    pathname.startsWith('/hotels-resorts') ? 'text-[#D4AF37]' : ''
-                  }`}
-                >
+                <Link href="/hotels-resorts" className={navLinkClass(pathname.startsWith('/hotels-resorts'))}>
                   <span>Hotels & Resorts</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-gray-500 transition-all duration-200 ${resortsOpen ? 'rotate-180 text-[#D4AF37]' : ''}`} />
+                  <ChevronDown
+                    className={cn(
+                      'h-3.5 w-3.5 text-ink-subtle transition-transform duration-200',
+                      resortsOpen && 'rotate-180 text-ink'
+                    )}
+                  />
                 </Link>
 
                 {resortsOpen && (
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 z-50">
-                    <div className="bg-white rounded-2xl shadow-[0_20px_45px_rgba(0,0,0,0.25)] border border-gray-100 p-3 text-gray-800 animate-in fade-in-50 zoom-in-95 duration-200">
-                      <div className="space-y-1">
+                  <div className="absolute top-full left-1/2 z-50 w-72 -translate-x-1/2 pt-2">
+                    <div className={dropdownPanel}>
+                      <div className="space-y-0.5">
                         <Link
                           href="/hotels-resorts?category=ASSOCIATED"
-                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
-                          <Palmtree className="w-4 h-4 text-[#D4AF37]" />
+                          <Palmtree className="h-4 w-4 text-accent-strong" />
                           <span>Associated Partner Resorts</span>
                         </Link>
                         <Link
                           href="/hotels-resorts?category=INTERNAL"
-                          className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-[#FAF7F2] hover:text-[#D4AF37] rounded-xl transition-colors"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
-                          <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                          <Sparkles className="h-4 w-4 text-accent-strong" />
                           <span>Internal Luxury Properties</span>
                         </Link>
-                        <div className="border-t border-gray-100 my-1 pt-1">
+                        <div className="mt-1 border-t border-line pt-1">
                           <Link
                             href="/hotels-resorts"
-                            className="block px-3 py-1.5 text-xs text-blue-600 font-semibold hover:underline"
+                            className="block px-3 py-2 text-xs font-semibold text-accent-strong hover:underline"
                           >
                             View All 43+ Properties &rarr;
                           </Link>
@@ -238,150 +231,106 @@ export function Navbar() {
                 )}
               </div>
 
-              <Link
-                href="/day-activities"
-                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                  pathname.startsWith('/day-activities') ? 'text-[#D4AF37]' : ''
-                }`}
-              >
+              <Link href="/day-activities" className={navLinkClass(pathname.startsWith('/day-activities'))}>
                 Day Outings
               </Link>
 
-              <Link
-                href="/travel-desk"
-                className={`transition-colors duration-150 hover:text-[#D4AF37] px-1 py-1 ${
-                  pathname === '/travel-desk' ? 'text-[#D4AF37]' : ''
-                }`}
-              >
+              <Link href="/travel-desk" className={navLinkClass(pathname === '/travel-desk')}>
                 Travel Desk
               </Link>
             </div>
-          </div>
 
-          {/* Right: Pill CTA Button */}
-          <div className="hidden sm:flex items-center shrink-0 ml-4">
-            {/* Contrast dark pill CTA button */}
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-[#141517] text-white hover:bg-black rounded-full text-xs font-bold tracking-wide shadow-md transition-all duration-200 hover:shadow-lg active:scale-95 whitespace-nowrap"
-            >
-              <span>Enquire Now</span>
-              <ArrowRight className="w-3.5 h-3.5 text-white" />
-            </Link>
-          </div>
+            {/* Right: primary CTA */}
+            <div className="ml-auto hidden shrink-0 items-center sm:flex lg:ml-0">
+              <Link href="/contact" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
+                <span>Enquire Now</span>
+                <ArrowRight />
+              </Link>
+            </div>
 
-            {/* Mobile Actions & Menu Toggle */}
-            <div className="flex lg:hidden items-center gap-1.5 pr-1">
-              <Link
-                href="/contact"
-                className="sm:hidden px-3.5 py-1.5 bg-[#141517] text-white rounded-full text-xs font-bold shadow"
-              >
+            {/* Mobile actions & menu toggle */}
+            <div className="flex items-center gap-1.5 lg:hidden">
+              <Link href="/contact" className={cn(buttonVariants({ variant: 'primary', size: 'sm' }), 'sm:hidden')}>
                 Enquire
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-gray-700 hover:text-black"
+                className="icon-btn"
                 aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
               >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
             </div>
           </nav>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile navigation drawer */}
         {mobileMenuOpen && (
-          <div className="max-w-7xl mx-auto px-3 sm:px-6 mt-2 lg:hidden">
-            <div className="bg-[#141517]/95 backdrop-blur-2xl rounded-3xl border border-white/10 px-5 pt-5 pb-6 space-y-4 shadow-2xl max-h-[80vh] overflow-y-auto text-white">
-              <div className="flex flex-col space-y-2 text-sm font-medium text-gray-300">
-                <Link
-                  href="/"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+          <div className="pointer-events-auto mx-auto mt-2 max-w-7xl px-4 sm:px-6 lg:hidden">
+            <div className="max-h-[calc(100svh-var(--header-h)-1rem)] space-y-4 overflow-y-auto rounded-3xl border border-line bg-white px-4 pt-4 pb-5 shadow-[0_24px_60px_-24px_rgba(14,14,14,0.35)] animate-fade-in">
+              <div className="flex flex-col space-y-1 text-sm font-medium text-ink">
+                <Link href="/" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Home
                 </Link>
-                <Link
-                  href="/about"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/about" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   About Us
                 </Link>
-                <div className="pl-2 border-l-2 border-white/10 space-y-1">
+                <div className="ml-3 space-y-0.5 border-l border-line pl-3">
                   <Link
                     href="/destinations?type=DOMESTIC"
-                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                    className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
                   >
                     Domestic Destinations
                   </Link>
                   <Link
                     href="/destinations?type=INTERNATIONAL"
-                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                    className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
                   >
                     International Destinations
                   </Link>
                   <Link
                     href="/destinations?type=INTERNATIONAL#exchange"
-                    className="block px-3 py-1.5 text-xs text-gray-300 hover:text-[#D4AF37] transition-colors"
+                    className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
                   >
                     Exchange
                   </Link>
                 </div>
-                <Link
-                  href="/vacation-packages"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/vacation-packages" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Vacation Packages
                 </Link>
-                <Link
-                  href="/hotels-resorts"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Hotels & Resorts (43+ Properties)
                 </Link>
-                <Link
-                  href="/day-activities"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/day-activities" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Day Outings & Water Parks
                 </Link>
-                <Link
-                  href="/travel-desk"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/travel-desk" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Dedicated Travel Desk
                 </Link>
                 <Link
                   href="/reviews-and-complaints"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 text-[#E5C158] font-semibold"
+                  className="rounded-xl px-3 py-2.5 font-semibold text-accent-strong transition-colors hover:bg-surface"
                 >
                   Reviews & Grievance Escalation Matrix
                 </Link>
-                <Link
-                  href="/faq"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/faq" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Customer FAQs
                 </Link>
-                <Link
-                  href="/contact"
-                  className="px-3 py-2 rounded-xl hover:bg-white/10 hover:text-[#D4AF37] transition-colors"
-                >
+                <Link href="/contact" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Contact & Office Addresses
                 </Link>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex flex-col gap-2.5">
-                <Link
-                  href="/contact"
-                  className="text-center py-2.5 px-4 rounded-full bg-white text-gray-900 font-bold text-xs uppercase tracking-wider shadow hover:bg-gray-100 transition-colors"
-                >
+              <div className="flex flex-col gap-2 border-t border-line pt-4">
+                <Link href="/contact" className={buttonVariants({ variant: 'primary', block: true })}>
                   Enquire Now
                 </Link>
                 <a
                   href="tel:18008436114"
-                  className="text-center py-2 px-4 text-xs font-semibold text-gray-300 flex items-center justify-center gap-2 hover:text-[#D4AF37]"
+                  className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold text-ink-muted hover:text-ink"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <Phone className="h-3.5 w-3.5 text-accent-strong" />
                   <span>Call Toll Free: 1800-843-6114</span>
                 </a>
               </div>
