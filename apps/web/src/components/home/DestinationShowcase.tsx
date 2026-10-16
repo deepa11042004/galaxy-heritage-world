@@ -73,9 +73,9 @@ export function DestinationShowcase({ destinations }: { destinations: Destinatio
         {/* Destination Grid */}
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.slice(0, 6).map((dest) => (
-            <Link key={dest.id} href={`/destinations/${dest.slug}`} className="group flex flex-col">
+            <Link key={dest.id} href={`/destinations/${dest.slug}`} className="card card-hover group flex flex-col p-2.5">
               {/* Card Image */}
-              <div className="media-frame aspect-[4/5]">
+              <div className="media-frame aspect-[4/5] rounded-[0.9rem]">
                 <Image
                   src={dest.heroImageUrl || '/media/galaxy-heritage-world/homepage/images/1-2.png'}
                   alt={dest.name}
@@ -93,7 +93,7 @@ export function DestinationShowcase({ destinations }: { destinations: Destinatio
               </div>
 
               {/* Card Body */}
-              <div className="flex flex-1 flex-col pt-4">
+              <div className="flex flex-1 flex-col px-2.5 pt-4 pb-2">
                 <div className="flex-1">
                   <div className="meta mb-1.5">
                     <MapPin />
