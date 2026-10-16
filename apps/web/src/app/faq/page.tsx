@@ -98,7 +98,7 @@ export default function FaqPage() {
                     className="accordion-trigger"
                   >
                     <span>{faq.question}</span>
-                    <span className={cn('accordion-icon', isOpen && 'rotate-180 border-accent bg-accent')}>
+                    <span className={cn('accordion-icon', isOpen && 'rotate-180')}>
                       <ChevronDown />
                     </span>
                   </button>
