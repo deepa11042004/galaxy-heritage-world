@@ -65,7 +65,7 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
         </div>
 
         <div className="mt-10 text-center">
-          <Link href="/faq" className={cn(buttonVariants({ variant: 'outline' }), 'whitespace-normal text-center')}>
+          <Link href="/faq" className={cn(buttonVariants({ variant: 'dark' }), 'whitespace-normal text-center')}>
             <span>View All Customer FAQs & Redressal Procedures</span>
             <ArrowRight />
           </Link>
