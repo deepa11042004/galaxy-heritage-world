@@ -18,6 +18,7 @@
   --color-accent-hover: #e6a800;
   --color-accent-strong: #8a5a00;
   --color-accent-soft: #fff6d6;
+  --color-divider: #ffa500;
 
   --radius-card: 1.25rem;
   --radius-hero: 1.75rem;
@@ -89,8 +90,19 @@
   .container-narrow {
     @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8;
   }
+  /* Content section with a divider line along its bottom edge */
   .section {
-    @apply py-14 md:py-20;
+    @apply relative py-14 md:py-20;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: min(calc(100% - 2rem), 80rem);
+      height: 2px;
+      transform: translateX(-50%);
+      background-color: var(--color-divider);
+    }
   }
   /* Wrapper for rounded hero frames: inset from the edges, starts under the utility bar */
   .hero-frame-wrap {

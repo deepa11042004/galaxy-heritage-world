@@ -23,7 +23,7 @@ interface HotelItem {
 export function ResortShowcase({ hotels }: { hotels: HotelItem[] }) {
   return (
     <section className="px-2 sm:px-3">
-      <div className="section rounded-hero bg-surface">
+      <div className="section rounded-hero border border-line bg-surface">
         <div className="container-page">
           <SectionHeader
             icon={Palmtree}
