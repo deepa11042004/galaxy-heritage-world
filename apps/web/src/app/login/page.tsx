@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, User, ShieldCheck, AlertCircle, ArrowRight } from 'lucide-react';
+import { Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
+import { buttonVariants } from '@/components/ui/button';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -49,82 +49,76 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-[85vh] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-[#D4AF37]/20">
-        <div className="text-center mb-8">
-          <div className="relative w-56 h-18 mx-auto mb-4">
-            <Image
-              src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
-              alt="Galaxy Heritage World"
-              fill
-              className="object-contain"
-              sizes="224px"
-            />
-          </div>
-          <h1 className="font-serif text-2xl font-bold text-gray-900">
-            Sign In to Portal
-          </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Access staff administration, enquiries management, or member services
-          </p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="email"
-                required
-                placeholder="admin@galaxyheritageworld.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
+    <div className="hero-frame-wrap">
+      <div className="flex min-h-[calc(100svh-var(--utility-h)-1.5rem)] items-center justify-center rounded-hero bg-surface px-4 pt-[calc(var(--nav-h)+1.5rem)] pb-12 sm:px-6">
+        <div className="card w-full max-w-md p-8 shadow-[0_30px_60px_-36px_rgba(14,14,14,0.3)] sm:p-10">
+          <div className="mb-8 text-center">
+            <div className="relative mx-auto mb-5 h-16 w-48">
+              <Image
+                src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
+                alt="Galaxy Heritage World"
+                fill
+                className="object-contain"
+                sizes="192px"
               />
             </div>
+            <h1 className="text-2xl font-medium tracking-tight text-ink sm:text-3xl">Sign In to Portal</h1>
+            <p className="mt-2 text-sm text-ink-muted">
+              Access staff administration, enquiries management, or member services
+            </p>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="password"
-                required
-                placeholder="••••••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-[#D4AF37]"
-              />
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="label">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-ink-subtle" />
+                <input
+                  type="email"
+                  required
+                  placeholder="admin@galaxyheritageworld.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="input pl-11"
+                />
+              </div>
             </div>
-          </div>
 
-          {error && (
-            <div className="flex items-center gap-2 p-3 bg-rose-50 text-rose-700 rounded-xl text-xs">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{error}</span>
+            <div>
+              <label className="label">Password</label>
+              <div className="relative">
+                <Lock className="absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-ink-subtle" />
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="input pl-11"
+                />
+              </div>
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full py-3 bg-[#0B1320] hover:bg-gray-800 text-white rounded-xl text-xs font-semibold uppercase tracking-wider shadow transition-all flex items-center justify-center gap-2"
-          >
-            <span>{submitting ? 'Authenticating...' : 'Sign In'}</span>
-            <ArrowRight className="w-4 h-4 text-[#D4AF37]" />
-          </button>
-        </form>
+            {error && (
+              <div className="alert-error">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                <span>{error}</span>
+              </div>
+            )}
 
-        <div className="mt-8 pt-6 border-t border-gray-100 text-center text-xs text-gray-500">
-          <div>Default Admin Access:</div>
-          <div className="font-mono text-gray-700 mt-1">
-            admin@galaxyheritageworld.com
+            <button
+              type="submit"
+              disabled={submitting}
+              className={buttonVariants({ variant: 'dark', size: 'lg', block: true })}
+            >
+              <span>{submitting ? 'Authenticating...' : 'Sign In'}</span>
+              <ArrowRight className="text-accent" />
+            </button>
+          </form>
+
+          <div className="mt-8 border-t border-line pt-6 text-center text-xs text-ink-muted">
+            <div>Default Admin Access:</div>
+            <div className="mt-1 font-mono text-ink">admin@galaxyheritageworld.com</div>
           </div>
         </div>
       </div>

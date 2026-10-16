@@ -27,6 +27,8 @@ const heroSlides = [
   },
 ];
 
+const headingShadow = '0 2px 6px rgba(0, 0, 0, 0.45), 0 10px 36px rgba(0, 0, 0, 0.4)';
+
 export function HeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -73,81 +75,100 @@ export function HeroBanner() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center bg-[#0B1320] text-white overflow-hidden pt-32 pb-14 sm:pt-36 sm:pb-16 lg:pt-40 lg:pb-20 select-none"
+      className="hero-frame-wrap select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
-      {/* Background Slides with Crossfade Animation */}
-      <div className="absolute inset-0 z-0">
-        {heroSlides.map((slide, index) => {
-          const isActive = index === currentSlide;
-          return (
-            <div
-              key={slide.src}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isActive ? 'opacity-100 z-0' : 'opacity-0 pointer-events-none'
-              }`}
-            >
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                priority={index === 0}
-                className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
-                  isActive ? 'scale-105' : 'scale-100'
+      <div className="relative flex min-h-[calc(100svh-var(--utility-h)-1.5rem)] items-center justify-center overflow-hidden rounded-hero bg-ink pt-[var(--nav-h)] pb-20 text-white">
+        {/* Background Slides with Crossfade Animation */}
+        <div className="absolute inset-0 z-0">
+          {heroSlides.map((slide, index) => {
+            const isActive = index === currentSlide;
+            return (
+              <div
+                key={slide.src}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  isActive ? 'opacity-100 z-0' : 'opacity-0 pointer-events-none'
                 }`}
-                sizes="100vw"
-              />
-            </div>
-          );
-        })}
-
-      </div>
-
-      {/* Slider Left & Right Navigation Arrows */}
-      <button
-        type="button"
-        id="hero-prev-btn"
-        onClick={prevSlide}
-        aria-label="Previous slide"
-        className="hidden md:flex absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
-      >
-        <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-0.5" />
-      </button>
-
-      <button
-        type="button"
-        id="hero-next-btn"
-        onClick={nextSlide}
-        aria-label="Next slide"
-        className="hidden md:flex absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 items-center justify-center rounded-full bg-black/35 hover:bg-[#D4AF37] hover:text-[#0B1320] text-white backdrop-blur-md border border-white/20 hover:border-[#D4AF37] transition-all duration-200 active:scale-95 shadow-xl group cursor-pointer"
-      >
-        <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
-      </button>
-
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center mt-3 sm:mt-5 lg:mt-6">
-        {/* Top Luxury Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-[#D4AF37]/60 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider mb-4 sm:mb-5 shadow-lg animate-in fade-in slide-in-from-top-4 duration-700">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>India&apos;s Premium Holiday & Hospitality Network</span>
+              >
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={index === 0}
+                  className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
+                    isActive ? 'scale-105' : 'scale-100'
+                  }`}
+                  sizes="100vw"
+                />
+              </div>
+            );
+          })}
         </div>
 
-        {/* Main Headline */}
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl leading-tight sm:leading-tight mb-4 sm:mb-5 drop-shadow-[0_4px_14px_rgba(0,0,0,0.85)]">
-          Crafting Unforgettable Journeys Across <span className="text-[#D4AF37] italic drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">India</span> & The World
-        </h1>
+        {/* Slider Left & Right Navigation Arrows */}
+        <button
+          type="button"
+          id="hero-prev-btn"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+          className="group absolute top-1/2 left-4 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-ink active:scale-95 md:flex lg:left-6"
+        >
+          <ChevronLeft className="h-5 w-5 transition-transform group-hover:-translate-x-0.5" />
+        </button>
 
-        {/* Subtitle */}
-        <p className="text-sm sm:text-base lg:text-lg text-white font-medium max-w-2xl leading-relaxed mb-5 sm:mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          Discover handpicked luxury resorts, bespoke family holiday packages, and seamless travel desk privileges with authentic hospitality and guaranteed transparency.
-        </p>
+        <button
+          type="button"
+          id="hero-next-btn"
+          onClick={nextSlide}
+          aria-label="Next slide"
+          className="group absolute top-1/2 right-4 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-all duration-200 hover:bg-white hover:text-ink active:scale-95 md:flex lg:right-6"
+        >
+          <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+        </button>
+
+        {/* Hero Content */}
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-5 text-center sm:px-6 lg:px-8">
+          {/* Soft localized backdrop behind the text only (no full-image overlay) */}
+          <div
+            className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[3rem] sm:-inset-x-20 sm:-inset-y-10"
+            style={{
+              background:
+                'radial-gradient(ellipse 80% 70% at 50% 50%, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.1) 70%, transparent 85%)',
+              filter: 'blur(20px)',
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Eyebrow pill */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-medium text-ink shadow-sm backdrop-blur-md animate-fade-in">
+            <Sparkles className="h-3.5 w-3.5 text-accent-strong" />
+            <span>India&apos;s Premium Holiday & Hospitality Network</span>
+          </div>
+
+          {/* Main headline */}
+          <h1 className="heading-hero mb-5 max-w-4xl text-white" style={{ textShadow: headingShadow }}>
+            Crafting Unforgettable Journeys Across{' '}
+            <span className="text-accent" style={{ textShadow: headingShadow }}>
+              India
+            </span>{' '}
+            & The World
+          </h1>
+
+          {/* Subtitle */}
+          <p
+            className="max-w-2xl text-sm leading-relaxed text-white/90 sm:text-base lg:text-lg"
+            style={{ textShadow: '0 1px 3px rgba(0, 0, 0, 0.6), 0 4px 18px rgba(0, 0, 0, 0.45)' }}
+          >
+            Discover handpicked luxury resorts, bespoke family holiday packages, and seamless travel desk privileges with authentic hospitality and guaranteed transparency.
+          </p>
+        </div>
 
         {/* Slide Indicators */}
-        <div className="flex items-center justify-center gap-2.5 mt-2 sm:mt-3 z-20">
+        <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-black/20 px-3 py-2 backdrop-blur-md sm:bottom-8">
           {heroSlides.map((slide, idx) => (
             <button
               key={slide.src}
@@ -155,10 +176,8 @@ export function HeroBanner() {
               id={`hero-dot-${idx}`}
               onClick={() => setCurrentSlide(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentSlide
-                  ? 'w-8 bg-[#D4AF37] shadow-[0_0_10px_rgba(212,175,55,0.7)]'
-                  : 'w-2 bg-white/40 hover:bg-white/80'
+              className={`h-2 rounded-full transition-all duration-300 ${
+                idx === currentSlide ? 'w-8 bg-accent' : 'w-2 bg-white/60 hover:bg-white'
               }`}
             />
           ))}

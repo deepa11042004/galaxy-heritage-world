@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Star, Quote, CheckCircle2 } from 'lucide-react';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 
 interface TestimonialItem {
   id: string;
@@ -16,56 +17,48 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            <span>Verified Customer Feedback</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
-            Memories Made With Galaxy Heritage
-          </h2>
-          <p className="text-sm text-gray-600 mt-2">
-            Authentic experiences shared by our holiday members across India.
-          </p>
-        </div>
+    <section className="section bg-white">
+      <div className="container-page">
+        <SectionHeader
+          icon={CheckCircle2}
+          eyebrow="Verified Customer Feedback"
+          title={
+            <>
+              Memories Made With <span className="text-ink-muted">Galaxy Heritage</span>
+            </>
+          }
+          description="Authentic experiences shared by our holiday members across India."
+        />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
           {testimonials.slice(0, 3).map((item) => (
             <div
               key={item.id}
-              className="luxury-card p-6 rounded-2xl bg-[#FAF7F2] border border-[#D4AF37]/20 flex flex-col justify-between"
+              className="flex flex-col justify-between rounded-card bg-divider p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-8"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-1 text-amber-400">
+                <div className="mb-6 flex items-center justify-between">
+                  <Quote className="h-8 w-8 fill-white text-white" />
+                  <div className="flex items-center gap-0.5 text-ink">
                     {Array.from({ length: item.rating || 5 }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400" />
+                      <Star key={i} className="h-3.5 w-3.5 fill-ink" />
                     ))}
                   </div>
-                  <Quote className="w-6 h-6 text-[#D4AF37]/40" />
                 </div>
 
-                <p className="text-xs sm:text-sm text-gray-700 italic leading-relaxed mb-6">
+                <p className="text-[15px] leading-relaxed text-ink sm:text-base">
                   &ldquo;{item.comment}&rdquo;
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-gray-200/60 flex items-center justify-between">
+              <div className="mt-8 flex flex-wrap items-end justify-between gap-3 border-t border-ink/15 pt-5">
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-gray-900">
-                    {item.customerName}
-                  </h4>
-                  <div className="text-[11px] text-gray-500">
-                    {item.customerLocation || 'Member, India'}
-                  </div>
+                  <h4 className="text-sm font-semibold text-ink">{item.customerName}</h4>
+                  <div className="text-xs text-ink/70">{item.customerLocation || 'Member, India'}</div>
                 </div>
 
                 {item.tripTitle && (
-                  <span className="text-[10px] font-semibold px-2.5 py-1 bg-white text-[#0B1320] rounded-full border border-gray-200">
-                    {item.tripTitle}
-                  </span>
+                  <span className="pill whitespace-nowrap border border-line text-[10px]">{item.tripTitle}</span>
                 )}
               </div>
             </div>

@@ -8,7 +8,13 @@ import {
   Headphones,
   Ticket,
   ArrowRight,
+  Eye,
+  Target,
+  Sparkles,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { StatCard } from '@/components/ui/StatCard';
 
 const pillars = [
   {
@@ -21,7 +27,7 @@ const pillars = [
     icon: ShieldCheck,
     title: '100% Transparent Escalation Matrix',
     description:
-      'We are India&apos;s most accountable holiday provider with an official 3-tier grievance mechanism, documented TAT, and direct executive contact.',
+      "We are India's most accountable holiday provider with an official 3-tier grievance mechanism, documented TAT, and direct executive contact.",
     highlight: true,
   },
   {
@@ -63,87 +69,107 @@ const stats = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-20 bg-[#0B1320] text-white relative overflow-hidden">
-      {/* Subtle gold glow in background */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+    <section className="section bg-white">
+      <div className="container-page">
+        <SectionHeader
+          icon={Sparkles}
+          eyebrow="The Galaxy Heritage World Difference"
+          title={
+            <>
+              Why Choose <span className="text-ink-muted">Galaxy Heritage World?</span>
+            </>
+          }
+          description="Delivering authentic family vacation joy with strict corporate accountability, audited hospitality properties, and dedicated care."
+        />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>The Galaxy Heritage World Difference</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">
-            Why Discerning Travelers Choose Us
-          </h2>
-          <p className="text-sm text-gray-400 mt-3 leading-relaxed">
-            Delivering authentic family vacation joy with strict corporate accountability, audited hospitality properties, and dedicated care.
-          </p>
+        {/* Trust Stats */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
+          {stats.map((stat, idx) => (
+            <StatCard
+              key={stat.title}
+              value={stat.value}
+              title={stat.title}
+              description={stat.description}
+              highlight={idx === 1}
+            />
+          ))}
         </div>
 
-        {/* 4 Cards already there - kept intact */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Vision & Mission Cards */}
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mt-5 lg:gap-5">
+          {/* Vision Card */}
+          <div className="group rounded-card bg-surface p-7 sm:p-9">
+            <div className="mb-5 flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-accent transition-transform duration-300 group-hover:scale-105">
+                <Eye className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-subtle">
+                  OUR CORE PURPOSE
+                </span>
+                <h3 className="text-2xl font-medium text-ink">Vision</h3>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
+              To make every journey comfortable, seamless and memorable through quality travel experiences and personalized service.
+            </p>
+          </div>
+
+          {/* Mission Card */}
+          <div className="group rounded-card bg-surface p-7 sm:p-9">
+            <div className="mb-5 flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-accent transition-transform duration-300 group-hover:scale-105">
+                <Target className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-subtle">
+                  OUR GUIDING PRINCIPLE
+                </span>
+                <h3 className="text-2xl font-medium text-ink">Mission</h3>
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
+              We believe in trust, quality, customer care and genuine hospitality, creating lasting relationships through every journey.
+            </p>
+          </div>
+        </div>
+
+        {/* 4 Pillars Grid */}
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-5 lg:grid-cols-4 lg:gap-5">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={idx}
-                className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
-                  pillar.highlight
-                    ? 'bg-gradient-to-b from-[#141E33] to-[#0E1726] border-[#D4AF37]/40 shadow-xl'
-                    : 'bg-white/5 border-gray-800 hover:border-gray-700'
-                }`}
+                className={cn(
+                  'card card-hover flex flex-col justify-between p-6',
+                  pillar.highlight && 'border-accent bg-accent-soft'
+                )}
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/10 text-[#D4AF37] flex items-center justify-center mb-5 border border-[#D4AF37]/20">
-                    <Icon className="w-6 h-6" />
+                  <div
+                    className={cn(
+                      'mb-6 flex h-11 w-11 items-center justify-center rounded-xl',
+                      pillar.highlight ? 'bg-accent text-ink' : 'bg-surface text-ink'
+                    )}
+                  >
+                    <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="font-serif text-lg font-bold text-white mb-2 leading-snug">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-xs text-gray-400 leading-relaxed">
-                    {pillar.description}
-                  </p>
+                  <h3 className="heading-card mb-2">{pillar.title}</h3>
+                  <p className="text-[13px] leading-relaxed text-ink-muted">{pillar.description}</p>
                 </div>
 
                 {pillar.highlight && (
-                  <div className="mt-6 pt-4 border-t border-gray-800">
-                    <Link
-                      href="/reviews-and-complaints"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4AF37] hover:underline"
-                    >
+                  <div className="mt-6 border-t border-accent/50 pt-4">
+                    <Link href="/reviews-and-complaints" className="link-arrow">
                       <span>Read Escalation Policy</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight />
                     </Link>
                   </div>
                 )}
               </div>
             );
           })}
-        </div>
-
-        {/* Headings & Stats Added Below the 4 Cards */}
-        <div className="mt-16 pt-12 border-t border-white/10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-            {stats.map((stat, idx) => (
-              <div
-                key={stat.title}
-                className={`flex flex-col items-center text-center group ${
-                  idx > 0 ? 'pt-6 sm:pt-0 sm:pl-6' : ''
-                }`}
-              >
-                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#D4AF37] tracking-tight leading-none mb-2.5 transition-transform duration-300 group-hover:scale-105">
-                  {stat.value}
-                </div>
-                <h4 className="text-base sm:text-lg font-bold text-white tracking-wide">
-                  {stat.title}
-                </h4>
-                <p className="text-xs text-gray-400 mt-1.5 leading-relaxed max-w-xs">
-                  {stat.description}
-                </p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

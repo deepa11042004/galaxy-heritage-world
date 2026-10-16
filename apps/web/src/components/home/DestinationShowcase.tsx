@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MapPin, Compass, ArrowRight, Sparkles } from 'lucide-react';
+import { MapPin, ArrowRight, Sparkles } from 'lucide-react';
+import { SectionHeader } from '@/components/ui/SectionHeader';
+import { buttonVariants } from '@/components/ui/button';
 
 interface DestinationItem {
   id: string;
@@ -27,109 +29,89 @@ export function DestinationShowcase({ destinations }: { destinations: Destinatio
   });
 
   return (
-    <section className="py-20 bg-[#FAF7F2]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Curated Holiday Escapes</span>
+    <section className="section bg-white">
+      <div className="container-page">
+        <SectionHeader
+          icon={Sparkles}
+          eyebrow="Curated Holiday Escapes"
+          title={
+            <>
+              Featured Travel <span className="text-ink-muted">Destinations</span>
+            </>
+          }
+          description="From sun-kissed beaches in Goa to the royal palaces of Rajasthan and snow-capped peaks of Himachal Pradesh."
+          actions={
+            <div className="segmented">
+              <button
+                type="button"
+                onClick={() => setFilter('ALL')}
+                data-active={filter === 'ALL'}
+                className="segmented-item"
+              >
+                All
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilter('DOMESTIC')}
+                data-active={filter === 'DOMESTIC'}
+                className="segmented-item"
+              >
+                Domestic
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilter('INTERNATIONAL')}
+                data-active={filter === 'INTERNATIONAL'}
+                className="segmented-item"
+              >
+                International
+              </button>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
-              Featured Travel Destinations
-            </h2>
-            <p className="text-sm text-gray-600 mt-2 max-w-xl">
-              From sun-kissed beaches in Goa to the royal palaces of Rajasthan and snow-capped peaks of Himachal Pradesh.
-            </p>
-          </div>
-
-          {/* Filter Pills */}
-          <div className="flex items-center gap-2 bg-white p-1 rounded-full border border-gray-200 self-start md:self-end shadow-sm">
-            <button
-              onClick={() => setFilter('ALL')}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                filter === 'ALL'
-                  ? 'bg-[#0B1320] text-white shadow'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              All
-            </button>
-            <button
-              onClick={() => setFilter('DOMESTIC')}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                filter === 'DOMESTIC'
-                  ? 'bg-[#0B1320] text-white shadow'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Domestic
-            </button>
-            <button
-              onClick={() => setFilter('INTERNATIONAL')}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                filter === 'INTERNATIONAL'
-                  ? 'bg-[#0B1320] text-white shadow'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              International
-            </button>
-          </div>
-        </div>
+          }
+        />
 
         {/* Destination Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.slice(0, 6).map((dest) => (
-            <Link
-              key={dest.id}
-              href={`/destinations/${dest.slug}`}
-              className="group luxury-card rounded-2xl overflow-hidden block shadow-sm hover:shadow-xl transition-all duration-300 bg-white"
-            >
+            <Link key={dest.id} href={`/destinations/${dest.slug}`} className="card card-hover group flex flex-col p-2.5">
               {/* Card Image */}
-              <div className="relative h-64 w-full overflow-hidden">
+              <div className="media-frame aspect-[4/5] rounded-[0.9rem]">
                 <Image
                   src={dest.heroImageUrl || '/media/galaxy-heritage-world/homepage/images/1-2.png'}
                   alt={dest.name}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 {/* Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#0B1320] shadow-sm">
+                  <span className="pill">
                     {dest.type === 'DOMESTIC' ? 'Domestic Escape' : 'International Exchange'}
                   </span>
-                </div>
-
-                {/* Bottom title on image */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className="flex items-center gap-1.5 text-xs text-[#D4AF37] font-semibold mb-1">
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>{dest.region}, {dest.country}</span>
-                  </div>
-                  <h3 className="font-serif text-2xl font-bold text-white group-hover:text-[#D4AF37] transition-colors">
-                    {dest.name}
-                  </h3>
                 </div>
               </div>
 
               {/* Card Body */}
-              <div className="p-5 flex flex-col justify-between">
-                <p className="text-xs text-gray-600 line-clamp-2 leading-relaxed mb-4">
-                  {dest.tagline || dest.description}
-                </p>
+              <div className="flex flex-1 flex-col px-2.5 pt-4 pb-2">
+                <div className="flex-1">
+                  <div className="meta mb-1.5">
+                    <MapPin />
+                    <span>{dest.region}, {dest.country}</span>
+                  </div>
+                  <h3 className="text-xl font-semibold tracking-tight text-ink">{dest.name}</h3>
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-muted">
+                    {dest.tagline || dest.description}
+                  </p>
+                </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100 text-xs font-semibold">
-                  <span className="text-gray-500">
+                <div className="mt-4 flex items-center justify-between border-t border-line pt-4 text-xs">
+                  <span className="font-medium text-ink-muted">
                     {dest._count?.hotels ? `${dest._count.hotels} Associated Resorts` : 'Resorts Available'}
                   </span>
-                  <span className="inline-flex items-center gap-1 text-[#2563EB] group-hover:translate-x-1 transition-transform">
+                  <span className="link-arrow">
                     <span>Explore</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight />
                   </span>
                 </div>
               </div>
@@ -138,13 +120,10 @@ export function DestinationShowcase({ destinations }: { destinations: Destinatio
         </div>
 
         {/* View All CTA */}
-        <div className="mt-12 text-center">
-          <Link
-            href="/destinations"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#0B1320] hover:bg-[#1a2538] text-white text-xs font-semibold uppercase tracking-wider transition-all duration-200 shadow-md group"
-          >
+        <div className="mt-14 text-center">
+          <Link href="/destinations" className={buttonVariants({ variant: 'dark', size: 'lg' })}>
             <span>View All Destinations</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight />
           </Link>
         </div>
       </div>
