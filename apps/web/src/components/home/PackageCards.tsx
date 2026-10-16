@@ -47,9 +47,9 @@ export function PackageCards({ packages }: { packages: PackageItem[] }) {
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {packages.slice(0, 4).map((pkg) => (
-            <div key={pkg.id} className="group flex flex-col">
+            <div key={pkg.id} className="card card-hover group flex flex-col p-2.5">
               {/* Image & Badge */}
-              <div className="media-frame aspect-[4/3]">
+              <div className="media-frame aspect-[4/3] rounded-[0.9rem]">
                 <Image
                   src={pkg.heroImageUrl || '/media/galaxy-heritage-world/homepage/images/2-1.png'}
                   alt={pkg.title}
@@ -65,7 +65,7 @@ export function PackageCards({ packages }: { packages: PackageItem[] }) {
               </div>
 
               {/* Body */}
-              <div className="flex flex-1 flex-col pt-4">
+              <div className="flex flex-1 flex-col px-2.5 pt-4 pb-2">
                 <div className="flex-1">
                   <div className="meta mb-1.5">
                     <MapPin />
