@@ -34,11 +34,11 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
           {testimonials.slice(0, 3).map((item) => (
             <div
               key={item.id}
-              className="flex flex-col justify-between rounded-card bg-surface p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-8"
+              className="flex flex-col justify-between rounded-card bg-divider p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-8"
             >
               <div>
                 <div className="mb-6 flex items-center justify-between">
-                  <Quote className="h-8 w-8 fill-accent text-accent" />
+                  <Quote className="h-8 w-8 fill-white text-white" />
                   <div className="flex items-center gap-0.5 text-ink">
                     {Array.from({ length: item.rating || 5 }).map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 fill-ink" />
@@ -51,10 +51,10 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
                 </p>
               </div>
 
-              <div className="mt-8 flex flex-wrap items-end justify-between gap-3 border-t border-line pt-5">
+              <div className="mt-8 flex flex-wrap items-end justify-between gap-3 border-t border-ink/15 pt-5">
                 <div>
                   <h4 className="text-sm font-semibold text-ink">{item.customerName}</h4>
-                  <div className="text-xs text-ink-muted">{item.customerLocation || 'Member, India'}</div>
+                  <div className="text-xs text-ink/70">{item.customerLocation || 'Member, India'}</div>
                 </div>
 
                 {item.tripTitle && (
