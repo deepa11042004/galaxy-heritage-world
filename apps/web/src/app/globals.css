@@ -104,6 +104,11 @@
       background-color: var(--color-divider);
     }
   }
+
+  /* Opt a section out of its divider line */
+  .section-plain::after {
+    display: none;
+  }
   /* Wrapper for rounded hero frames: inset from the edges, starts under the utility bar */
   .hero-frame-wrap {
     @apply px-2 sm:px-3;

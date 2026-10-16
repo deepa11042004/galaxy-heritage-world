@@ -26,7 +26,7 @@ interface PackageItem {
 
 export function PackageCards({ packages }: { packages: PackageItem[] }) {
   return (
-    <section className="section bg-white">
+    <section className="section section-plain bg-white">
       <div className="container-page">
         <SectionHeader
           icon={Sparkles}
