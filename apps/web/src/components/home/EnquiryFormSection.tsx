@@ -48,7 +48,7 @@ export function EnquiryFormSection() {
   };
 
   return (
-    <section id="enquiry" className="section bg-white">
+    <section id="enquiry" className="section section-plain bg-white">
       <div className="container-page">
         <div className="relative overflow-hidden rounded-hero bg-[#575547] p-5 sm:p-10 lg:p-14">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
