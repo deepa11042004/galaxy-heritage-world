@@ -53,10 +53,10 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <HeroBanner />
+      <WhyChooseUs />
       <DestinationShowcase destinations={destinations} />
       <PackageCards packages={packages} />
       <ResortShowcase hotels={hotels} />
-      <WhyChooseUs />
       <DayActivitiesSection activities={activities} />
       <TestimonialsSection testimonials={testimonials} />
       <FaqSection faqs={faqs} />

@@ -8,6 +8,9 @@ import {
   Headphones,
   Ticket,
   ArrowRight,
+  Eye,
+  Target,
+  Sparkles,
 } from 'lucide-react';
 
 const pillars = [
@@ -21,7 +24,7 @@ const pillars = [
     icon: ShieldCheck,
     title: '100% Transparent Escalation Matrix',
     description:
-      'We are India&apos;s most accountable holiday provider with an official 3-tier grievance mechanism, documented TAT, and direct executive contact.',
+      "We are India's most accountable holiday provider with an official 3-tier grievance mechanism, documented TAT, and direct executive contact.",
     highlight: true,
   },
   {
@@ -63,26 +66,69 @@ const stats = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-20 bg-[#0B1320] text-white relative overflow-hidden">
-      {/* Subtle gold glow in background */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+    <section className="py-20 bg-[#0B1320] text-white relative overflow-hidden border-b border-white/10">
+      {/* Subtle gold glows in background */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-[#D4AF37] mb-2 px-3.5 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20">
+            <Sparkles className="w-3.5 h-3.5" />
             <span>The Galaxy Heritage World Difference</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white leading-tight">
-            Why Discerning Travelers Choose Us
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mt-2">
+            Why Choose Galaxy Heritage World?
           </h2>
-          <p className="text-sm text-gray-400 mt-3 leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-400 mt-3.5 leading-relaxed">
             Delivering authentic family vacation joy with strict corporate accountability, audited hospitality properties, and dedicated care.
           </p>
         </div>
 
-        {/* 4 Cards already there - kept intact */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Vision & Mission Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-16">
+          {/* Vision Card */}
+          <div className="relative p-7 sm:p-8 rounded-3xl bg-gradient-to-br from-[#141E33] via-[#0E1726] to-[#0A101D] border border-[#D4AF37]/35 shadow-2xl hover:border-[#D4AF37] transition-all duration-300 group overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-44 h-44 bg-[#D4AF37]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#D4AF37]/20 transition-all duration-500" />
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/30 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <Eye className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#D4AF37]">
+                  OUR CORE PURPOSE
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-white tracking-wide">Vision</h3>
+              </div>
+            </div>
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed pl-1">
+              To make every journey comfortable, seamless and memorable through quality travel experiences and personalized service.
+            </p>
+          </div>
+
+          {/* Mission Card */}
+          <div className="relative p-7 sm:p-8 rounded-3xl bg-gradient-to-br from-[#141E33] via-[#0E1726] to-[#0A101D] border border-[#D4AF37]/35 shadow-2xl hover:border-[#D4AF37] transition-all duration-300 group overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-44 h-44 bg-[#D4AF37]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#D4AF37]/20 transition-all duration-500" />
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center border border-[#D4AF37]/30 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-widest text-[#D4AF37]">
+                  OUR GUIDING PRINCIPLE
+                </span>
+                <h3 className="font-serif text-2xl font-bold text-white tracking-wide">Mission</h3>
+              </div>
+            </div>
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed pl-1">
+              We believe in trust, quality, customer care and genuine hospitality, creating lasting relationships through every journey.
+            </p>
+          </div>
+        </div>
+
+        {/* 4 Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {pillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
@@ -90,7 +136,7 @@ export function WhyChooseUs() {
                 key={idx}
                 className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between ${
                   pillar.highlight
-                    ? 'bg-gradient-to-b from-[#141E33] to-[#0E1726] border-[#D4AF37]/40 shadow-xl'
+                    ? 'bg-gradient-to-b from-[#141E33] to-[#0E1726] border-[#D4AF37]/50 shadow-xl'
                     : 'bg-white/5 border-gray-800 hover:border-gray-700'
                 }`}
               >
@@ -122,7 +168,7 @@ export function WhyChooseUs() {
           })}
         </div>
 
-        {/* Headings & Stats Added Below the 4 Cards */}
+        {/* Trust Stats Counters */}
         <div className="mt-16 pt-12 border-t border-white/10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
             {stats.map((stat, idx) => (
