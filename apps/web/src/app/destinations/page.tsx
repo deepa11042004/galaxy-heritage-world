@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Compass, ArrowRight } from 'lucide-react';
-import { getDestinations } from '@/lib/api';
+import { getHotelFilters } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
@@ -19,8 +19,8 @@ export default async function DestinationsPage({
   searchParams: Promise<{ type?: string }>;
 }) {
   const { type } = await searchParams;
-  const res = await getDestinations({ type }).catch(() => ({ data: [] }));
-  const destinations = res.data || [];
+  const res = await getHotelFilters().catch(() => ({ data: [] as any[] }));
+  const cities = (res.data || []).filter((c) => !type || c.locationType === type);
 
   return (
     <div>
@@ -55,12 +55,16 @@ export default async function DestinationsPage({
       {/* Destinations Grid */}
       <div className="container-page section">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {destinations.map((dest: any) => (
-            <Link key={dest.id} href={`/destinations/${dest.slug}`} className="group flex flex-col">
+          {cities.map((city) => (
+            <Link
+              key={`${city.locationType}-${city.location}`}
+              href={`/hotels-resorts?type=${city.locationType ?? ''}&location=${encodeURIComponent(city.location)}`}
+              className="group flex flex-col"
+            >
               <div className="media-frame aspect-[4/5]">
                 <Image
-                  src={dest.heroImageUrl || '/media/galaxy-heritage-world/destinations/images/1-1.png'}
-                  alt={dest.name}
+                  src={city.imageUrl || '/media/galaxy-heritage-world/destinations/images/1-1.png'}
+                  alt={city.location}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -68,7 +72,7 @@ export default async function DestinationsPage({
 
                 <div className="absolute top-4 left-4">
                   <span className="pill">
-                    {dest.type === 'DOMESTIC' ? 'Domestic Escape' : 'International Exchange'}
+                    {city.locationType === 'DOMESTIC' ? 'Domestic Escape' : 'International Exchange'}
                   </span>
                 </div>
               </div>
@@ -77,20 +81,17 @@ export default async function DestinationsPage({
                 <div className="flex-1">
                   <div className="meta mb-1.5">
                     <MapPin />
-                    <span>{dest.region}, {dest.country}</span>
+                    <span>{city.country}</span>
                   </div>
-                  <h2 className="text-xl font-semibold tracking-tight text-ink">{dest.name}</h2>
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-muted">
-                    {dest.tagline || dest.description}
-                  </p>
+                  <h2 className="text-xl font-semibold tracking-tight text-ink">{city.location}</h2>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between border-t border-line pt-4 text-xs">
                   <span className="font-medium text-ink-muted">
-                    {dest._count?.hotels ? `${dest._count.hotels} Associated Resorts` : 'Resorts Available'}
+                    {city.count} {city.count === 1 ? 'Property' : 'Properties'}
                   </span>
                   <span className="link-arrow">
-                    <span>View Destination</span>
+                    <span>View Hotels</span>
                     <ArrowRight />
                   </span>
                 </div>

@@ -69,6 +69,13 @@ export async function getHotelFilters(_req: Request, res: Response, next: NextFu
       _count: { _all: true },
       orderBy: { locationName: 'asc' },
     });
+    const covers = await prisma.hotel.findMany({
+      where: { isPublished: true, deletedAt: null, imageUrl: { not: '' } },
+      select: { locationName: true, imageUrl: true },
+      orderBy: [{ featured: 'desc' }, { ratingStars: 'desc' }, { name: 'asc' }],
+    });
+    const cover = new Map<string, string>();
+    for (const c of covers) if (!cover.has(c.locationName)) cover.set(c.locationName, c.imageUrl);
     res.json({
       success: true,
       data: rows.map((r) => ({
@@ -76,6 +83,7 @@ export async function getHotelFilters(_req: Request, res: Response, next: NextFu
         location: r.locationName,
         country: r.country,
         count: r._count._all,
+        imageUrl: cover.get(r.locationName) ?? null,
       })),
     });
   } catch (error) {

@@ -94,7 +94,7 @@ export async function getHotels(params?: HotelListParams) {
 }
 
 export async function getHotelFilters() {
-  return fetchApi<{ locationType: string | null; location: string; country: string; count: number }[]>(
+  return fetchApi<{ locationType: string | null; location: string; country: string; count: number; imageUrl: string | null }[]>(
     '/hotels/filters',
   );
 }
