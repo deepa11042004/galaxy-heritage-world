@@ -1,23 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PhoneCall, Mail, MapPin, Clock, Building, Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { PhoneCall, Mail, MapPin, Send, CheckCircle2, AlertCircle, Building2, Clock } from 'lucide-react';
 import { submitEnquiry } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
 
-export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    subject: 'General Holiday Query',
-    message: '',
-    consent: true,
-  });
+const BRANCHES = [
+  { city: 'Mumbai', address: '309 New Link Road Andheri West mumbai 400053' },
+  { city: 'Chennai', address: '1,766 Shakti Tower Anna Salai Thousand Light, Chennai 600002' },
+  { city: 'Ghaziabad', address: 'C-33, Kaushambi, Ghaziabad, U.P. 201012' },
+  { city: 'Lucknow', address: 'Upcoming Office', upcoming: true },
+  { city: 'Pune', address: 'Upcoming Office', upcoming: true },
+];
 
+const EMPTY_FORM = { firstName: '', lastName: '', email: '', phone: '', message: '' };
+
+export default function ContactPage() {
+  const [formData, setFormData] = useState(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [successRef, setSuccessRef] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -28,27 +29,20 @@ export default function ContactPage() {
       setSubmitting(true);
       setError(null);
       const res = await submitEnquiry({
-        name: formData.name,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
         email: formData.email,
         phone: formData.phone,
-        city: formData.city,
-        destinationInterest: formData.subject,
+        // The live contact form has no city field; the enquiry API requires one.
+        city: 'Not specified',
+        destinationInterest: 'General Query',
         message: formData.message,
         consent: true,
         sourcePage: '/contact',
       });
       setSuccessRef(res.referenceNumber || 'GHW-ENQ-SUCCESS');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        city: '',
-        subject: 'General Holiday Query',
-        message: '',
-        consent: true,
-      });
+      setFormData(EMPTY_FORM);
     } catch (err: any) {
-      setError(err.message || 'Unable to submit your contact message. Please call our toll-free desk.');
+      setError(err.message || 'Unable to submit your enquiry. Please call our toll-free desk.');
     } finally {
       setSubmitting(false);
     }
@@ -58,89 +52,59 @@ export default function ContactPage() {
     <div>
       <PageHero
         icon={MapPin}
-        eyebrow="Connect With Us"
+        eyebrow="Contact Us"
         title={
           <>
-            Contact <span className="text-ink-muted">Galaxy Heritage World</span>
+            Get in Touch <span className="text-ink-muted">with Us</span>
           </>
         }
-        subtitle="Reach out to our customer care desk, registered corporate headquarters, or travel concierge team."
+        subtitle="Have questions, need assistance, or want to explore our services? We're here to help! Contact us today"
       />
 
-      <div className="container-page section">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-          {/* Left Column: Office Coordinates & Credentials */}
-          <div className="space-y-4 lg:col-span-5 lg:space-y-5">
-            {/* Toll Free Card */}
-            <div className="space-y-4 rounded-card bg-accent p-7 sm:p-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-accent">
-                <PhoneCall className="h-5 w-5" />
-              </div>
-              <h3 className="text-xl font-semibold text-ink">Toll-Free Assistance</h3>
-              <p className="text-sm text-ink/70">
-                Call us toll-free from any network across India for vacation planning, voucher verification, or resort reservations.
-              </p>
+      <div className="container-page section section-plain">
+        {/* Quick contact cards */}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="card flex items-start gap-4 p-6">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-ink text-accent">
+              <Mail className="h-5 w-5" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-medium text-ink-muted">E-Mail</div>
               <a
-                href="tel:18008436114"
-                className="inline-block text-3xl font-medium tracking-tight text-ink hover:underline"
+                href="mailto:info@galaxyheritageworld.com"
+                className="break-all text-sm font-semibold text-ink hover:text-accent-strong"
               >
-                1800-843-6114
+                Info@galaxyheritageworld.com
               </a>
-              <div className="text-xs text-ink/70">
-                Direct Line: <strong className="text-ink">+91 99990 01122</strong>
-              </div>
-            </div>
-
-            {/* Registered Head Office */}
-            <div className="card space-y-3 p-7 sm:p-8">
-              <div className="eyebrow">
-                <Building />
-                <span>Registered Corporate HQ</span>
-              </div>
-              <h4 className="text-lg font-semibold text-ink">GALAXY HERITAGE WORLD RESORTS PVT LTD</h4>
-              <p className="text-sm leading-relaxed text-ink-muted">
-                Lower Ground, C-33, Ram Nagar, Kaushambi, Ghaziabad, Uttar Pradesh 201012
-              </p>
-              <div className="rounded-xl bg-surface p-3 text-xs text-ink-muted">
-                <strong className="text-ink">Corporate CIN:</strong> U74999DL2022PTC407515
-              </div>
-            </div>
-
-            {/* Email & Support Hours */}
-            <div className="card space-y-3 p-7 sm:p-8">
-              <div className="eyebrow">
-                <Mail />
-                <span>Support Inboxes</span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div>
-                  <span className="text-ink-muted">Customer Support:</span>{' '}
-                  <a
-                    href="mailto:info@galaxyheritageworld.com"
-                    className="break-all font-semibold text-ink hover:text-accent-strong"
-                  >
-                    info@galaxyheritageworld.com
-                  </a>
-                </div>
-                <div>
-                  <span className="text-ink-muted">Grievance Desk:</span>{' '}
-                  <a
-                    href="mailto:grievance@galaxyheritageworld.com"
-                    className="break-all font-semibold text-ink hover:text-accent-strong"
-                  >
-                    grievance@galaxyheritageworld.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-1.5 border-t border-line pt-3 text-xs text-ink-muted">
-                  <Clock className="h-3.5 w-3.5 text-accent-strong" />
-                  <span>Mon - Sat: 10:00 AM - 6:30 PM</span>
-                </div>
-              </div>
             </div>
           </div>
+          <div className="card flex items-start gap-4 p-6">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-ink">
+              <PhoneCall className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-xs font-medium text-ink-muted">Phone Number</div>
+              <a href="tel:18008436114" className="text-sm font-semibold text-ink hover:text-accent-strong">
+                1800-843-6114
+              </a>
+            </div>
+          </div>
+          <div className="card flex items-start gap-4 p-6">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent text-ink">
+              <PhoneCall className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-xs font-medium text-ink-muted">Phone Number</div>
+              <a href="tel:9355440328" className="text-sm font-semibold text-ink hover:text-accent-strong">
+                9355440328
+              </a>
+            </div>
+          </div>
+        </div>
 
-          {/* Right Column: Contact Form */}
-          <div className="card p-6 sm:p-10 lg:col-span-7">
+        {/* Form + map */}
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+          <div className="card p-6 sm:p-10">
             {successRef ? (
               <div className="space-y-4 py-12 text-center">
                 <div className="success-badge">
@@ -161,84 +125,67 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
-                <h2 className="mb-1 text-2xl font-medium tracking-tight text-ink sm:text-3xl">
-                  Send Us a Direct Message
-                </h2>
-                <p className="mb-6 text-sm text-ink-muted">
-                  Fill in the form below and our travel desk will reach out immediately.
-                </p>
+                <div className="eyebrow">
+                  <span>GET IN TOUCH</span>
+                </div>
+                <h2 className="text-2xl font-medium tracking-tight text-ink sm:text-3xl">CONTACT US!</h2>
+                <p className="mb-4 text-sm text-ink-muted">Fill the form for any query</p>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="label">Full Name *</label>
+                    <label className="label">First Name *</label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Anjali Nair"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="First Name"
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                       className="input"
                     />
                   </div>
                   <div>
-                    <label className="label">Email Address *</label>
+                    <label className="label">Last Name</label>
+                    <input
+                      type="text"
+                      placeholder="Last Name"
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      className="input"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div>
+                    <label className="label">Email *</label>
                     <input
                       type="email"
                       required
-                      placeholder="e.g. anjali@example.com"
+                      placeholder="Email Address"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="input"
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="label">Phone Number *</label>
+                    <label className="label">Contact Number *</label>
                     <input
                       type="tel"
                       required
-                      placeholder="e.g. +91 98765 43210"
+                      placeholder="Contact Number"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="input"
                     />
                   </div>
-                  <div>
-                    <label className="label">City of Residence *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Delhi, Noida, Bengaluru"
-                      value={formData.city}
-                      onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                      className="input"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="label">Subject / Query Type</label>
-                  <select
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="input"
-                  >
-                    <option value="General Holiday Query">General Holiday Query</option>
-                    <option value="Resort Reservation Assistance">Resort Reservation Assistance</option>
-                    <option value="Voucher Redemption Query">Voucher Redemption Query</option>
-                    <option value="Corporate / Group Outing">Corporate / Group Outing</option>
-                    <option value="Grievance / Feedback">Grievance / Feedback</option>
-                  </select>
                 </div>
 
                 <div>
                   <label className="label">Your Message *</label>
                   <textarea
-                    rows={4}
+                    rows={5}
                     required
-                    placeholder="How can we assist with your vacation plans?"
+                    placeholder="Your Message"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="input"
@@ -253,14 +200,58 @@ export default function ContactPage() {
                 )}
 
                 <button type="submit" disabled={submitting} className={buttonVariants({ size: 'lg', block: true })}>
-                  <span>{submitting ? 'Sending Message...' : 'Send Message to Travel Desk'}</span>
+                  <span>{submitting ? 'Sending...' : 'Send Enquiry'}</span>
                   <Send />
                 </button>
               </form>
             )}
           </div>
+
+          <div className="media-frame min-h-[22rem] lg:min-h-full">
+            <iframe
+              title="Galaxy Heritage World location map"
+              src="https://maps.google.com/maps?q=galaxy%20holiday%20world&t=m&z=9&output=embed&iwloc=near"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full border-0"
+            />
+          </div>
         </div>
       </div>
+
+      {/* Our Address */}
+      <section className="container-page section">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <div className="eyebrow mx-auto">
+            <Building2 />
+            <span>Our Address</span>
+          </div>
+          <h2 className="heading-section mt-4 text-ink">
+            Welcome to <span className="text-ink-muted">GHW</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            We are delighted to serve you from our conveniently located branches. Here&apos;s where you can find us:
+          </p>
+          <p className="mt-2 text-sm text-ink-muted sm:text-base">
+            We are excited to expand our presence with new offices in Lucknow and Pune.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {BRANCHES.map((b) => (
+            <div
+              key={b.city}
+              className={cn('card p-6', b.upcoming && 'border-dashed bg-surface')}
+            >
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-accent">
+                {b.upcoming ? <Clock className="h-4 w-4" /> : <MapPin className="h-4 w-4" />}
+              </div>
+              <h3 className="text-lg font-semibold text-ink">{b.city}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-ink-muted">{b.address}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

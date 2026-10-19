@@ -238,6 +238,10 @@ export function Navbar() {
               <Link href="/travel-desk" className={navLinkClass(pathname === '/travel-desk')}>
                 Travel Desk
               </Link>
+
+              <Link href="/contact" className={navLinkClass(pathname === '/contact')}>
+                Contact
+              </Link>
             </div>
 
             {/* Right: primary CTA */}
