@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { HeroBanner } from '@/components/home/HeroBanner';
 import { DestinationShowcase } from '@/components/home/DestinationShowcase';
 import { PackageCards } from '@/components/home/PackageCards';
@@ -9,9 +9,9 @@ import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { FaqSection } from '@/components/home/FaqSection';
 import { EnquiryFormSection } from '@/components/home/EnquiryFormSection';
 import {
-  getDestinations,
   getPackages,
   getHotels,
+  getHotelFilters,
   getActivities,
   getFaqs,
   getTestimonials,
@@ -29,7 +29,7 @@ export default async function HomePage() {
     faqsRes,
     testimonialsRes,
   ] = await Promise.allSettled([
-    getDestinations(),
+    getHotelFilters(),
     getPackages(),
     getHotels({ limit: 6 }),
     getActivities(),
