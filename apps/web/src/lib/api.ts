@@ -77,6 +77,7 @@ export interface HotelListParams {
   search?: string;
   page?: number;
   limit?: number;
+  imported?: boolean;
 }
 
 export async function getHotels(params?: HotelListParams) {
@@ -89,6 +90,7 @@ export async function getHotels(params?: HotelListParams) {
   if (params?.search) query.set('search', params.search);
   if (params?.page) query.set('page', String(params.page));
   if (params?.limit) query.set('limit', String(params.limit));
+  if (params?.imported) query.set('imported', 'true');
   const qs = query.toString() ? `?${query.toString()}` : '';
   return fetchApi<any[]>(`/hotels${qs}`);
 }

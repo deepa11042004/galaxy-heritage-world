@@ -6,7 +6,7 @@ import { HotelCategory } from '@prisma/client';
 
 export async function getHotels(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { destinationId, category, featured, search, locationType, location, hotelType, page, limit } = req.query;
+    const { destinationId, category, featured, search, locationType, location, hotelType, page, limit, imported } = req.query;
 
     const where: any = { isPublished: true, deletedAt: null };
 
@@ -18,6 +18,11 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
       if (category === 'EXCHANGE') where.category = HotelCategory.EXCHANGE;
     }
 
+    // imported=true: only catalogue hotels (have a hotel code and photos)
+    if (imported === 'true') {
+      where.hotelCode = { not: null };
+      where.imageUrl = { not: '' };
+    }
     if (locationType === 'DOMESTIC' || locationType === 'INTERNATIONAL') where.locationType = locationType;
     if (typeof location === 'string' && location.trim()) where.locationName = location.trim();
     if (typeof hotelType === 'string' && /^[A-Z_]{2,30}$/.test(hotelType)) where.hotelType = hotelType;
