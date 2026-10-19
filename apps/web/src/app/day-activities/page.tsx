@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Clock, MapPin, ArrowRight, Sun } from 'lucide-react';
+import { Clock, MapPin, ArrowRight, Sun, Mountain, Waves, Sparkles } from 'lucide-react';
+import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed';
+import { DAY_OUTINGS as D } from '@/lib/day-outings';
 import { getActivities } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 
@@ -9,6 +11,12 @@ export const metadata = {
   title: 'Day Activities & Family Picnics | Galaxy Heritage World',
   description:
     'Experience traditional rural village farms, heritage picnics, adventure activities, and exciting water parks across Delhi NCR, Haryana, and MP.',
+};
+
+const FARM_STATS: Record<string, [string, string][]> = {
+  'Rangmanch Farms': [['70+', 'Activities'], ['40+', 'Food Options'], ['2', 'Kids Zone'], ['5,000+', 'Happy Family']],
+  'Yaduvanshi Farms': [['50+', 'Activities'], ['40+', 'Food Options'], ['1', 'Fun Zone'], ['3,400+', 'Happy Family']],
+  'Madhavgarh Farms': [['50+', 'Activities'], ['40+', 'Food Options'], ['1', 'Kids Zone'], ['5,000+', 'Happy Family']],
 };
 
 export const revalidate = 60;
@@ -29,6 +37,86 @@ export default async function DayActivitiesPage() {
         }
         subtitle="Recharge with a full day of rural fun, cultural performances, pottery, tractor rides, adventure rope courses, and unlimited authentic food."
       />
+
+      <section className="container-page section">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <h2 className="heading-section text-ink">
+            Why Choose <span className="text-ink-muted">Our Day Outings?</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">{D.why}</p>
+          <h3 className="mt-8 text-xl font-semibold text-ink">{D.stepsTitle}</h3>
+          <p className="mt-2 text-sm text-ink-muted sm:text-base">{D.stepsText}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {D.ideas.map((idea, i) => {
+            const Icon = [Mountain, Waves, Sparkles][i];
+            return (
+              <div key={idea.title} className="card p-7">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-accent">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-ink">{idea.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-muted">{idea.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Featured farms with gallery and video */}
+      <section className="container-page section space-y-10">
+        {D.farms.map((farm) => (
+          <div key={farm.name} className="card p-3 sm:p-4">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <div className="space-y-4 p-4 sm:p-6">
+                <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{farm.name}</h2>
+                <p className="text-sm leading-relaxed text-ink-muted sm:text-base">{farm.desc}</p>
+                <div className="grid grid-cols-4 gap-2 border-y border-line py-4 text-center">
+                  {(FARM_STATS[farm.name] ?? []).map(([value, label]) => (
+                    <div key={label}>
+                      <p className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{value}</p>
+                      <p className="mt-1 text-xs text-ink-muted sm:text-sm">{label}</p>
+                    </div>
+                  ))}
+                </div>
+                <YouTubeEmbed videoId={farm.video} title={`${farm.name} video`} />
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                {farm.images.slice(0, 6).map((src, i) => (
+                  <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
+                    <Image src={src} alt={`${farm.name} ${i + 1}`} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {[
+        { title: D.outingTitle, text: D.outingText, items: D.outing },
+        { title: D.waterTitle, text: D.waterText, items: D.water },
+      ].map((sec) => (
+        <section key={sec.title} className="container-page section">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <h2 className="heading-section text-ink">{sec.title}</h2>
+            <p className="mt-3 text-sm text-ink-muted sm:text-base">{sec.text}</p>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {sec.items.map((c) => (
+              <div key={c.name} className="card card-hover group flex flex-col p-2.5">
+                <div className="media-frame relative aspect-[4/3] rounded-[0.9rem]">
+                  <Image src={c.image} alt={c.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
+                </div>
+                <div className="px-2.5 pt-4 pb-2">
+                  <h3 className="text-xl font-semibold tracking-tight text-ink">{c.name}</h3>
+                  <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-ink-muted">{c.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
       <div className="container-page section">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
