@@ -156,6 +156,11 @@ model Hotel {
   amenities     Json?
   description   String        @db.Text
   sourceUrl     String?       @map("source_url") @db.VarChar(500)
+  hotelCode     String?       @unique @map("hotel_code") @db.VarChar(30)
+  hotelType     String?       @map("hotel_type") @db.VarChar(30)
+  locationType  String?       @map("location_type") @db.VarChar(20)
+  address       String?       @db.Text
+  mapLink       String?       @map("map_link") @db.Text
   featured      Boolean       @default(false)
   isPublished   Boolean       @default(true) @map("is_published")
   deletedAt     DateTime?     @map("deleted_at")
@@ -165,6 +170,7 @@ model Hotel {
   destination   Destination?  @relation(fields: [destinationId], references: [id], onDelete: SetNull)
 
   @@index([category, isPublished, featured])
+  @@index([locationType, locationName])
   @@index([destinationId])
   @@map("hotels")
 }

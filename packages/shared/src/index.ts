@@ -120,6 +120,11 @@ export const HotelSchema = z.object({
   gallery: z.array(z.string()).optional().default([]),
   amenities: z.array(z.string()).optional().default([]),
   description: z.string().min(10),
+  hotelCode: z.string().max(30).optional().nullable(),
+  hotelType: z.string().max(30).optional().nullable(),
+  locationType: z.enum(['DOMESTIC', 'INTERNATIONAL']).optional().nullable(),
+  address: z.string().optional().nullable(),
+  mapLink: z.string().optional().nullable(),
   featured: z.boolean().default(false),
   isPublished: z.boolean().default(true),
 });

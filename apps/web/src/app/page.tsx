@@ -31,7 +31,7 @@ export default async function HomePage() {
   ] = await Promise.allSettled([
     getDestinations(),
     getPackages(),
-    getHotels(),
+    getHotels({ limit: 6 }),
     getActivities(),
     getFaqs(),
     getTestimonials(),

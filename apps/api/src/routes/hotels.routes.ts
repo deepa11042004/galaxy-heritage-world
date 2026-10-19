@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   getHotels,
+  getHotelFilters,
   getHotelBySlug,
   createHotel,
   updateHotel,
@@ -11,6 +12,7 @@ import { authenticate, authorizeRoles } from '../middlewares/auth.js';
 export const hotelsRouter = Router();
 
 hotelsRouter.get('/', getHotels);
+hotelsRouter.get('/filters', getHotelFilters);
 hotelsRouter.get('/:slug', getHotelBySlug);
 hotelsRouter.post('/', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN'), createHotel);
 hotelsRouter.put('/:id', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN'), updateHotel);

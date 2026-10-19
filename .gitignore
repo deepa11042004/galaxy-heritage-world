@@ -32,3 +32,9 @@ yarn-error.log*
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Large source archives / CSV exports (never commit)
+*.zip
+hotels_export.csv
+New_Hotels_Import.csv
+import-data/

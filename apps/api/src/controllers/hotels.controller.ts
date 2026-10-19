@@ -6,7 +6,7 @@ import { HotelCategory } from '@prisma/client';
 
 export async function getHotels(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { destinationId, category, featured, search } = req.query;
+    const { destinationId, category, featured, search, locationType, location, hotelType, page, limit } = req.query;
 
     const where: any = { isPublished: true, deletedAt: null };
 
@@ -18,6 +18,10 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
       if (category === 'EXCHANGE') where.category = HotelCategory.EXCHANGE;
     }
 
+    if (locationType === 'DOMESTIC' || locationType === 'INTERNATIONAL') where.locationType = locationType;
+    if (typeof location === 'string' && location.trim()) where.locationName = location.trim();
+    if (typeof hotelType === 'string' && /^[A-Z_]{2,30}$/.test(hotelType)) where.hotelType = hotelType;
+
     if (typeof search === 'string' && search.trim()) {
       where.OR = [
         { name: { contains: search.trim() } },
@@ -27,15 +31,53 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
       ];
     }
 
-    const hotels = await prisma.hotel.findMany({
-      where,
-      orderBy: [{ featured: 'desc' }, { ratingStars: 'desc' }, { name: 'asc' }],
-      include: {
-        destination: { select: { id: true, name: true, slug: true, region: true } },
-      },
-    });
+    // Pagination is opt-in so existing callers keep receiving the full list.
+    const paged = page !== undefined || limit !== undefined;
+    const take = paged ? Math.min(Math.max(parseInt(String(limit), 10) || 24, 1), 100) : undefined;
+    const pageNo = paged ? Math.max(parseInt(String(page), 10) || 1, 1) : 1;
 
-    res.json({ success: true, count: hotels.length, data: hotels });
+    const [total, hotels] = await Promise.all([
+      prisma.hotel.count({ where }),
+      prisma.hotel.findMany({
+        where,
+        orderBy: [{ featured: 'desc' }, { locationName: 'asc' }, { ratingStars: 'desc' }, { name: 'asc' }],
+        ...(paged ? { skip: (pageNo - 1) * take!, take } : {}),
+        include: {
+          destination: { select: { id: true, name: true, slug: true, region: true } },
+        },
+      }),
+    ]);
+
+    res.json({
+      success: true,
+      count: hotels.length,
+      total,
+      page: pageNo,
+      pages: paged ? Math.max(Math.ceil(total / take!), 1) : 1,
+      data: hotels,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getHotelFilters(_req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const rows = await prisma.hotel.groupBy({
+      by: ['locationType', 'locationName', 'country'],
+      where: { isPublished: true, deletedAt: null },
+      _count: { _all: true },
+      orderBy: { locationName: 'asc' },
+    });
+    res.json({
+      success: true,
+      data: rows.map((r) => ({
+        locationType: r.locationType,
+        location: r.locationName,
+        country: r.country,
+        count: r._count._all,
+      })),
+    });
   } catch (error) {
     next(error);
   }

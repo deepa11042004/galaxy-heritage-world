@@ -7,6 +7,8 @@ export interface ApiResponse<T> {
   data: T;
   count?: number;
   total?: number;
+  page?: number;
+  pages?: number;
   message?: string;
   referenceNumber?: string;
 }
@@ -66,12 +68,35 @@ export async function getPackageBySlug(slug: string) {
 }
 
 // Hotels & Resorts endpoints
-export async function getHotels(params?: { category?: string; featured?: boolean }) {
+export interface HotelListParams {
+  category?: string;
+  featured?: boolean;
+  locationType?: string;
+  location?: string;
+  hotelType?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}
+
+export async function getHotels(params?: HotelListParams) {
   const query = new URLSearchParams();
   if (params?.category) query.set('category', params.category);
   if (params?.featured) query.set('featured', 'true');
+  if (params?.locationType) query.set('locationType', params.locationType);
+  if (params?.location) query.set('location', params.location);
+  if (params?.hotelType) query.set('hotelType', params.hotelType);
+  if (params?.search) query.set('search', params.search);
+  if (params?.page) query.set('page', String(params.page));
+  if (params?.limit) query.set('limit', String(params.limit));
   const qs = query.toString() ? `?${query.toString()}` : '';
   return fetchApi<any[]>(`/hotels${qs}`);
+}
+
+export async function getHotelFilters() {
+  return fetchApi<{ locationType: string | null; location: string; country: string; count: number }[]>(
+    '/hotels/filters',
+  );
 }
 
 export async function getHotelBySlug(slug: string) {

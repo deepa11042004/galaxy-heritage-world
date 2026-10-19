@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, MapPin, Palmtree, ArrowRight } from 'lucide-react';
-import { getHotels } from '@/lib/api';
+import { Star, MapPin, Palmtree, ArrowRight, Search } from 'lucide-react';
+import { getHotels, getHotelFilters } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
@@ -13,14 +13,44 @@ export const metadata = {
 
 export const revalidate = 60;
 
+const PAGE_SIZE = 24;
+
+type Search = { category?: string; type?: string; location?: string; q?: string; page?: string };
+
+function buildHref(current: Search, patch: Search) {
+  const merged: Search = { ...current, ...patch };
+  const qs = new URLSearchParams();
+  (Object.keys(merged) as (keyof Search)[]).forEach((k) => {
+    if (merged[k]) qs.set(k, merged[k]!);
+  });
+  const str = qs.toString();
+  return str ? `/hotels-resorts?${str}` : '/hotels-resorts';
+}
+
 export default async function HotelsResortsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<Search>;
 }) {
-  const { category } = await searchParams;
-  const res = await getHotels({ category }).catch(() => ({ data: [] }));
+  const sp = await searchParams;
+  const { category, type, location, q } = sp;
+  const page = Math.max(parseInt(sp.page || '1', 10) || 1, 1);
+
+  const [res, filtersRes] = await Promise.all([
+    getHotels({
+      category,
+      locationType: type,
+      location,
+      search: q,
+      page,
+      limit: PAGE_SIZE,
+    }).catch(() => ({ data: [] as any[], total: 0, pages: 1 })),
+    getHotelFilters().catch(() => ({ data: [] as any[] })),
+  ]);
   const hotels = res.data || [];
+  const total = (res as any).total ?? hotels.length;
+  const pages = (res as any).pages ?? 1;
+  const locations = (filtersRes.data || []).filter((l: any) => !type || l.locationType === type);
 
   return (
     <div>
@@ -36,31 +66,88 @@ export default async function HotelsResortsPage({
       >
         {/* Category Switcher Pills */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-          <Link href="/hotels-resorts" data-active={!category} className="chip">
+          <Link href={buildHref(sp, { category: '', page: '' })} data-active={!category} className="chip">
             All 43+ Resorts
           </Link>
           <Link
-            href="/hotels-resorts?category=ASSOCIATED"
+            href={buildHref(sp, { category: 'ASSOCIATED', page: '' })}
             data-active={category === 'ASSOCIATED'}
             className="chip"
           >
             Associated Partners
           </Link>
           <Link
-            href="/hotels-resorts?category=INTERNAL"
+            href={buildHref(sp, { category: 'INTERNAL', page: '' })}
             data-active={category === 'INTERNAL'}
             className="chip"
           >
             Internal Properties
           </Link>
         </div>
+
+        {/* Domestic / International */}
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          <Link href={buildHref(sp, { type: '', location: '', page: '' })} data-active={!type} className="chip">
+            All Locations
+          </Link>
+          <Link
+            href={buildHref(sp, { type: 'DOMESTIC', location: '', page: '' })}
+            data-active={type === 'DOMESTIC'}
+            className="chip"
+          >
+            Domestic
+          </Link>
+          <Link
+            href={buildHref(sp, { type: 'INTERNATIONAL', location: '', page: '' })}
+            data-active={type === 'INTERNATIONAL'}
+            className="chip"
+          >
+            International
+          </Link>
+        </div>
+
+        {/* Location select + search (plain GET form) */}
+        <form method="get" action="/hotels-resorts" className="mx-auto mt-5 flex max-w-2xl flex-col gap-2 sm:flex-row">
+          {category && <input type="hidden" name="category" value={category} />}
+          {type && <input type="hidden" name="type" value={type} />}
+          <select name="location" defaultValue={location || ''} aria-label="Filter by location" className="input sm:w-56">
+            <option value="">All destinations</option>
+            {locations.map((l: any) => (
+              <option key={`${l.locationType}-${l.location}`} value={l.location}>
+                {l.location} ({l.count})
+              </option>
+            ))}
+          </select>
+          <div className="relative flex-1">
+            <Search className="absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-ink-subtle" />
+            <input
+              type="search"
+              name="q"
+              defaultValue={q || ''}
+              placeholder="Search hotels..."
+              aria-label="Search hotels"
+              className="input w-full pl-10"
+            />
+          </div>
+          <button type="submit" className="btn btn-dark">Search</button>
+        </form>
       </PageHero>
 
       {/* Resorts Grid */}
       <div className="container-page section">
+        <p className="mb-6 text-sm text-ink-muted">
+          {total} {total === 1 ? 'property' : 'properties'} found
+        </p>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {hotels.map((hotel: any) => (
-            <div key={hotel.id} className="card card-hover group flex flex-col p-2.5">
+          {hotels.map((hotel: any, i: number) => (
+            <React.Fragment key={hotel.id}>
+              {(i === 0 || hotels[i - 1].locationName !== hotel.locationName) && (
+                <h2 className="col-span-full mt-4 border-b border-line pb-2 text-lg font-semibold text-ink first:mt-0">
+                  {hotel.locationName}
+                  <span className="ml-2 text-xs font-medium text-ink-muted">{hotel.country}</span>
+                </h2>
+              )}
+            <div className="card card-hover group flex flex-col p-2.5">
               <div className="media-frame aspect-[4/3] rounded-[0.9rem]">
                 <Image
                   src={hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png'}
@@ -88,7 +175,7 @@ export default async function HotelsResortsPage({
                     <MapPin />
                     <span>{hotel.locationName}{hotel.state ? `, ${hotel.state}` : ''}</span>
                   </div>
-                  <h2 className="text-xl font-semibold leading-snug tracking-tight text-ink">{hotel.name}</h2>
+                  <h3 className="text-xl font-semibold leading-snug tracking-tight text-ink">{hotel.name}</h3>
                   <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-muted">{hotel.description}</p>
 
                   {Array.isArray(hotel.amenities) && hotel.amenities.length > 0 && (
@@ -111,8 +198,33 @@ export default async function HotelsResortsPage({
                 </div>
               </div>
             </div>
+            </React.Fragment>
           ))}
         </div>
+
+        {hotels.length === 0 && (
+          <div className="rounded-card bg-surface p-8 text-center text-sm text-ink-muted">
+            No properties match these filters.
+          </div>
+        )}
+
+        {pages > 1 && (
+          <nav aria-label="Pagination" className="mt-10 flex items-center justify-center gap-3">
+            {page > 1 && (
+              <Link href={buildHref(sp, { page: String(page - 1) })} className="btn btn-outline btn-sm">
+                Previous
+              </Link>
+            )}
+            <span className="text-sm text-ink-muted">
+              Page {page} of {pages}
+            </span>
+            {page < pages && (
+              <Link href={buildHref(sp, { page: String(page + 1) })} className="btn btn-outline btn-sm">
+                Next
+              </Link>
+            )}
+          </nav>
+        )}
       </div>
     </div>
   );
