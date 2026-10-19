@@ -1,4 +1,7 @@
+// NEXT_PUBLIC_* values are inlined at build time. Server-side rendering (inside the web
+// container) must therefore use a runtime variable (API_INTERNAL_URL, e.g. http://api:4000/api/v1).
 const API_BASE_URL =
+  (typeof window === 'undefined' ? process.env.API_INTERNAL_URL : undefined) ||
   process.env.NEXT_PUBLIC_API_URL ||
   (typeof window === 'undefined' ? 'http://127.0.0.1:4000/api/v1' : 'http://localhost:4000/api/v1');
 
