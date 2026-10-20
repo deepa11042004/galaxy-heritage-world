@@ -9,7 +9,7 @@ import {
 } from '../controllers/media.controller.js';
 import { authenticate, authorizeRoles } from '../middlewares/auth.js';
 
-const uploadDir = path.resolve(process.cwd(), '../../public/media/uploads');
+const uploadDir = path.resolve(process.cwd(), 'public/media/uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }

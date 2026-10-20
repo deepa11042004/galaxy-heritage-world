@@ -30,14 +30,14 @@ export async function getMediaAssets(req: Request, res: Response, next: NextFunc
 
 export async function getMediaManifest(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const manifestPath = path.resolve(process.cwd(), '../../public/media/galaxy-heritage-world/media-manifest.json');
+    const manifestPath = path.resolve(process.cwd(), 'public/media/galaxy-heritage-world/media-manifest.json');
     if (fs.existsSync(manifestPath)) {
       const data = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
       res.json({ success: true, total: data.length, data });
       return;
     }
 
-    const fallbackPath = path.resolve(process.cwd(), 'public/media/galaxy-heritage-world/media-manifest.json');
+    const fallbackPath = path.resolve(process.cwd(), '../frontend/public/media/galaxy-heritage-world/media-manifest.json');
     if (fs.existsSync(fallbackPath)) {
       const data = JSON.parse(fs.readFileSync(fallbackPath, 'utf-8'));
       res.json({ success: true, total: data.length, data });
