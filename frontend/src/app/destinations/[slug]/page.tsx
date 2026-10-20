@@ -112,6 +112,7 @@ export default async function DestinationDetailPage({
                           fill
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           sizes="(max-width: 640px) 100vw, 384px"
+                        quality={90}
                         />
                       </div>
                       <div className="pt-3">
@@ -138,6 +139,7 @@ export default async function DestinationDetailPage({
                           fill
                           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                           sizes="(max-width: 640px) 100vw, 384px"
+                        quality={90}
                         />
                         <div className="absolute top-3 left-3 pill">
                           {pkg.durationDays}D / {pkg.durationNights}N

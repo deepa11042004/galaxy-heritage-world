@@ -92,6 +92,7 @@ export default async function HotelDetailPage({
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 50vw, 33vw"
+                        quality={90}
                       />
                     </div>
                   ))}
