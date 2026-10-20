@@ -4,23 +4,21 @@
   "private": true,
   "description": "Galaxy Heritage World - Modernized Travel & Vacation Ownership Platform",
   "workspaces": [
-    "packages/shared",
-    "apps/api",
-    "apps/web"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "start": "npm --workspace=apps/web run start",
-    "dev:api": "npm --workspace=apps/api run dev",
-    "dev:web": "npm --workspace=apps/web run dev",
-    "build:shared": "npm --workspace=packages/shared run build",
-    "build:api": "npm --workspace=apps/api run build",
-    "build:web": "npm --workspace=apps/web run build",
-    "build": "npm run build:shared && npm run build:api && npm run build:web",
-    "db:generate": "npm --workspace=apps/api run db:generate",
-    "db:migrate": "npm --workspace=apps/api run db:migrate",
-    "db:seed": "npm --workspace=apps/api run db:seed",
-    "test": "npm --workspace=apps/api run test",
-    "test:e2e": "npx playwright test"
+    "start": "npm --workspace=frontend run start",
+    "dev:frontend": "npm --workspace=frontend run dev",
+    "dev:backend": "npm --workspace=backend run dev",
+    "dev": "npm --workspace=frontend run dev",
+    "build:frontend": "npm --workspace=frontend run build",
+    "build:backend": "npm --workspace=backend run build",
+    "build": "npm run build:backend && npm run build:frontend",
+    "db:generate": "npm --workspace=backend run db:generate",
+    "db:migrate": "npm --workspace=backend run db:migrate",
+    "db:seed": "npm --workspace=backend run db:seed",
+    "test:backend": "npm --workspace=backend run test"
   },
   "engines": {
     "node": ">=20.0.0"

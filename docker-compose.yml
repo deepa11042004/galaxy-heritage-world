@@ -26,11 +26,11 @@ services:
     volumes:
       - redis_data:/data
 
-  api:
+  backend:
     build:
-      context: .
-      dockerfile: apps/api/Dockerfile
-    container_name: ghw-api
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ghw-backend
     restart: always
     environment:
       NODE_ENV: production
@@ -48,20 +48,20 @@ services:
       redis:
         condition: service_started
 
-  web:
+  frontend:
     build:
-      context: .
-      dockerfile: apps/web/Dockerfile
-    container_name: ghw-web
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ghw-frontend
     restart: always
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: http://api:4000/api/v1
-      API_INTERNAL_URL: http://api:4000/api/v1
+      NEXT_PUBLIC_API_URL: http://backend:4000/api/v1
+      API_INTERNAL_URL: http://backend:4000/api/v1
     ports:
-      - "3300:3000"
+      - "3000:3000"
     depends_on:
-      - api
+      - backend
 
 volumes:
   mysql_data:
