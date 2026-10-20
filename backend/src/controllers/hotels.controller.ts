@@ -53,13 +53,23 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
       }),
     ]);
 
+    const sanitizedHotels = hotels.map((h) => ({
+      ...h,
+      imageUrl: h.imageUrl
+        ? h.imageUrl
+            .replace('Neelam-goa.jpg', 'neelam-goa.jpg')
+            .replace('Divan-Clarks-Inn-Goa.jpg', 'divan-clarks-inn-goa.jpg')
+            .replace('Untitled-1024-x-674-px.png', 'untitled-1024-x-674-px.png')
+        : h.imageUrl,
+    }));
+
     res.json({
       success: true,
-      count: hotels.length,
+      count: sanitizedHotels.length,
       total,
       page: pageNo,
       pages: paged ? Math.max(Math.ceil(total / take!), 1) : 1,
-      data: hotels,
+      data: sanitizedHotels,
     });
   } catch (error) {
     next(error);
@@ -81,6 +91,15 @@ export async function getHotelFilters(_req: Request, res: Response, next: NextFu
     });
     const cover = new Map<string, string>();
     for (const c of covers) if (!cover.has(c.locationName)) cover.set(c.locationName, c.imageUrl);
+
+    const normalizeUrl = (url: string | null | undefined): string | null => {
+      if (!url) return null;
+      return url
+        .replace('Neelam-goa.jpg', 'neelam-goa.jpg')
+        .replace('Divan-Clarks-Inn-Goa.jpg', 'divan-clarks-inn-goa.jpg')
+        .replace('Untitled-1024-x-674-px.png', 'untitled-1024-x-674-px.png');
+    };
+
     res.json({
       success: true,
       data: rows.map((r) => ({
@@ -88,7 +107,7 @@ export async function getHotelFilters(_req: Request, res: Response, next: NextFu
         location: r.locationName,
         country: r.country,
         count: r._count._all,
-        imageUrl: cover.get(r.locationName) ?? null,
+        imageUrl: normalizeUrl(cover.get(r.locationName)),
       })),
     });
   } catch (error) {

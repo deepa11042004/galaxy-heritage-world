@@ -20,6 +20,22 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/media/galaxy-heritage-world/homepage/images/Neelam-goa.jpg',
+        destination: '/media/galaxy-heritage-world/homepage/images/neelam-goa.jpg',
+      },
+      {
+        source: '/media/galaxy-heritage-world/homepage/images/Divan-Clarks-Inn-Goa.jpg',
+        destination: '/media/galaxy-heritage-world/homepage/images/divan-clarks-inn-goa.jpg',
+      },
+      {
+        source: '/media/galaxy-heritage-world/homepage/images/Untitled-1024-x-674-px.png',
+        destination: '/media/galaxy-heritage-world/homepage/images/untitled-1024-x-674-px.png',
+      },
+    ];
+  },
   async redirects() {
     return [
       {

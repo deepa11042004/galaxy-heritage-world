@@ -266,7 +266,7 @@ async function main() {
       state: 'Rajasthan',
       ratingStars: 4,
       category: HotelCategory.ASSOCIATED,
-      imageUrl: '/media/galaxy-heritage-world/homepage/images/Untitled-1024-x-674-px.png',
+      imageUrl: '/media/galaxy-heritage-world/homepage/images/untitled-1024-x-674-px.png',
       amenities: ['Rooftop Swimming Pool', 'Multi-Cuisine Restaurant', 'Ayurvedic Spa', 'Banqueting', 'Wi-Fi'],
       description:
         'Set in the heart of the Pink City, Ramada Jaipur blends traditional Rajasthani elegance with contemporary luxury amenities, making it the perfect gateway for exploring Jaipur forts and bazaars.',
@@ -280,7 +280,7 @@ async function main() {
       state: 'Goa',
       ratingStars: 5,
       category: HotelCategory.ASSOCIATED,
-      imageUrl: '/media/galaxy-heritage-world/homepage/images/Neelam-goa.jpg',
+      imageUrl: '/media/galaxy-heritage-world/homepage/images/neelam-goa.jpg',
       amenities: ['Resort Pool', 'Fine Dining', 'Poolside Bar', 'Spa & Massage', 'Concierge Desk'],
       description:
         'A tranquil 5-star haven situated near Baga and Anjuna, Park Regis Goa features lavish guest suites, expansive swimming lagoons, and gourmet international gastronomy.',
@@ -294,7 +294,7 @@ async function main() {
       state: 'Goa',
       ratingStars: 4,
       category: HotelCategory.ASSOCIATED,
-      imageUrl: '/media/galaxy-heritage-world/homepage/images/Divan-Clarks-Inn-Goa.jpg',
+      imageUrl: '/media/galaxy-heritage-world/homepage/images/divan-clarks-inn-goa.jpg',
       amenities: ['Swimming Pool', 'Buffet Restaurant', 'Wi-Fi', 'Travel Desk Assistance', 'Air Conditioning'],
       description:
         'Offering calm coastal comfort with swift access to North Goa’s lively markets and beaches, Divan Clarks Inn guarantees relaxing family stays with attentive customer service.',

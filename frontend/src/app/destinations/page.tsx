@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { MapPin, Compass, ArrowRight } from 'lucide-react';
 import { getHotelFilters } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
+import { normalizeImageUrl } from '@/lib/utils';
 
 export const metadata = {
   title: 'Destinations | Galaxy Heritage World',
@@ -63,7 +64,7 @@ export default async function DestinationsPage({
             >
               <div className="media-frame aspect-[4/5]">
                 <Image
-                  src={city.imageUrl || '/media/galaxy-heritage-world/destinations/images/1-1.png'}
+                  src={normalizeImageUrl(city.imageUrl, '/media/galaxy-heritage-world/destinations/images/1-1.png')}
                   alt={city.location}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
