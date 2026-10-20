@@ -73,13 +73,14 @@ export function DestinationShowcase({ destinations }: { destinations: CityItem[]
               href={`/hotels-resorts?type=${dest.locationType ?? ''}&location=${encodeURIComponent(dest.location)}`}
               className="card card-hover group flex flex-col p-2.5"
             >
-              <div className="media-frame aspect-[4/5] rounded-[0.9rem]">
+              <div className="media-frame aspect-[4/3] rounded-[0.9rem]">
                 <Image
                   src={dest.imageUrl || '/media/galaxy-heritage-world/homepage/images/1-2.png'}
                   alt={dest.location}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={90}
                 />
                 <div className="absolute top-4 left-4">
                   <span className="pill">

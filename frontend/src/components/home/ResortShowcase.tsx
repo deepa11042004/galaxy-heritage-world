@@ -52,6 +52,7 @@ export function ResortShowcase({ hotels }: { hotels: HotelItem[] }) {
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={90}
                   />
 
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">

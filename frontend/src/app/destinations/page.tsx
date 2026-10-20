@@ -62,13 +62,14 @@ export default async function DestinationsPage({
               href={`/hotels-resorts?type=${city.locationType ?? ''}&location=${encodeURIComponent(city.location)}`}
               className="group flex flex-col"
             >
-              <div className="media-frame aspect-[4/5]">
+              <div className="media-frame aspect-[4/3]">
                 <Image
                   src={normalizeImageUrl(city.imageUrl, '/media/galaxy-heritage-world/destinations/images/1-1.png')}
                   alt={city.location}
                   fill
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  quality={90}
                 />
 
                 <div className="absolute top-4 left-4">
