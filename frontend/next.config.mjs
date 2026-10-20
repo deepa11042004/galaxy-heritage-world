@@ -1,3 +1,7 @@
+// Uploaded images are stored by the API and served from its /media/uploads folder.
+// Computed at build/start time, so set API_INTERNAL_URL (or NEXT_PUBLIC_API_URL) before `next build`.
+const API_ORIGIN = (process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000/api/v1').replace(/\/api\/v1\/?$/, '');
+
 const nextConfig = {
   output: 'standalone',
   images: {
@@ -22,6 +26,10 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      {
+        source: '/media/uploads/:path*',
+        destination: `${API_ORIGIN}/media/uploads/:path*`,
+      },
       {
         source: '/media/galaxy-heritage-world/homepage/images/Neelam-goa.jpg',
         destination: '/media/galaxy-heritage-world/homepage/images/neelam-goa.jpg',

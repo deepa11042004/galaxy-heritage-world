@@ -89,6 +89,13 @@ export const VoucherRedemptionSchema = z.object({
 // ============================================================================
 // CONTENT MANAGEMENT SCHEMAS
 // ============================================================================
+// Image references: an uploaded/served path ("/media/...") or an absolute http(s) URL.
+const IMAGE_REF = /^(\/(?!\/)|https?:\/\/)/;
+const imageRef = z.string().max(500).regex(IMAGE_REF, 'Must be an uploaded image path or an http(s) URL');
+// Hotels imported from the catalogue may legitimately have no image yet.
+const imageRefOrEmpty = z.union([z.literal(''), imageRef]);
+const imageList = z.array(imageRef).max(30).optional().default([]);
+
 export const DestinationSchema = z.object({
   slug: z.string().min(2).max(191).regex(/^[a-z0-9-]+$/),
   name: z.string().min(2).max(191),
@@ -97,8 +104,8 @@ export const DestinationSchema = z.object({
   type: z.enum(['DOMESTIC', 'INTERNATIONAL']).default('DOMESTIC'),
   tagline: z.string().max(255).optional().nullable(),
   description: z.string().min(10),
-  heroImageUrl: z.string().max(500),
-  gallery: z.array(z.string()).optional().default([]),
+  heroImageUrl: imageRef,
+  gallery: imageList,
   highlights: z.array(z.string()).optional().default([]),
   bestTimeToVisit: z.string().max(150).optional().nullable(),
   featured: z.boolean().default(false),
@@ -116,8 +123,8 @@ export const HotelSchema = z.object({
   country: z.string().default('India'),
   category: z.enum(['ASSOCIATED', 'INTERNAL', 'EXCHANGE']).default('ASSOCIATED'),
   ratingStars: z.coerce.number().int().min(1).max(5).default(4),
-  imageUrl: z.string().max(500),
-  gallery: z.array(z.string()).optional().default([]),
+  imageUrl: imageRefOrEmpty,
+  gallery: imageList,
   amenities: z.array(z.string()).optional().default([]),
   description: z.string().min(10),
   hotelCode: z.string().max(30).optional().nullable(),
@@ -140,7 +147,7 @@ export const PackageSchema = z.object({
   priceStarting: z.coerce.number().min(0).optional().nullable(),
   priceLabel: z.string().max(100).optional().nullable(),
   category: z.string().default('Holiday Package'),
-  heroImageUrl: z.string().max(500),
+  heroImageUrl: imageRef,
   overview: z.string().min(10),
   inclusions: z.array(z.string()).optional().default([]),
   exclusions: z.array(z.string()).optional().default([]),
@@ -165,7 +172,7 @@ export const ItinerarySchema = z.object({
   locationLabel: z.string().min(2).max(191),
   durationDays: z.coerce.number().int().min(1),
   durationNights: z.coerce.number().int().min(0),
-  heroImageUrl: z.string().max(500),
+  heroImageUrl: imageRef,
   summary: z.string().min(10),
   overview: z.string().min(10),
   inclusions: z.array(z.string()).optional().default([]),
@@ -180,7 +187,9 @@ export const ActivitySchema = z.object({
   category: z.string().default('Day Outing & Picnic'),
   locationLabel: z.string().min(2).max(191),
   durationLabel: z.string().default('Full Day (9:00 AM - 5:00 PM)'),
-  imageUrl: z.string().max(500),
+  imageUrl: imageRef,
+  gallery: imageList,
+  videoId: z.string().regex(/^[\w-]{6,30}$/, 'Enter a YouTube video id').optional().nullable(),
   description: z.string().min(10),
   highlights: z.array(z.string()).optional().default([]),
   inclusions: z.array(z.string()).optional().default([]),

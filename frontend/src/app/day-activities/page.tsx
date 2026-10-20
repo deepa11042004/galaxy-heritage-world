@@ -13,6 +13,7 @@ export const metadata = {
     'Experience traditional rural village farms, heritage picnics, adventure activities, and exciting water parks across Delhi NCR, Haryana, and MP.',
 };
 
+// Highlight figures shown on the featured farm cards, matched by the start of the outing title.
 const FARM_STATS: Record<string, [string, string][]> = {
   'Rangmanch Farms': [['70+', 'Activities'], ['40+', 'Food Options'], ['2', 'Kids Zone'], ['5,000+', 'Happy Family']],
   'Yaduvanshi Farms': [['50+', 'Activities'], ['40+', 'Food Options'], ['1', 'Fun Zone'], ['3,400+', 'Happy Family']],
@@ -23,7 +24,15 @@ export const revalidate = 60;
 
 export default async function DayActivitiesPage() {
   const res = await getActivities().catch(() => ({ data: [] }));
-  const activities = res.data || [];
+  const activities: any[] = res.data || [];
+
+  // Every section is driven by the activities table (managed in the admin panel).
+  const isFeatured = (a: any) => Boolean(a.videoId) && Array.isArray(a.gallery) && a.gallery.length > 0;
+  const isWater = (a: any) => !isFeatured(a) && /water|amusement|theme park/i.test(a.category || '');
+  const featured = activities.filter(isFeatured);
+  const water = activities.filter(isWater);
+  const outings = activities.filter((a) => !isFeatured(a) && !isWater(a));
+  const statsFor = (title: string) => Object.entries(FARM_STATS).find(([name]) => title.startsWith(name))?.[1] ?? [];
 
   return (
     <div>
@@ -63,104 +72,102 @@ export default async function DayActivitiesPage() {
         </div>
       </section>
 
-      {/* Featured farms with gallery and video */}
-      <section className="container-page section space-y-10">
-        {D.farms.map((farm) => (
-          <div key={farm.name} className="card p-3 sm:p-4">
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <div className="space-y-4 p-4 sm:p-6">
-                <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{farm.name}</h2>
-                <p className="text-sm leading-relaxed text-ink-muted sm:text-base">{farm.desc}</p>
-                <div className="grid grid-cols-4 gap-2 border-y border-line py-4 text-center">
-                  {(FARM_STATS[farm.name] ?? []).map(([value, label]) => (
-                    <div key={label}>
-                      <p className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{value}</p>
-                      <p className="mt-1 text-xs text-ink-muted sm:text-sm">{label}</p>
+      {/* Featured outings with gallery and video */}
+      {featured.length > 0 && (
+        <section className="container-page section space-y-10">
+          {featured.map((farm) => (
+            <div key={farm.id} className="card p-3 sm:p-4">
+              <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <div className="space-y-4 p-4 sm:p-6">
+                  <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+                    <Link href={`/day-activities/${farm.slug}`} className="hover:text-accent-strong">{farm.title}</Link>
+                  </h2>
+                  <p className="text-sm leading-relaxed text-ink-muted sm:text-base">{farm.description}</p>
+                  {statsFor(farm.title).length > 0 && (
+                    <div className="grid grid-cols-4 gap-2 border-y border-line py-4 text-center">
+                      {statsFor(farm.title).map(([value, label]) => (
+                        <div key={label}>
+                          <p className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{value}</p>
+                          <p className="mt-1 text-xs text-ink-muted sm:text-sm">{label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <YouTubeEmbed videoId={farm.videoId} title={`${farm.title} video`} />
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {(farm.gallery as string[]).slice(0, 6).map((src, i) => (
+                    <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
+                      <Image src={src} alt={`${farm.title} ${i + 1}`} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" quality={90} />
                     </div>
                   ))}
                 </div>
-                <YouTubeEmbed videoId={farm.video} title={`${farm.name} video`} />
-              </div>
-              <div className="grid grid-cols-3 gap-2">
-                {farm.images.slice(0, 6).map((src, i) => (
-                  <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
-                    <Image src={src} alt={`${farm.name} ${i + 1}`} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" />
-                  </div>
-                ))}
               </div>
             </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {[
-        { title: D.outingTitle, text: D.outingText, items: D.outing },
-        { title: D.waterTitle, text: D.waterText, items: D.water },
-      ].map((sec) => (
-        <section key={sec.title} className="container-page section">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <h2 className="heading-section text-ink">{sec.title}</h2>
-            <p className="mt-3 text-sm text-ink-muted sm:text-base">{sec.text}</p>
-          </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {sec.items.map((c) => (
-              <div key={c.name} className="card card-hover group flex flex-col p-2.5">
-                <div className="media-frame relative aspect-[4/3] rounded-[0.9rem]">
-                  <Image src={c.image} alt={c.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
-                </div>
-                <div className="px-2.5 pt-4 pb-2">
-                  <h3 className="text-xl font-semibold tracking-tight text-ink">{c.name}</h3>
-                  <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-ink-muted">{c.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        { title: D.outingTitle, text: D.outingText, items: outings },
+        { title: D.waterTitle, text: D.waterText, items: water },
+      ]
+        .filter((sec) => sec.items.length > 0)
+        .map((sec) => (
+          <section key={sec.title} className="container-page section">
+            <div className="mx-auto mb-10 max-w-3xl text-center">
+              <h2 className="heading-section text-ink">{sec.title}</h2>
+              <p className="mt-3 text-sm text-ink-muted sm:text-base">{sec.text}</p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {sec.items.map((act: any) => (
+                <Link key={act.id} href={`/day-activities/${act.slug}`} className="group flex flex-col">
+                  <div className="media-frame aspect-[4/3]">
+                    <Image
+                      src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
+                      alt={act.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      quality={90}
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="pill">{act.category}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1 flex-col pt-4">
+                    <div className="flex-1">
+                      <div className="meta mb-1.5">
+                        <MapPin />
+                        <span>{act.locationLabel}</span>
+                      </div>
+                      <h3 className="text-xl font-semibold leading-snug tracking-tight text-ink">{act.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-muted">{act.description}</p>
+                    </div>
+
+                    <div className="mt-5 flex items-center justify-between border-t border-line pt-4 text-xs">
+                      <div className="meta">
+                        <Clock />
+                        <span>{act.durationLabel}</span>
+                      </div>
+                      <span className="link-arrow">
+                        <span>Details & Pass</span>
+                        <ArrowRight />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ))}
+
+      {activities.length === 0 && (
+        <section className="container-page section">
+          <p className="text-center text-sm text-ink-muted">Day outings are being updated. Please check back shortly.</p>
         </section>
-      ))}
-
-      <div className="container-page section">
-        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {activities.map((act: any) => (
-            <Link key={act.id} href={`/day-activities/${act.slug}`} className="group flex flex-col">
-              <div className="media-frame aspect-[4/3]">
-                <Image
-                  src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
-                  alt={act.title}
-                  fill
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-
-                <div className="absolute top-4 left-4">
-                  <span className="pill">{act.category}</span>
-                </div>
-              </div>
-
-              <div className="flex flex-1 flex-col pt-4">
-                <div className="flex-1">
-                  <div className="meta mb-1.5">
-                    <MapPin />
-                    <span>{act.locationLabel}</span>
-                  </div>
-                  <h2 className="text-xl font-semibold leading-snug tracking-tight text-ink">{act.title}</h2>
-                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-muted">{act.description}</p>
-                </div>
-
-                <div className="mt-5 flex items-center justify-between border-t border-line pt-4 text-xs">
-                  <div className="meta">
-                    <Clock />
-                    <span>{act.durationLabel}</span>
-                  </div>
-                  <span className="link-arrow">
-                    <span>Details & Pass</span>
-                    <ArrowRight />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

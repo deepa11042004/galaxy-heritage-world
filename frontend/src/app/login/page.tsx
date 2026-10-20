@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, AlertCircle, ArrowRight } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
+import { API_BASE } from '@/lib/admin/api';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function LoginPage() {
       setSubmitting(true);
       setError(null);
 
-      const res = await fetch('http://localhost:4000/api/v1/auth/login', {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -40,7 +41,8 @@ export default function LoginPage() {
         localStorage.setItem('ghw_user', JSON.stringify(data.user));
       }
 
-      router.push('/admin');
+      const next = new URLSearchParams(window.location.search).get('next');
+      router.push(next && /^\/admin(\/|$)/.test(next) ? next : '/admin');
     } catch (err: any) {
       setError(err.message || 'Login failed. Please check credentials.');
     } finally {
@@ -116,10 +118,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-8 border-t border-line pt-6 text-center text-xs text-ink-muted">
-            <div>Default Admin Access:</div>
-            <div className="mt-1 font-mono text-ink">admin@galaxyheritageworld.com</div>
-          </div>
         </div>
       </div>
     </div>

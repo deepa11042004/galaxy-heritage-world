@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
+import { MulterError } from 'multer';
 import { logger } from '../config/logger.js';
 
 export class AppError extends Error {
@@ -34,6 +35,13 @@ export function errorHandler(
     return;
   }
 
+  // 1b. Upload limits (file too large, too many files)
+  if (err instanceof MulterError) {
+    const message = err.code === 'LIMIT_FILE_SIZE' ? 'Each image must be 8 MB or smaller' : `Upload error: ${err.message}`;
+    res.status(400).json({ success: false, error: message });
+    return;
+  }
+
   // 2. Custom AppError
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
@@ -59,6 +67,22 @@ export function errorHandler(
       success: false,
       error: `A record with this ${target || 'unique field'} already exists`,
     });
+    return;
+  }
+
+  // 4b. Prisma Foreign Key Violation (P2003)
+  if (err?.code === 'P2003') {
+    res.status(400).json({ success: false, error: 'A referenced record does not exist' });
+    return;
+  }
+
+  // 4c. Database unreachable / timed out (P1001, P1002, P1008, P1017) or Prisma failed to connect
+  if (
+    ['P1001', 'P1002', 'P1008', 'P1017', 'P2024'].includes(err?.code) ||
+    err?.name === 'PrismaClientInitializationError'
+  ) {
+    logger.error({ code: err?.code, path: req.path }, 'Database unavailable');
+    res.status(503).json({ success: false, error: 'The database is temporarily unreachable. Please try again in a moment.' });
     return;
   }
 

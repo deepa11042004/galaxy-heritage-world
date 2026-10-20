@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Check, Sparkles, Tags } from 'lucide-react';
+import { getPackages } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
@@ -9,49 +10,22 @@ export const metadata = {
     'Browse luxury holiday packages across Goa, Rajasthan, Himachal Pradesh, Uttarakhand, and South India with verified resort stays.',
 };
 
-const TIERS = [
-  {
-    name: 'BLUE - OFF SEASON',
-    price: '6,75,000',
-    pill: 'bg-blue-600 text-white',
-    button: 'bg-blue-600 hover:bg-blue-700',
-    features: [
-      'Access to 4500+ properties worldwide',
-      '6 nights, 7 days accommodation per year',
-      'Dedicated Travel Desk',
-      'EMI options available',
-    ],
-  },
-  {
-    name: 'WHITE - MID SEASON',
-    price: '7,11,000',
-    pill: 'bg-slate-500 text-white',
-    button: 'bg-slate-500 hover:bg-slate-600',
-    popular: true,
-    features: [
-      'Access to 4500+ properties worldwide',
-      '6 nights, 7 days accommodation per year',
-      'Dedicated Travel Desk',
-      'EMI options available',
-    ],
-  },
-  {
-    name: 'RED - PEAK SEASON',
-    price: '10,02,000',
-    pill: 'bg-red-600 text-white',
-    button: 'bg-red-600 hover:bg-red-700',
-    features: [
-      'Access to 4500+ properties worldwide',
-      '6 nights, 7 days accommodation per year',
-      'Dedicated Travel Desk',
-      'Zero-interest EMI options* Available',
-      'Exclusive experiences included',
-    ],
-  },
+// Pill / button colours follow the tier name (BLUE, WHITE, RED); anything else gets a neutral style.
+const TIER_STYLES: { match: RegExp; pill: string; button: string }[] = [
+  { match: /blue/i, pill: 'bg-blue-600 text-white', button: 'bg-blue-600 hover:bg-blue-700' },
+  { match: /white/i, pill: 'bg-slate-500 text-white', button: 'bg-slate-500 hover:bg-slate-600' },
+  { match: /red/i, pill: 'bg-red-600 text-white', button: 'bg-red-600 hover:bg-red-700' },
 ];
+const DEFAULT_STYLE = { pill: 'bg-ink text-white', button: 'bg-ink hover:bg-ink/85' };
+
+const formatPrice = (v: unknown) => Number(v).toLocaleString('en-IN');
 
 export const revalidate = 60;
-export default function VacationPackagesPage() {
+export default async function VacationPackagesPage() {
+  const res = await getPackages().catch(() => ({ data: [] as any[] }));
+  // Packages are managed in the admin panel. Featured = "Popular"; cheapest first.
+  const tiers = [...(res.data || [])].sort((a: any, b: any) => Number(a.priceStarting ?? 0) - Number(b.priceStarting ?? 0));
+
   return (
     <div>
       <PageHero
@@ -82,33 +56,37 @@ export default function VacationPackagesPage() {
         </div>
 
         <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-3">
-          {TIERS.map((tier) => (
+          {tiers.map((tier: any) => {
+            const style = TIER_STYLES.find((t) => t.match.test(tier.title)) ?? DEFAULT_STYLE;
+            return (
             <div
-              key={tier.name}
-              className={`card relative overflow-hidden p-0 ${tier.popular ? 'border-accent' : ''}`}
+              key={tier.id}
+              className={`card relative overflow-hidden p-0 ${tier.featured ? 'border-accent' : ''}`}
             >
-              {tier.popular && (
+              {tier.featured && (
                 <span className="absolute top-4 -right-9 rotate-45 bg-accent px-10 py-1 text-[10px] font-bold tracking-wider text-ink">
                   POPULAR
                 </span>
               )}
               <div className="px-6 pt-8 pb-6 text-center">
-                <span className={`inline-block rounded-full px-5 py-2 text-xs font-bold tracking-wider ${tier.pill}`}>
-                  {tier.name}
+                <span className={`inline-block rounded-full px-5 py-2 text-xs font-bold tracking-wider ${style.pill}`}>
+                  {tier.title}
                 </span>
                 <p className="mt-6 text-sm text-ink-muted">Package Price</p>
                 <p className="mt-1 text-4xl font-semibold tracking-tight text-ink">
                   <span className="mr-1 text-base font-medium text-accent-strong">Rs.</span>
-                  {tier.price}
+                  {tier.priceStarting != null ? formatPrice(tier.priceStarting) : tier.priceLabel}
                 </p>
-                <div className="mt-5 rounded-xl bg-surface p-3">
-                  <p className="text-xs text-ink-muted">Variable Charges</p>
-                  <p className="text-sm font-semibold text-ink">Rs. 20,000</p>
-                </div>
+                {tier.subtitle && (
+                  <div className="mt-5 rounded-xl bg-surface p-3">
+                    <p className="text-xs text-ink-muted">Variable Charges</p>
+                    <p className="text-sm font-semibold text-ink">{tier.subtitle}</p>
+                  </div>
+                )}
               </div>
 
               <ul className="space-y-3 border-t border-line px-6 py-6">
-                {tier.features.map((f) => (
+                {(tier.inclusions ?? []).map((f: string) => (
                   <li key={f} className="flex items-start gap-3 text-sm text-ink-muted">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-strong" />
                     <span>{f}</span>
@@ -119,14 +97,18 @@ export default function VacationPackagesPage() {
               <div className="border-t border-line p-6">
                 <Link
                   href="/contact"
-                  className={`block rounded-xl px-4 py-3 text-center text-sm font-semibold text-white transition-colors ${tier.button}`}
+                  className={`block rounded-xl px-4 py-3 text-center text-sm font-semibold text-white transition-colors ${style.button}`}
                 >
                   Subscribe Now
                 </Link>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
+        {tiers.length === 0 && (
+          <p className="text-center text-sm text-ink-muted">Packages are being updated. Please check back shortly.</p>
+        )}
       </section>
     </div>
   );

@@ -11,6 +11,7 @@ import { searchRouter } from './search.routes.js';
 import { settingsRouter } from './settings.routes.js';
 import { testimonialsRouter } from './testimonials.routes.js';
 import { mediaRouter } from './media.routes.js';
+import { adminRouter } from './admin.routes.js';
 import { prisma } from '../config/database.js';
 
 export const apiRouter = Router();
@@ -48,3 +49,4 @@ apiRouter.use('/search', searchRouter);
 apiRouter.use('/settings', settingsRouter);
 apiRouter.use('/testimonials', testimonialsRouter);
 apiRouter.use('/media', mediaRouter);
+apiRouter.use('/admin', adminRouter);

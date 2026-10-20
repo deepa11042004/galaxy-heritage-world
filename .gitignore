@@ -38,3 +38,14 @@ Thumbs.db
 hotels_export.csv
 New_Hotels_Import.csv
 import-data/
+
+# DB backups (contain password hashes)
+backend/backups/
+
+# Secrets
+.env
+backend/.env
+
+# Playwright output
+frontend/test-results/
+frontend/playwright-report/

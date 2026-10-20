@@ -275,6 +275,8 @@ model Activity {
   description   String    @db.Text
   highlights    Json?
   inclusions    Json?
+  gallery       Json?
+  videoId       String?   @map("video_id") @db.VarChar(30)
   sourceUrl     String?   @map("source_url") @db.VarChar(500)
   featured      Boolean   @default(false)
   isPublished   Boolean   @default(true) @map("is_published")

@@ -3,6 +3,7 @@ import './globals.css';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { TravelDeskFloat } from '@/components/layout/TravelDeskFloat';
+import { SiteChrome } from '@/components/layout/SiteChrome';
 import { QueryProvider } from '@/components/providers/QueryProvider';
 
 export const metadata: Metadata = {
@@ -62,10 +63,14 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen flex flex-col bg-canvas text-ink antialiased selection:bg-accent selection:text-ink">
         <QueryProvider>
-          <Navbar />
+          <SiteChrome>
+            <Navbar />
+          </SiteChrome>
           <main className="flex-1">{children}</main>
-          <TravelDeskFloat />
-          <Footer />
+          <SiteChrome>
+            <TravelDeskFloat />
+            <Footer />
+          </SiteChrome>
         </QueryProvider>
       </body>
     </html>

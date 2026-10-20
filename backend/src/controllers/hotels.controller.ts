@@ -100,15 +100,30 @@ export async function getHotelFilters(_req: Request, res: Response, next: NextFu
         .replace('Untitled-1024-x-674-px.png', 'untitled-1024-x-674-px.png');
     };
 
+    // City cards are managed in the admin panel (Destinations): a city whose destination is
+    // unpublished or deleted is hidden, and the destination's cover image wins over the hotel photo.
+    const managed = await prisma.destination.findMany({
+      select: { name: true, heroImageUrl: true, isPublished: true, deletedAt: true },
+    });
+    const managedByName = new Map(managed.map((d) => [d.name.toLowerCase(), d]));
+
     res.json({
       success: true,
-      data: rows.map((r) => ({
-        locationType: r.locationType,
-        location: r.locationName,
-        country: r.country,
-        count: r._count._all,
-        imageUrl: normalizeUrl(cover.get(r.locationName)),
-      })),
+      data: rows
+        .filter((r) => {
+          const d = managedByName.get(r.locationName.toLowerCase());
+          return !d || (d.isPublished && !d.deletedAt);
+        })
+        .map((r) => {
+          const d = managedByName.get(r.locationName.toLowerCase());
+          return {
+            locationType: r.locationType,
+            location: r.locationName,
+            country: r.country,
+            count: r._count._all,
+            imageUrl: normalizeUrl(d?.heroImageUrl || cover.get(r.locationName)),
+          };
+        }),
     });
   } catch (error) {
     next(error);

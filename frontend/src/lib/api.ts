@@ -29,7 +29,7 @@ export async function fetchApi<T>(
         'Content-Type': 'application/json',
         ...(options?.headers || {}),
       },
-      next: { revalidate: 60 },
+      next: { revalidate: 60, tags: ['content'] },
     });
 
     if (!res.ok) {

@@ -11,6 +11,9 @@ import { errorHandler, AppError } from './middlewares/error.js';
 
 export const app = express();
 
+// Behind Coolify/nginx the client IP comes from X-Forwarded-For (needed for rate limiting & audit logs).
+if (config.env === 'production') app.set('trust proxy', 1);
+
 // Security headers
 app.use(
   helmet({
@@ -19,24 +22,23 @@ app.use(
   })
 );
 
-// CORS configuration
-const allowedOrigins = [
-  config.corsOrigin,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-  'http://localhost:3001',
-  'https://galaxyheritageworld.com',
-];
+// CORS configuration: credentialed requests are only accepted from known origins.
+const allowedOrigins = new Set(
+  [
+    ...config.corsOrigin.split(',').map((o) => o.trim()),
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://galaxyheritageworld.com',
+    'https://www.galaxyheritageworld.com',
+  ].filter(Boolean)
+);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // allow requests with no origin like curl or mobile apps
-      if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.galaxyheritageworld.com')) {
-        callback(null, true);
-      } else {
-        callback(null, true); // Permissive in dev/staging
-      }
+      // no Origin header: curl, server-side rendering, health checks
+      if (!origin || allowedOrigins.has(origin)) callback(null, true);
+      else callback(null, false);
     },
     credentials: true,
   })
@@ -47,7 +49,11 @@ app.use(cookieParser(config.cookie.secret));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Static media serving
+// Static media serving (images are embedded cross-origin by the website and the admin panel)
+app.use('/media', (_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+});
 const localMedia = path.resolve(process.cwd(), 'public/media');
 app.use('/media', express.static(localMedia));
 

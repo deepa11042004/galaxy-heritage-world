@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { randomUUID } from 'crypto';
 import { prisma } from '../config/database.js';
 import { config } from '../config/env.js';
 import { AppError } from '../middlewares/error.js';
@@ -14,7 +15,7 @@ function generateTokens(user: { id: string; email: string }) {
   );
 
   const refreshToken = jwt.sign(
-    { userId: user.id, email: user.email },
+    { userId: user.id, email: user.email, jti: randomUUID() },
     config.jwt.refreshSecret,
     { expiresIn: '7d' }
   );
