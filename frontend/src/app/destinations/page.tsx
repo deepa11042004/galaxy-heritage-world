@@ -101,6 +101,7 @@ export default async function DestinationsPage({
             </Link>
           ))}
         </div>
+
       </div>
     </div>
   );
