@@ -157,7 +157,7 @@ export const PackageSchema = z.object({
 });
 
 export const ItineraryDaySchema = z.object({
-  dayNumber: z.coerce.number().int().min(1),
+  dayNumber: z.coerce.number().int().min(1).max(60).optional(), // the admin API numbers days 1..n by their order
   title: z.string().min(2).max(255),
   description: z.string().min(5),
   meals: z.string().max(150).optional().nullable(),
@@ -176,9 +176,14 @@ export const ItinerarySchema = z.object({
   summary: z.string().min(10),
   overview: z.string().min(10),
   inclusions: z.array(z.string()).optional().default([]),
+  highlights: z.array(z.string()).optional().default([]),
+  gallery: imageList,
+  bestTime: z.string().max(100).optional().nullable(),
+  category: z.string().max(100).optional().nullable(),
+  locationType: z.enum(['DOMESTIC', 'INTERNATIONAL']).optional().nullable(),
   featured: z.boolean().default(false),
   isPublished: z.boolean().default(true),
-  days: z.array(ItineraryDaySchema).optional().default([]),
+  days: z.array(ItineraryDaySchema).max(60).optional().default([]),
 });
 
 export const ActivitySchema = z.object({

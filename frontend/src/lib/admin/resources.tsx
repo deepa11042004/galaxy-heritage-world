@@ -10,7 +10,8 @@ export type FieldDef =
   | { kind: 'switch'; name: string; label: string; help?: string }
   | { kind: 'list'; name: string; label: string; help?: string; placeholder?: string }
   | { kind: 'image'; name: string; label: string; required?: boolean; help?: string }
-  | { kind: 'gallery'; name: string; label: string; help?: string };
+  | { kind: 'gallery'; name: string; label: string; help?: string }
+  | { kind: 'days'; name: string; label: string; help?: string };
 
 export interface Section {
   title: string;
@@ -301,4 +302,73 @@ export const activities: ResourceConfig = {
   ],
 };
 
-export const RESOURCES = { destinations, hotels, packages, activities };
+
+// ---------------------------------------------------------------- itineraries
+export const itineraries: ResourceConfig = {
+  key: 'itineraries',
+  route: 'itineraries',
+  singular: 'Itinerary',
+  plural: 'Itineraries',
+  titleField: 'title',
+  folder: 'itineraries',
+  publicPath: (r) => `/itineraries/${r.slug}`,
+  imageOf: (r) => r.heroImageUrl,
+  columns: [
+    { label: 'Itinerary', render: (r) => (<><p className="font-semibold text-ink">{r.title}</p><p className="text-xs text-ink-muted">{r.locationLabel}</p></>) },
+    { label: 'Duration', className: 'hidden md:table-cell', render: (r) => <Muted>{r.durationDays}D / {r.durationNights}N</Muted> },
+    { label: 'Style', className: 'hidden lg:table-cell', render: (r) => <Muted>{r.category ?? '—'}</Muted> },
+    { label: 'Days planned', className: 'hidden xl:table-cell', render: (r) => <Muted>{r._count?.days ?? 0}</Muted> },
+  ],
+  filters: [{ param: 'locationType', label: 'Domestic & intl.', options: DOMESTIC_INTL }],
+  defaults: {
+    durationDays: 3, durationNights: 2, isPublished: false, featured: false,
+    gallery: [], highlights: [], inclusions: [], days: [],
+  },
+  sections: [
+    {
+      title: 'Basics',
+      fields: [
+        { kind: 'text', name: 'title', label: 'Title', required: true, half: true },
+        { kind: 'slug', name: 'slug', label: 'URL slug', from: 'title', half: true, help: 'Used in the page address. Changing it breaks existing links.' },
+        { kind: 'text', name: 'badgeText', label: 'Badge', half: true, maxLength: 100, placeholder: 'Coastal Luxury', help: 'Short label shown on the card.' },
+        { kind: 'combo', name: 'category', label: 'Style / category', half: true, suggestions: ['Beach & Coastal', 'Island Romance', 'Royal Heritage', 'Mountain Adventure', 'Nature & Wellness', 'City Break'] },
+        { kind: 'text', name: 'locationLabel', label: 'Destination label', required: true, half: true, placeholder: 'Goa, India' },
+        { kind: 'select', name: 'locationType', label: 'Domestic / international', half: true, options: DOMESTIC_INTL, emptyLabel: 'Not set' },
+        { kind: 'select', name: 'destinationId', label: 'Linked destination', options: 'destinations', emptyLabel: 'None' },
+        { kind: 'text', name: 'bestTime', label: 'Best time to visit', maxLength: 100, placeholder: 'October to May' },
+        { kind: 'number', name: 'durationDays', label: 'Days', required: true, half: true, min: 1 },
+        { kind: 'number', name: 'durationNights', label: 'Nights', required: true, half: true, min: 0 },
+      ],
+    },
+    {
+      title: 'Description',
+      fields: [
+        { kind: 'textarea', name: 'summary', label: 'Short summary', required: true, rows: 3, help: 'Shown on the itinerary cards.' },
+        { kind: 'textarea', name: 'overview', label: 'Overview', required: true, rows: 6, help: 'Shown at the top of the itinerary page.' },
+        { kind: 'list', name: 'highlights', label: 'Trip highlights', help: 'One per line.' },
+        { kind: 'list', name: 'inclusions', label: 'What is included', help: 'One per line.' },
+      ],
+    },
+    {
+      title: 'Day-by-day schedule',
+      description: 'Days are numbered automatically in the order shown here.',
+      fields: [{ kind: 'days', name: 'days', label: 'Days' }],
+    },
+    {
+      title: 'Images',
+      fields: [
+        { kind: 'image', name: 'heroImageUrl', label: 'Cover image', required: true },
+        { kind: 'gallery', name: 'gallery', label: 'Gallery' },
+      ],
+    },
+    {
+      title: 'Visibility',
+      fields: [
+        { kind: 'switch', name: 'isPublished', label: 'Published', help: 'Unpublished itineraries are hidden from the website.' },
+        { kind: 'switch', name: 'featured', label: 'Featured', help: 'Shown first on listings.' },
+      ],
+    },
+  ],
+};
+
+export const RESOURCES = { destinations, hotels, packages, activities, itineraries };

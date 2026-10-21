@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { prisma } from '../config/database.js';
-import { DestinationSchema, HotelSchema, PackageSchema, ActivitySchema } from '../shared/index.js';
+import { DestinationSchema, HotelSchema, PackageSchema, ActivitySchema, ItinerarySchema } from '../shared/index.js';
 
 export interface ResourceConfig {
   /** URL segment under /api/v1/admin */
@@ -23,6 +23,8 @@ export interface ResourceConfig {
   dependents?: (id: string) => Promise<{ count: number; label: string }>;
   /** Field holding a destination id that must exist. */
   destinationField?: 'destinationId';
+  /** One-to-many child rows edited together with the record (e.g. an itinerary's days). Replaced wholesale on update. */
+  children?: { field: string; delegate: any; fk: string; orderBy: Record<string, 'asc' | 'desc'> };
 }
 
 const eq = (field: string, allowed?: string[]) => (v: string) =>
@@ -97,5 +99,24 @@ export const resources: Record<string, ResourceConfig> = {
     sortable: ['title', 'updatedAt', 'createdAt'],
     defaultSort: { updatedAt: 'desc' },
     nullifyEmpty: ['videoId'],
+  },
+  itineraries: {
+    key: 'itineraries',
+    entity: 'Itinerary',
+    delegate: prisma.itinerary,
+    schema: ItinerarySchema,
+    titleField: 'title',
+    searchFields: ['title', 'locationLabel', 'category', 'slug'],
+    filters: {
+      locationType: eq('locationType', ['DOMESTIC', 'INTERNATIONAL']),
+      category: eq('category'),
+      destinationId: eq('destinationId'),
+    },
+    sortable: ['title', 'updatedAt', 'createdAt', 'durationDays'],
+    defaultSort: { updatedAt: 'desc' },
+    nullifyEmpty: ['destinationId', 'badgeText', 'bestTime', 'category', 'locationType'],
+    include: { destination: { select: { id: true, name: true } }, _count: { select: { days: true } } },
+    destinationField: 'destinationId',
+    children: { field: 'days', delegate: prisma.itineraryDay, fk: 'itineraryId', orderBy: { dayNumber: 'asc' } },
   },
 };

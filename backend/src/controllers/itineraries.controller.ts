@@ -65,8 +65,8 @@ export async function createItinerary(req: Request, res: Response, next: NextFun
       data: {
         ...data,
         days: {
-          create: days.map((d) => ({
-            dayNumber: d.dayNumber,
+          create: days.map((d, i) => ({
+            dayNumber: d.dayNumber ?? i + 1,
             title: d.title,
             description: d.description,
             meals: d.meals,

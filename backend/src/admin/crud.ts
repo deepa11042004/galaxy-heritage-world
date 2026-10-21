@@ -30,10 +30,22 @@ async function assertDestination(cfg: ResourceConfig, data: Record<string, unkno
   if (!found) throw new AppError('Selected destination does not exist', 400);
 }
 
+/** Split child rows (e.g. days) out of a parsed payload and number them 1..n in the order given. */
+function splitChildren(cfg: ResourceConfig, data: Record<string, any>): { data: Record<string, any>; rows?: Record<string, any>[] } {
+  if (!cfg.children) return { data };
+  const { [cfg.children.field]: rows, ...rest } = data;
+  if (!Array.isArray(rows)) return { data: rest };
+  return { data: rest, rows: rows.map((r, i) => ({ ...r, dayNumber: i + 1 })) };
+}
+
 export function makeCrud(cfg: ResourceConfig) {
   const createSchema = cfg.schema.partial({ slug: true });
   const updateSchema = cfg.schema.partial();
   const withInclude = cfg.include ? { include: cfg.include } : {};
+  // The detail view also loads the child rows so the edit form can show them.
+  const withDetail = cfg.children
+    ? { include: { ...(cfg.include ?? {}), [cfg.children.field]: { orderBy: cfg.children.orderBy } } }
+    : withInclude;
 
   return {
     async list(req: Request, res: Response) {
@@ -67,7 +79,7 @@ export function makeCrud(cfg: ResourceConfig) {
     },
 
     async get(req: Request, res: Response) {
-      const row = await cfg.delegate.findFirst({ where: { id: idOf(req), deletedAt: null }, ...withInclude });
+      const row = await cfg.delegate.findFirst({ where: { id: idOf(req), deletedAt: null }, ...withDetail });
       if (!row) throw new AppError(`${cfg.entity} not found`, 404);
       res.json({ success: true, data: row });
     },
@@ -83,7 +95,10 @@ export function makeCrud(cfg: ResourceConfig) {
         parsed.slug = await uniqueSlug(cfg, parsed[cfg.titleField]);
       }
 
-      const row = await cfg.delegate.create({ data: parsed });
+      const { data: fields, rows } = splitChildren(cfg, parsed);
+      const row = await cfg.delegate.create({
+        data: rows && rows.length ? { ...fields, [cfg.children!.field]: { create: rows } } : fields,
+      });
       await audit(req, `CREATE_${cfg.entity.toUpperCase()}`, cfg.entity, row.id, { title: row[cfg.titleField] });
       notifyFrontend();
       res.status(201).json({ success: true, data: row });
@@ -102,7 +117,19 @@ export function makeCrud(cfg: ResourceConfig) {
         if (taken) throw new AppError('That slug is already used by another record', 409);
       }
 
-      const row = await cfg.delegate.update({ where: { id }, data: parsed });
+      const { data: fields, rows } = splitChildren(cfg, parsed);
+      let row;
+      if (rows && cfg.children) {
+        // Replace the child rows together with the record, atomically.
+        const { delegate, fk } = cfg.children;
+        [row] = await prisma.$transaction([
+          cfg.delegate.update({ where: { id }, data: fields }),
+          delegate.deleteMany({ where: { [fk]: id } }),
+          ...(rows.length ? [delegate.createMany({ data: rows.map((r) => ({ ...r, [fk]: id })) })] : []),
+        ]);
+      } else {
+        row = await cfg.delegate.update({ where: { id }, data: fields });
+      }
       await audit(req, `UPDATE_${cfg.entity.toUpperCase()}`, cfg.entity, id, { fields: Object.keys(parsed) });
       notifyFrontend();
       res.json({ success: true, data: row });

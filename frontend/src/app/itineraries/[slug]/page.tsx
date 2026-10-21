@@ -68,7 +68,7 @@ export default async function ItineraryDetailPage({ params }: { params: Promise<
           <div className="space-y-6 lg:col-span-8">
             <div className="card space-y-4 p-6 sm:p-8">
               <h2 className="text-2xl font-medium text-ink sm:text-3xl">Overview</h2>
-              <p className="text-sm leading-relaxed whitespace-pre-line text-ink-muted sm:text-base">{it.summary}</p>
+              <p className="text-sm leading-relaxed whitespace-pre-line text-ink-muted sm:text-base">{it.overview || it.summary}</p>
             </div>
 
             {highlights.length > 0 && (

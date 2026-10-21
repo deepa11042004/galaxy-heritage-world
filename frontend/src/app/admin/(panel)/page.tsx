@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Compass, Hotel, Package, Plus, Sun, Users } from 'lucide-react';
+import { Compass, Hotel, Map as MapIcon, Package, Plus, Sun, Users } from 'lucide-react';
 import { adminFetch } from '@/lib/admin/api';
 import { useAdmin } from '@/components/admin/AdminShell';
 import { EmptyState, ErrorState, PageHeader, Spinner } from '@/components/admin/ui';
@@ -17,6 +17,7 @@ interface Stats {
   hotels: ModuleStat;
   packages: ModuleStat;
   activities: ModuleStat;
+  itineraries: ModuleStat;
   destinationsByType: { domestic: number; international: number };
   activeUsers: number;
   recentActivity: { id: string; action: string; entityType: string; userName: string | null; createdAt: string }[];
@@ -26,10 +27,11 @@ const MODULES = [
   { key: 'packages', label: 'Vacation Packages', href: '/admin/packages', icon: Package },
   { key: 'hotels', label: 'Hotels & Resorts', href: '/admin/hotels', icon: Hotel },
   { key: 'destinations', label: 'Destinations', href: '/admin/destinations', icon: Compass },
+  { key: 'itineraries', label: 'Itineraries', href: '/admin/itineraries', icon: MapIcon },
   { key: 'activities', label: 'Day Outings', href: '/admin/day-outings', icon: Sun },
 ] as const;
 
-const ENTITY_LABEL: Record<string, string> = { Destination: 'destination', Hotel: 'hotel', Package: 'package', Activity: 'day outing', User: 'user', MediaAsset: 'images' };
+const ENTITY_LABEL: Record<string, string> = { Destination: 'destination', Hotel: 'hotel', Package: 'package', Activity: 'day outing', Itinerary: 'itinerary', User: 'user', MediaAsset: 'images' };
 const VERB: Record<string, string> = { CREATE: 'created', UPDATE: 'updated', DELETE: 'deleted', PUBLISH: 'published', UNPUBLISH: 'unpublished', UPLOAD: 'uploaded', USER: 'signed in', RESET: 'reset password for', CHANGE: 'changed password', REVOKE: 'signed out devices' };
 
 function describe(a: Stats['recentActivity'][number]): string {
@@ -69,7 +71,7 @@ export default function DashboardPage() {
     <div>
       <PageHeader title={`Welcome back, ${user.name.split(' ')[0]}`} subtitle="Live counts from the website database." />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {MODULES.map((m) => {
           const s = stats[m.key];
           const pct = s.total ? Math.round((s.published / s.total) * 100) : 0;

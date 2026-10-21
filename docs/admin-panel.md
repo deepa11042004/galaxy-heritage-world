@@ -1,6 +1,6 @@
 # Admin panel
 
-Manages **Vacation Packages, Hotels & Resorts, Destinations, Day Outings** and **Settings & Users**.
+Manages **Vacation Packages, Hotels & Resorts, Destinations, Itineraries (with day-by-day schedules), Day Outings** and **Settings & Users**.
 Enquiries and Vouchers keep their existing pages (`/admin/enquiries`, `/admin/vouchers`), linked from the sidebar.
 
 - UI: Next.js, `frontend/src/app/admin/(panel)` (shell: `components/admin/AdminShell.tsx`)

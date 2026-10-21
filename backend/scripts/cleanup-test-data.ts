@@ -15,6 +15,7 @@ async function main() {
     hotels: (await prisma.hotel.deleteMany({ where: { slug: startsWith } })).count,
     packages: (await prisma.package.deleteMany({ where: { slug: startsWith } })).count,
     activities: (await prisma.activity.deleteMany({ where: { slug: startsWith } })).count,
+    itineraries: (await prisma.itinerary.deleteMany({ where: { slug: startsWith } })).count, // days cascade
     destinations: (await prisma.destination.deleteMany({ where: { slug: startsWith } })).count,
     users: 0,
     images: 0,

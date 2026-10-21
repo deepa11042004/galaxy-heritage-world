@@ -8,6 +8,7 @@ import { adminFetch, ApiError, jsonBody } from '@/lib/admin/api';
 import type { FieldDef, ResourceConfig, Row } from '@/lib/admin/resources';
 import { cn } from '@/lib/utils';
 import { useAdmin } from './AdminShell';
+import { DaysField, DayRow } from './DaysField';
 import { GalleryField, ImageField } from './ImageFields';
 import { ConfirmDialog, ErrorState, PageHeader, Spinner, StatusBadge, Switch, useToast } from './ui';
 
@@ -31,6 +32,13 @@ function toForm(config: ResourceConfig, row: Row): Values {
     const v = row[f.name];
     if (f.kind === 'list') out[f.name] = Array.isArray(v) ? v.join('\n') : '';
     else if (f.kind === 'gallery') out[f.name] = Array.isArray(v) ? v : [];
+    else if (f.kind === 'days')
+      out[f.name] = (Array.isArray(v) ? v : []).map((d: any) => ({
+        title: d.title ?? '',
+        description: d.description ?? '',
+        meals: d.meals ?? '',
+        stayLocation: d.stayLocation ?? '',
+      }));
     else if (f.kind === 'switch') out[f.name] = Boolean(v);
     else out[f.name] = v === null || v === undefined ? '' : String(v);
   }
@@ -49,6 +57,15 @@ function toPayload(config: ResourceConfig, values: Values, isNew: boolean): Row 
       case 'gallery':
       case 'switch':
         out[f.name] = v;
+        break;
+      case 'days':
+        out[f.name] = (v as DayRow[]).map((d, i) => ({
+          dayNumber: i + 1,
+          title: d.title.trim(),
+          description: d.description.trim(),
+          meals: d.meals.trim() || null,
+          stayLocation: d.stayLocation.trim() || null,
+        }));
         break;
       case 'number':
         out[f.name] = v === '' ? null : Number(v);
@@ -80,6 +97,9 @@ function validate(config: ResourceConfig, values: Values): Errors {
     if (required && (v === undefined || v === null || String(v).trim() === '')) {
       errors[f.name] = `${f.label} is required`;
       continue;
+    }
+    if (f.kind === 'days' && (v as DayRow[]).some((d) => !d.title.trim() || d.description.trim().length < 5)) {
+      errors[f.name] = 'Every day needs a title and a description (at least 5 characters)';
     }
     if (f.kind === 'number' && v !== '' && Number.isNaN(Number(v))) errors[f.name] = `${f.label} must be a number`;
     if (f.kind === 'number' && v !== '' && f.min !== undefined && Number(v) < f.min) errors[f.name] = `${f.label} must be at least ${f.min}`;
@@ -320,6 +340,8 @@ export function ResourceForm({ config, id }: { config: ResourceConfig; id?: stri
         );
       case 'image':
         return wrap(<ImageField value={values[f.name] ?? ''} onChange={(v) => set(f.name, v)} folder={config.folder} invalid={Boolean(err)} />, f.help);
+      case 'days':
+        return wrap(<DaysField value={values[f.name] ?? []} onChange={(v) => set(f.name, v)} invalid={Boolean(err)} />, f.help);
       case 'gallery':
         return wrap(<GalleryField value={values[f.name] ?? []} onChange={(v) => set(f.name, v)} folder={config.folder} />, f.help);
     }
