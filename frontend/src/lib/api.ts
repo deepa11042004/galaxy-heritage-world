@@ -81,6 +81,7 @@ export interface HotelListParams {
   page?: number;
   limit?: number;
   imported?: boolean;
+  stayType?: string;
 }
 
 export async function getHotels(params?: HotelListParams) {
@@ -94,8 +95,13 @@ export async function getHotels(params?: HotelListParams) {
   if (params?.page) query.set('page', String(params.page));
   if (params?.limit) query.set('limit', String(params.limit));
   if (params?.imported) query.set('imported', 'true');
+  if (params?.stayType) query.set('stayType', params.stayType);
   const qs = query.toString() ? `?${query.toString()}` : '';
   return fetchApi<any[]>(`/hotels${qs}`);
+}
+
+export async function getStayTypeCounts() {
+  return fetchApi<Record<string, number>>('/hotels/stay-types');
 }
 
 export async function getHotelFilters() {

@@ -14,6 +14,7 @@ import {
   Sparkles,
   User,
   Palmtree,
+  BedDouble,
   ArrowRight,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -224,7 +225,7 @@ export function Navbar() {
                 onMouseEnter={() => setResortsOpen(true)}
                 onMouseLeave={() => setResortsOpen(false)}
               >
-                <Link href="/hotels-resorts" className={navLinkClass(pathname.startsWith('/hotels-resorts'))}>
+                <Link href="/hotels-resorts" className={navLinkClass(pathname.startsWith('/hotels-resorts') || pathname.startsWith('/stays'))}>
                   <span>Hotels & Resorts</span>
                   <ChevronDown
                     className={cn(
@@ -251,6 +252,13 @@ export function Navbar() {
                         >
                           <Sparkles className="h-4 w-4 text-accent-strong" />
                           <span>Internal Luxury Properties</span>
+                        </Link>
+                        <Link
+                          href="/stays"
+                          className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
+                        >
+                          <BedDouble className="h-4 w-4 text-accent-strong" />
+                          <span>Stays: Villas, Cabins &amp; More</span>
                         </Link>
                         <div className="mt-1 border-t border-line pt-1">
                           <Link
@@ -343,6 +351,9 @@ export function Navbar() {
                 </Link>
                 <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Hotels & Resorts (43+ Properties)
+                </Link>
+                <Link href="/stays" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
+                  Stays
                 </Link>
                 <Link href="/day-activities" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Day Outings & Water Parks

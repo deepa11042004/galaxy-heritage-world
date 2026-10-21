@@ -64,6 +64,7 @@ export const resources: Record<string, ResourceConfig> = {
       category: eq('category', ['ASSOCIATED', 'INTERNAL', 'EXCHANGE']),
       locationType: eq('locationType', ['DOMESTIC', 'INTERNATIONAL']),
       destinationId: eq('destinationId'),
+      stayType: (v) => (/^[a-z-]{2,40}$/.test(v) ? { stayTypes: { array_contains: v } } : undefined),
     },
     sortable: ['name', 'locationName', 'updatedAt', 'createdAt', 'ratingStars'],
     defaultSort: { updatedAt: 'desc' },

@@ -89,6 +89,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/stays" className={footerLink}>
+                    Stays
+                  </Link>
+                </li>
+                <li>
                   <Link href="/day-activities" className={footerLink}>
                     Day Picnics & Farms
                   </Link>

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   getHotels,
   getHotelFilters,
+  getStayTypeCounts,
   getHotelBySlug,
   createHotel,
   updateHotel,
@@ -13,6 +14,7 @@ export const hotelsRouter = Router();
 
 hotelsRouter.get('/', getHotels);
 hotelsRouter.get('/filters', getHotelFilters);
+hotelsRouter.get('/stay-types', getStayTypeCounts);
 hotelsRouter.get('/:slug', getHotelBySlug);
 hotelsRouter.post('/', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN'), createHotel);
 hotelsRouter.put('/:id', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN'), updateHotel);

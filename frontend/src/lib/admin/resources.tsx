@@ -1,4 +1,5 @@
 import React from 'react';
+import { STAY_TYPES } from '@/lib/stays';
 
 export type Row = Record<string, any>;
 
@@ -11,7 +12,8 @@ export type FieldDef =
   | { kind: 'list'; name: string; label: string; help?: string; placeholder?: string }
   | { kind: 'image'; name: string; label: string; required?: boolean; help?: string }
   | { kind: 'gallery'; name: string; label: string; help?: string }
-  | { kind: 'days'; name: string; label: string; help?: string };
+  | { kind: 'days'; name: string; label: string; help?: string }
+  | { kind: 'multi'; name: string; label: string; options: { value: string; label: string }[]; help?: string };
 
 export interface Section {
   title: string;
@@ -137,8 +139,9 @@ export const hotels: ResourceConfig = {
   filters: [
     { param: 'category', label: 'All categories', options: [{ value: 'ASSOCIATED', label: 'Associated' }, { value: 'INTERNAL', label: 'Internal' }, { value: 'EXCHANGE', label: 'Exchange' }] },
     { param: 'locationType', label: 'Domestic & intl.', options: DOMESTIC_INTL },
+    { param: 'stayType', label: 'All stay types', options: STAY_TYPES.map((t) => ({ value: t.slug, label: t.name })) },
   ],
-  defaults: { category: 'ASSOCIATED', ratingStars: 4, country: 'India', isPublished: false, featured: false, gallery: [], amenities: [], imageUrl: '' },
+  defaults: { category: 'ASSOCIATED', ratingStars: 4, country: 'India', isPublished: false, featured: false, gallery: [], amenities: [], stayTypes: [], imageUrl: '' },
   sections: [
     {
       title: 'Basics',
@@ -149,6 +152,7 @@ export const hotels: ResourceConfig = {
         { kind: 'select', name: 'ratingStars', label: 'Star rating', required: true, half: true, options: [1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: `${n} star${n > 1 ? 's' : ''}` })) },
         { kind: 'textarea', name: 'description', label: 'Description', required: true, rows: 6 },
         { kind: 'list', name: 'amenities', label: 'Amenities', help: 'One per line, e.g. Swimming pool.' },
+        { kind: 'multi', name: 'stayTypes', label: 'Stay types', options: STAY_TYPES.map((t) => ({ value: t.slug, label: t.name })), help: 'The categories this property is listed under on the Stays page.' },
       ],
     },
     {

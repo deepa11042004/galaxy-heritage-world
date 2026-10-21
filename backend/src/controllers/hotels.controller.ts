@@ -6,7 +6,7 @@ import { HotelCategory } from '@prisma/client';
 
 export async function getHotels(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { destinationId, category, featured, search, locationType, location, hotelType, page, limit, imported } = req.query;
+    const { destinationId, category, featured, search, locationType, location, hotelType, stayType, page, limit, imported } = req.query;
 
     const where: any = { isPublished: true, deletedAt: null };
 
@@ -26,6 +26,7 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
     if (locationType === 'DOMESTIC' || locationType === 'INTERNATIONAL') where.locationType = locationType;
     if (typeof location === 'string' && location.trim()) where.locationName = location.trim();
     if (typeof hotelType === 'string' && /^[A-Z_]{2,30}$/.test(hotelType)) where.hotelType = hotelType;
+    if (typeof stayType === 'string' && /^[a-z-]{2,40}$/.test(stayType)) where.stayTypes = { array_contains: stayType };
 
     if (typeof search === 'string' && search.trim()) {
       where.OR = [
@@ -71,6 +72,24 @@ export async function getHotels(req: Request, res: Response, next: NextFunction)
       pages: paged ? Math.max(Math.ceil(total / take!), 1) : 1,
       data: sanitizedHotels,
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/** Number of published properties per stay type, for the Stays page. */
+export async function getStayTypeCounts(_req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const rows = await prisma.hotel.findMany({
+      where: { isPublished: true, deletedAt: null },
+      select: { stayTypes: true },
+    });
+    const counts: Record<string, number> = {};
+    for (const r of rows) {
+      if (!Array.isArray(r.stayTypes)) continue;
+      for (const t of r.stayTypes as string[]) counts[t] = (counts[t] ?? 0) + 1;
+    }
+    res.json({ success: true, data: counts });
   } catch (error) {
     next(error);
   }

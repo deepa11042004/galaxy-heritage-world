@@ -31,7 +31,7 @@ function toForm(config: ResourceConfig, row: Row): Values {
   for (const f of allFields(config)) {
     const v = row[f.name];
     if (f.kind === 'list') out[f.name] = Array.isArray(v) ? v.join('\n') : '';
-    else if (f.kind === 'gallery') out[f.name] = Array.isArray(v) ? v : [];
+    else if (f.kind === 'gallery' || f.kind === 'multi') out[f.name] = Array.isArray(v) ? v : [];
     else if (f.kind === 'days')
       out[f.name] = (Array.isArray(v) ? v : []).map((d: any) => ({
         title: d.title ?? '',
@@ -55,6 +55,7 @@ function toPayload(config: ResourceConfig, values: Values, isNew: boolean): Row 
         out[f.name] = String(v ?? '').split('\n').map((l) => l.trim()).filter(Boolean);
         break;
       case 'gallery':
+      case 'multi':
       case 'switch':
         out[f.name] = v;
         break;
@@ -340,6 +341,27 @@ export function ResourceForm({ config, id }: { config: ResourceConfig; id?: stri
         );
       case 'image':
         return wrap(<ImageField value={values[f.name] ?? ''} onChange={(v) => set(f.name, v)} folder={config.folder} invalid={Boolean(err)} />, f.help);
+      case 'multi':
+        return wrap(
+          <div className="flex flex-wrap gap-2" role="group" aria-label={f.label}>
+            {f.options.map((o) => {
+              const on = (values[f.name] ?? []).includes(o.value);
+              return (
+                <button
+                  key={o.value}
+                  type="button"
+                  aria-pressed={on}
+                  data-active={on}
+                  className="chip"
+                  onClick={() => set(f.name, on ? (values[f.name] as string[]).filter((v) => v !== o.value) : [...(values[f.name] ?? []), o.value])}
+                >
+                  {o.label}
+                </button>
+              );
+            })}
+          </div>,
+          f.help
+        );
       case 'days':
         return wrap(<DaysField value={values[f.name] ?? []} onChange={(v) => set(f.name, v)} invalid={Boolean(err)} />, f.help);
       case 'gallery':
