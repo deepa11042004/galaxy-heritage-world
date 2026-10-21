@@ -68,9 +68,9 @@ export default function TestimonialsPage() {
         wide
         title={
           <>
-            BEFORE WE TALK ABOUT <br className="hidden sm:block" />
-            WHAT&rsquo;S NEXT, LOOK AT WHAT&rsquo;S <br className="hidden sm:block" />
-            <span className="text-ink-muted">ALREADY DELIVERED.</span>
+            Before we talk about <br className="hidden sm:block" />
+            what&rsquo;s next, look at what&rsquo;s <br className="hidden sm:block" />
+            <span className="text-ink-muted">already delivered.</span>
           </>
         }
       />

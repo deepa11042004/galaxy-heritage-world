@@ -21,7 +21,7 @@ import { buttonVariants } from '@/components/ui/button';
 
 const navLinkClass = (active: boolean) =>
   cn(
-    'flex items-center gap-1 rounded-full px-2 xl:px-3.5 py-2 transition-colors duration-150',
+    'flex items-center gap-1 rounded-full px-1.5 xl:px-3.5 py-2 transition-colors duration-150',
     active ? 'bg-surface text-ink' : 'text-ink-muted hover:text-ink hover:bg-surface/70'
   );
 
@@ -110,7 +110,7 @@ export function Navbar() {
               aria-label="Galaxy Heritage World Home"
               className="group flex h-10 shrink-0 items-center transition-transform duration-200 hover:scale-[1.03]"
             >
-              <div className="relative h-10 w-28 xl:w-36">
+              <div className="relative h-10 w-24 xl:w-36">
                 <Image
                   src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                   alt="Galaxy Heritage World"
@@ -123,7 +123,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop navigation links */}
-            <div className="hidden flex-1 items-center justify-center gap-0.5 whitespace-nowrap text-[12.5px] font-medium lg:flex xl:text-[13px]">
+            <div className="hidden flex-1 items-center justify-center gap-0.5 whitespace-nowrap text-[12px] font-medium lg:flex xl:text-[13px]">
               <Link href="/" className={navLinkClass(pathname === '/')}>
                 Home
               </Link>
@@ -237,6 +237,9 @@ export function Navbar() {
 
               <Link href="/travel-desk" className={navLinkClass(pathname === '/travel-desk')}>
                 Travel Desk
+              </Link>
+              <Link href="/testimonials" className={cn(navLinkClass(pathname === '/testimonials'), 'hidden min-[1360px]:flex')}>
+                Testimonials
               </Link>
 
               <Link href="/contact" className={navLinkClass(pathname === '/contact')}>
