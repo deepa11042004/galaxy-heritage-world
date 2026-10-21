@@ -234,6 +234,11 @@ model Itinerary {
   summary        String         @db.Text
   overview       String         @db.Text
   inclusions     Json?
+  highlights     Json?
+  gallery        Json?
+  bestTime       String?        @map("best_time") @db.VarChar(100)
+  category       String?        @db.VarChar(100)
+  locationType   String?        @map("location_type") @db.VarChar(20)
   featured       Boolean        @default(false)
   isPublished    Boolean        @default(true) @map("is_published")
   deletedAt      DateTime?      @map("deleted_at")

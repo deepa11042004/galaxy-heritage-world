@@ -1,71 +1,134 @@
-'use client';
 
-import React, { useState } from 'react';
-import { PhoneCall, MessageCircle, Clock, Send, CheckCircle2, AlertCircle, Headphones } from 'lucide-react';
-import { submitEnquiry } from '@/lib/api';
+import React from 'react';
+import Link from 'next/link';
+import {
+  PhoneCall,
+  MessageCircle,
+  Clock,
+  CheckCircle2,
+  Headphones,
+  ArrowRight,
+  Layers,
+  BarChart3,
+  UserCog,
+  LifeBuoy,
+  SlidersHorizontal,
+  MousePointerClick,
+  RefreshCw,
+  ShieldCheck,
+  BellRing,
+  Globe2,
+  Briefcase,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
+import { TravelDeskSearch } from '@/components/travel-desk/TravelDeskSearch';
+
+const WHY_BOOK = [
+  {
+    icon: Layers,
+    title: 'All-in-One Efficiency',
+    text: 'Saves massive chunks of your day by unifying every flight, stay, car rental, and document checklist inside one hub.',
+  },
+  {
+    icon: BarChart3,
+    title: 'Smart Rate Compares',
+    text: 'Instantly pulls real-time inventories across multiple leading providers to ensure you leverage competitive rates.',
+  },
+  {
+    icon: UserCog,
+    title: 'Personalized Framework',
+    text: 'Offers tailored travel configurations built around your previous routes, corporate policies, and car preferences.',
+  },
+  {
+    icon: LifeBuoy,
+    title: 'Proactive Human Assist',
+    text: 'Provides priority troubleshooting support before, during, and well after your target itinerary dates wrap up.',
+  },
+  {
+    icon: SlidersHorizontal,
+    title: 'Simplified Management',
+    text: 'View details, file rapid modifications, or execute immediate cancellations with effortless self-serve utilities.',
+  },
+];
+
+const CAPABILITIES = [
+  { icon: MousePointerClick, title: 'Fluid Search UX', text: 'Intuitively engineered panels mapped out for frictionless booking interactions.' },
+  { icon: RefreshCw, title: 'Real-Time Catalogs', text: 'Instantaneous sync for live pricing engines and vehicle availability windows.' },
+  { icon: ShieldCheck, title: 'Secure Transactions', text: 'End-to-end tokenized payment routing structures shielding high-volume accounts.' },
+  { icon: CheckCircle2, title: 'Instant Confirmations', text: 'Automated notifications dispatched to SMS and corporate emails within seconds.' },
+  { icon: SlidersHorizontal, title: 'Full Lifecycle Control', text: 'Robust native tools designed to monitor, track, modify car rentals, or process cancellations.' },
+  { icon: Globe2, title: '24/7 Global Helpline', text: 'Always available routing lines maintaining around-the-clock emergency support.' },
+  { icon: BellRing, title: 'Proactive Travel Alerts', text: 'Live flight delays, weather tracking, and ground transportation updates.' },
+  { icon: Briefcase, title: 'Strategic Corporate Deals', text: 'Unlocks special pre-negotiated volume benefits and custom car rental enterprise discounts.' },
+];
 
 export default function TravelDeskPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    city: '',
-    destinationInterest: '',
-    travelDates: '',
-    travelersCount: 2,
-    message: '',
-    consent: true,
-  });
-
-  const [submitting, setSubmitting] = useState(false);
-  const [successRef, setSuccessRef] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setSubmitting(true);
-      setError(null);
-      const res = await submitEnquiry({
-        ...formData,
-        packageInterest: 'Travel Desk Concierge Request',
-        sourcePage: '/travel-desk',
-      });
-      setSuccessRef(res.referenceNumber || 'GHW-ENQ-SUCCESS');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        city: '',
-        destinationInterest: '',
-        travelDates: '',
-        travelersCount: 2,
-        message: '',
-        consent: true,
-      });
-    } catch (err: any) {
-      setError(err.message || 'Unable to submit travel desk request. Please call directly.');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div>
       {/* Header */}
       <PageHero
         icon={Headphones}
-        eyebrow="Personal Vacation Concierge"
+        eyebrow="Corporate & Leisure Travel Desk"
         title={
           <>
-            Galaxy Heritage World <span className="text-ink-muted">Travel Desk</span>
+            Your Complete Journey, <span className="text-ink-muted">Simplified</span>
           </>
         }
-        subtitle="Your single point of contact for customized itinerary design, associated resort bookings, voucher claims, and 24/7 on-trip support."
+        subtitle="Book flights, reserve stays, manage car rentals, arrange transfers, and get visa support, all in one premium ecosystem."
       />
+
+      {/* Booking widget */}
+      <section className="container-page section">
+        <div className="mx-auto max-w-6xl">
+          <TravelDeskSearch />
+        </div>
+      </section>
+
+      {/* Why book through the desk */}
+      <section className="container-page section">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h2 className="text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+            Why Book Through <span className="text-ink-muted">Our Travel Desk?</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            Engineered to bring seamless efficiency to all your journeys
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {WHY_BOOK.map((w) => (
+            <div key={w.title} className="card card-hover p-6">
+              <div className="flex size-12 items-center justify-center rounded-xl bg-ink text-accent">
+                <w.icon className="size-6" />
+              </div>
+              <h3 className="mt-5 text-lg font-semibold text-ink">{w.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{w.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Capabilities */}
+      <section className="container-page section">
+        <div className="mx-auto mb-12 max-w-3xl text-center">
+          <h2 className="text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+            Enterprise-Grade <span className="text-ink-muted">Desk Capabilities</span>
+          </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            Everything required for modernized global logistical infrastructure
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {CAPABILITIES.map((c) => (
+            <div key={c.title} className="card p-6">
+              <c.icon className="size-6 text-accent-strong" />
+              <h3 className="mt-4 text-base font-semibold text-ink">{c.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{c.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="container-page section">
         {/* Quick Contact Banners */}
@@ -121,136 +184,20 @@ export default function TravelDeskPage() {
             </div>
           </div>
         </div>
-
-        {/* Travel Desk Form */}
-        <div className="rounded-hero bg-surface p-3 sm:p-4">
-          <div className="card p-6 sm:p-12">
-            <div className="mx-auto max-w-3xl">
-              <h2 className="heading-section mb-3 text-center">Submit a Travel Desk Request</h2>
-              <p className="mb-10 text-center text-sm text-ink-muted">
-                Let us know your destination, travel window, and member details. An expert consultant will call back with customized options.
-              </p>
-
-              {successRef ? (
-                <div className="space-y-4 py-12 text-center">
-                  <div className="success-badge">
-                    <CheckCircle2 className="h-8 w-8" />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-ink">Request Received by Travel Desk!</h3>
-                  <p className="text-sm text-ink-muted">
-                    Reference Code: <strong className="font-mono text-ink">{successRef}</strong>
-                  </p>
-                  <p className="text-xs text-ink-subtle">Our coordinator will call back shortly on your contact number.</p>
-                  <button
-                    onClick={() => setSuccessRef(null)}
-                    className={cn(buttonVariants({ variant: 'dark', size: 'sm' }), 'mt-4')}
-                  >
-                    Submit Another Query
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="label">Full Name *</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. Vikram Malhotra"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                    <div>
-                      <label className="label">Email Address *</label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="e.g. vikram@example.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="label">Phone Number *</label>
-                      <input
-                        type="tel"
-                        required
-                        placeholder="e.g. +91 98765 43210"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                    <div>
-                      <label className="label">City of Residence *</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="e.g. Delhi, Gurgaon, Lucknow"
-                        value={formData.city}
-                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className="label">Destination of Interest</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Goa, Manali, Kerala, Dubai"
-                        value={formData.destinationInterest}
-                        onChange={(e) => setFormData({ ...formData, destinationInterest: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                    <div>
-                      <label className="label">Preferred Dates / Month</label>
-                      <input
-                        type="text"
-                        placeholder="e.g. Next month weekend, Mid-November"
-                        value={formData.travelDates}
-                        onChange={(e) => setFormData({ ...formData, travelDates: e.target.value })}
-                        className="input"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="label">Specific Requests / Voucher Number</label>
-                    <textarea
-                      rows={3}
-                      placeholder="Provide any voucher details or travel preferences..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="input"
-                    />
-                  </div>
-
-                  {error && (
-                    <div className="alert-error">
-                      <AlertCircle className="h-4 w-4 shrink-0" />
-                      <span>{error}</span>
-                    </div>
-                  )}
-
-                  <button type="submit" disabled={submitting} className={buttonVariants({ size: 'lg', block: true })}>
-                    <span>{submitting ? 'Submitting to Desk...' : 'Submit Travel Desk Request'}</span>
-                    <Send />
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
       </div>
+
+      {/* Closing call to action */}
+      <section className="container-page section section-plain">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+            Expeditions Expertise <span className="text-ink-muted">at Your Service</span>
+          </h2>
+          <Link href="/contact" className={cn(buttonVariants({ size: 'lg' }), 'mt-7')}>
+            <span>Contact Us</span>
+            <ArrowRight />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

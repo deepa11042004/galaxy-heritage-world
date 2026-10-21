@@ -99,6 +99,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/itineraries" className={footerLink}>
+                    Holiday Itineraries
+                  </Link>
+                </li>
+                <li>
                   <Link href="/testimonials" className={footerLink}>
                     Client Testimonials
                   </Link>
