@@ -129,10 +129,6 @@ export function Navbar() {
                 Home
               </Link>
 
-              <Link href="/about" className={navLinkClass(pathname === '/about')}>
-                About Us
-              </Link>
-
               {/* Destinations Dropdown */}
               <div
                 className="relative py-1"
@@ -157,19 +153,13 @@ export function Navbar() {
                           href="/destinations?type=DOMESTIC"
                           className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
-                          Domestic Destinations
+                          Domestic
                         </Link>
                         <Link
                           href="/destinations?type=INTERNATIONAL"
                           className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
-                          International Destinations
-                        </Link>
-                        <Link
-                          href="/destinations?type=INTERNATIONAL#exchange"
-                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
-                        >
-                          Exchange
+                          International
                         </Link>
                       </div>
                     </div>
@@ -247,6 +237,10 @@ export function Navbar() {
                 Testimonials
               </Link>
 
+              <Link href="/about" className={navLinkClass(pathname === '/about')}>
+                About Us
+              </Link>
+
               <Link href="/contact" className={navLinkClass(pathname === '/contact')}>
                 Contact
               </Link>
@@ -285,27 +279,18 @@ export function Navbar() {
                 <Link href="/" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Home
                 </Link>
-                <Link href="/about" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  About Us
-                </Link>
                 <div className="ml-3 space-y-0.5 border-l border-line pl-3">
                   <Link
                     href="/destinations?type=DOMESTIC"
                     className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
                   >
-                    Domestic Destinations
+                    Domestic
                   </Link>
                   <Link
                     href="/destinations?type=INTERNATIONAL"
                     className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
                   >
-                    International Destinations
-                  </Link>
-                  <Link
-                    href="/destinations?type=INTERNATIONAL#exchange"
-                    className="block rounded-lg px-3 py-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
-                  >
-                    Exchange
+                    International
                   </Link>
                 </div>
                 <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
@@ -335,6 +320,9 @@ export function Navbar() {
                 </Link>
                 <Link href="/faq" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Customer FAQs
+                </Link>
+                <Link href="/about" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
+                  About Us
                 </Link>
                 <Link href="/contact" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Contact & Office Addresses
