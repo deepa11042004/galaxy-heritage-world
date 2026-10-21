@@ -14,7 +14,7 @@ test.describe('Galaxy Heritage World E2E Smoke Tests', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText(/Crafting Unforgettable Journeys/);
 
     // Check floating Travel Desk
-    const travelDeskFloat = page.getByLabel('Open Travel Desk Concierge');
+    const travelDeskFloat = page.getByLabel('Open the Travel Desk page');
     await expect(travelDeskFloat).toBeVisible();
   });
 

@@ -34,7 +34,6 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [destinationsOpen, setDestinationsOpen] = useState(false);
   const [resortsOpen, setResortsOpen] = useState(false);
-  const [packagesOpen, setPackagesOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -178,46 +177,9 @@ export function Navbar() {
                 )}
               </div>
 
-              {/* Membership Dropdown */}
-              <div
-                className="relative py-1"
-                onMouseEnter={() => setPackagesOpen(true)}
-                onMouseLeave={() => setPackagesOpen(false)}
-              >
-                <Link
-                  href="/membership"
-                  className={navLinkClass(pathname.startsWith('/membership') || pathname.startsWith('/itineraries'))}
-                >
-                  <span>Membership</span>
-                  <ChevronDown
-                    className={cn(
-                      'hidden h-3.5 w-3.5 text-ink-subtle transition-transform duration-200 xl:block',
-                      packagesOpen && 'rotate-180 text-ink'
-                    )}
-                  />
-                </Link>
-
-                {packagesOpen && (
-                  <div className="absolute top-full left-0 z-50 w-64 pt-2">
-                    <div className={dropdownPanel}>
-                      <div className="flex flex-col space-y-0.5 text-left">
-                        <Link
-                          href="/membership"
-                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
-                        >
-                          Galaxy Heritage Club
-                        </Link>
-                        <Link
-                          href="/itineraries"
-                          className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
-                        >
-                          Holiday Itineraries
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Link href="/membership" className={navLinkClass(pathname.startsWith('/membership'))}>
+                Membership
+              </Link>
 
               {/* Hotels & Resorts Dropdown */}
               <div
@@ -278,8 +240,8 @@ export function Navbar() {
                 Day Outings
               </Link>
 
-              <Link href="/travel-desk" className={navLinkClass(pathname === '/travel-desk')}>
-                Travel Desk
+              <Link href="/itineraries" className={navLinkClass(pathname.startsWith('/itineraries'))}>
+                Itineraries
               </Link>
               <Link href="/testimonials" className={cn(navLinkClass(pathname === '/testimonials'), 'hidden min-[1400px]:flex')}>
                 Testimonials
@@ -358,11 +320,9 @@ export function Navbar() {
                 <Link href="/day-activities" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Day Outings & Water Parks
                 </Link>
-                <Link href="/travel-desk" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Dedicated Travel Desk
-                </Link>
+
                 <Link href="/itineraries" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Holiday Itineraries
+                  Itineraries
                 </Link>
                 <Link href="/testimonials" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Client Testimonials
