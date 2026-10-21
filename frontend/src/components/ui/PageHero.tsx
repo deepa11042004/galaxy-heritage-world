@@ -14,6 +14,8 @@ interface PageHeroProps {
   meta?: React.ReactNode;
   /** Extra content under the subtitle (filters, search). */
   children?: React.ReactNode;
+  /** Plain variant only: allow a wider title block for long headlines. */
+  wide?: boolean;
   className?: string;
 }
 
@@ -29,6 +31,7 @@ export function PageHero({
   image,
   meta,
   children,
+  wide,
   className,
 }: PageHeroProps) {
   if (image) {
@@ -55,7 +58,7 @@ export function PageHero({
     <section className={cn('hero-frame-wrap', className)}>
       <div className="relative overflow-hidden rounded-hero bg-surface">
         <div className="container-page pb-14 pt-[calc(var(--nav-h)+2rem)] text-center sm:pb-20 sm:pt-[calc(var(--nav-h)+3.5rem)]">
-          <div className="mx-auto max-w-3xl">
+          <div className={cn('mx-auto', wide ? 'max-w-5xl' : 'max-w-3xl')}>
             {eyebrow && (
               <div className="eyebrow mb-5">
                 {Icon && <Icon />}

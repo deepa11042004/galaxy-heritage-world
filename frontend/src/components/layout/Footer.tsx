@@ -98,6 +98,11 @@ export function Footer() {
                     Travel Desk
                   </Link>
                 </li>
+                <li>
+                  <Link href="/testimonials" className={footerLink}>
+                    Client Testimonials
+                  </Link>
+                </li>
               </ul>
             </div>
 

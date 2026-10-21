@@ -312,6 +312,9 @@ export function Navbar() {
                 <Link href="/travel-desk" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Dedicated Travel Desk
                 </Link>
+                <Link href="/testimonials" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
+                  Client Testimonials
+                </Link>
                 <Link
                   href="/reviews-and-complaints"
                   className="rounded-xl px-3 py-2.5 font-semibold text-accent-strong transition-colors hover:bg-surface"
