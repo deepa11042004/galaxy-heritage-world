@@ -3,7 +3,9 @@
  * sign-in (credentials: 'include'); no token is ever readable from JavaScript. On a 401 the client
  * silently refreshes the session once and retries.
  */
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+// Default: same-origin "/api/v1", which Next.js proxies to the API (see next.config.mjs). That keeps the session
+// cookie first-party and avoids CORS. Set NEXT_PUBLIC_API_URL only to call a separate API origin directly.
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api/v1';
 export const API_ORIGIN = API_BASE.replace(/\/api\/v1\/?$/, '');
 
 export interface FieldIssue {

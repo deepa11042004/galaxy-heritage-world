@@ -3,7 +3,7 @@
 const API_BASE_URL =
   (typeof window === 'undefined' ? process.env.API_INTERNAL_URL : undefined) ||
   process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window === 'undefined' ? 'http://127.0.0.1:4000/api/v1' : 'http://localhost:4000/api/v1');
+  (typeof window === 'undefined' ? 'http://127.0.0.1:4000/api/v1' : '/api/v1');
 
 export interface ApiResponse<T> {
   success: boolean;

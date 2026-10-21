@@ -25,7 +25,8 @@ export const config = {
   },
   cookie: {
     secret: secret('COOKIE_SECRET', 'fallback-cookie-secret'),
-    secure: process.env.NODE_ENV === 'production',
+    // Secure cookies need https. Set COOKIE_SECURE=false only for an http-only test server.
+    secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : process.env.NODE_ENV === 'production',
   },
   smtp: {
     host: process.env.SMTP_HOST || 'localhost',

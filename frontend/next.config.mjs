@@ -1,6 +1,7 @@
 // Uploaded images are stored by the API and served from its /media/uploads folder.
 // Computed at build/start time, so set API_INTERNAL_URL (or NEXT_PUBLIC_API_URL) before `next build`.
-const API_ORIGIN = (process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:4000/api/v1').replace(/\/api\/v1\/?$/, '');
+const configured = process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_URL || '';
+const API_ORIGIN = (configured.startsWith('http') ? configured : 'http://127.0.0.1:4000/api/v1').replace(/\/api\/v1\/?$/, '');
 
 const nextConfig = {
   output: 'standalone',
@@ -26,6 +27,8 @@ const nextConfig = {
   },
   async rewrites() {
     return [
+      // The browser talks to the API through this site (same origin), so login cookies work on any host.
+      { source: '/api/v1/:path*', destination: `${API_ORIGIN}/api/v1/:path*` },
       {
         source: '/media/uploads/:path*',
         destination: `${API_ORIGIN}/media/uploads/:path*`,

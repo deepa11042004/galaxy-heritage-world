@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE } from '@/lib/admin/api';
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
@@ -27,7 +29,7 @@ export default function AdminVouchersPage() {
     const query = new URLSearchParams();
     if (search) query.set('search', search);
 
-    fetch(`http://localhost:4000/api/v1/enquiries/vouchers/list?${query.toString()}`, {
+    fetch(`${API_BASE}/enquiries/vouchers/list?${query.toString()}`, {
       credentials: 'include',
       headers,
     })

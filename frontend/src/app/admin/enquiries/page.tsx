@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE } from '@/lib/admin/api';
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
@@ -35,7 +37,7 @@ export default function AdminEnquiriesPage() {
     if (statusFilter) query.set('status', statusFilter);
     if (search) query.set('search', search);
 
-    fetch(`http://localhost:4000/api/v1/enquiries?${query.toString()}`, {
+    fetch(`${API_BASE}/enquiries?${query.toString()}`, {
       credentials: 'include',
       headers,
     })
@@ -60,7 +62,7 @@ export default function AdminEnquiriesPage() {
       };
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const res = await fetch(`http://localhost:4000/api/v1/enquiries/${id}`, {
+      const res = await fetch(`${API_BASE}/enquiries/${id}`, {
         method: 'PATCH',
         credentials: 'include',
         headers,
