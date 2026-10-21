@@ -79,13 +79,13 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/vacation-packages" className={footerLink}>
-                    Vacation Packages
+                  <Link href="/hotels-resorts" className={footerLink}>
+                    Hotels & 43+ Resorts
                   </Link>
                 </li>
                 <li>
-                  <Link href="/hotels-resorts" className={footerLink}>
-                    Hotels & 43+ Resorts
+                  <Link href="/membership" className={footerLink}>
+                    Membership
                   </Link>
                 </li>
                 <li>

@@ -55,7 +55,7 @@ export default async function HomePage() {
       <HeroBanner />
       <WhyChooseUs />
       <DestinationShowcase destinations={destinations} />
-      <PackageCards packages={packages} />
+      {packages.length > 0 && <PackageCards packages={packages} />}
       <ResortShowcase hotels={hotels} />
       <DayActivitiesSection activities={activities} />
       <TestimonialsSection testimonials={testimonials} />

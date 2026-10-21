@@ -178,17 +178,17 @@ export function Navbar() {
                 )}
               </div>
 
-              {/* Vacation Packages Dropdown */}
+              {/* Membership Dropdown */}
               <div
                 className="relative py-1"
                 onMouseEnter={() => setPackagesOpen(true)}
                 onMouseLeave={() => setPackagesOpen(false)}
               >
                 <Link
-                  href="/vacation-packages"
-                  className={navLinkClass(pathname.startsWith('/vacation-packages') || pathname.startsWith('/itineraries'))}
+                  href="/membership"
+                  className={navLinkClass(pathname.startsWith('/membership') || pathname.startsWith('/itineraries'))}
                 >
-                  <span>Vacation Packages</span>
+                  <span>Membership</span>
                   <ChevronDown
                     className={cn(
                       'hidden h-3.5 w-3.5 text-ink-subtle transition-transform duration-200 xl:block',
@@ -202,10 +202,10 @@ export function Navbar() {
                     <div className={dropdownPanel}>
                       <div className="flex flex-col space-y-0.5 text-left">
                         <Link
-                          href="/vacation-packages"
+                          href="/membership"
                           className="block rounded-xl px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-surface"
                         >
-                          Membership Packages
+                          Galaxy Heritage Club
                         </Link>
                         <Link
                           href="/itineraries"
@@ -346,11 +346,11 @@ export function Navbar() {
                     Exchange
                   </Link>
                 </div>
-                <Link href="/vacation-packages" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Vacation Packages
-                </Link>
                 <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Hotels & Resorts (43+ Properties)
+                </Link>
+                <Link href="/membership" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
+                  Membership
                 </Link>
                 <Link href="/stays" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Stays

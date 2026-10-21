@@ -81,7 +81,13 @@ const nextConfig = {
       },
       {
         source: '/booking',
-        destination: '/vacation-packages',
+        destination: '/membership',
+        permanent: true,
+      },
+      // The old Blue / White / Red packages were replaced by the Galaxy Heritage Club membership.
+      {
+        source: '/vacation-packages',
+        destination: '/membership',
         permanent: true,
       },
       {
