@@ -3,18 +3,15 @@ import Link from 'next/link';
 import {
   ArrowRight,
   BedDouble,
-  CalendarCheck,
   Check,
   Crown,
-  Headset,
-  PartyPopper,
-  Percent,
   Sparkles,
   Users,
 } from 'lucide-react';
 import { MembershipHero } from '@/components/membership/MembershipHero';
 import { PrivilegeSlider } from '@/components/membership/PrivilegeSlider';
 import { RoomVideo } from '@/components/membership/RoomVideo';
+import { TenetSlider } from '@/components/membership/TenetSlider';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -92,8 +89,9 @@ const ROOMS = [
 
 const TENETS = [
   {
-    icon: Sparkles,
     title: "We've Got You Covered",
+    image: '/media/membership/tenet-1.jpg',
+    alt: 'Cottages and a restaurant among palm trees at a Goa beach resort',
     items: [
       'Your membership gives you 6 nights/7 days of holidays every year. If you miss your vacation, you can carry forward up to 14 nights.',
       'Breakfast is on us. Other meals come with special savings.',
@@ -102,8 +100,9 @@ const TENETS = [
     ],
   },
   {
-    icon: Crown,
     title: 'Special Privileges',
+    image: '/media/membership/tenet-2.jpg',
+    alt: 'Private plunge pool on a terrace above the ocean',
     items: [
       'Avail 52, 46, and 24 weeks of holiday access across applicable seasons for EBONY, IVORY, and JADE Keys respectively.',
       'Enjoy 25% discounts on eligible in-resort spends.',
@@ -111,8 +110,9 @@ const TENETS = [
     ],
   },
   {
-    icon: CalendarCheck,
     title: 'Holiday Benefits',
+    image: '/media/membership/tenet-3.jpg',
+    alt: 'Resort pool surrounded by forest',
     items: [
       'You can start booking your holidays up to 4 months in advance. All bookings are confirmed on a first-come, first-served basis.',
       'The number of rooms you can book and the seasons you travel in are based on your membership plan.',
@@ -120,8 +120,9 @@ const TENETS = [
     ],
   },
   {
-    icon: Percent,
     title: 'Seamless Booking & Flexibility',
+    image: '/media/membership/tenet-4.jpg',
+    alt: 'Resort entrance glowing at blue hour',
     items: [
       'Book your stays up to 4 months in advance with guaranteed confirmation.',
       'Flexible carry-forward options for unused nights, ensuring your time is never wasted.',
@@ -129,8 +130,9 @@ const TENETS = [
     ],
   },
   {
-    icon: PartyPopper,
     title: 'Exclusive Member Events',
+    image: '/media/membership/tenet-5.jpg',
+    alt: 'Grand ballroom set with round banquet tables',
     items: [
       'Invitations to private, members-only events and exclusive culinary experiences.',
       'Early access to new resort openings and special seasonal holiday packages.',
@@ -138,8 +140,9 @@ const TENETS = [
     ],
   },
   {
-    icon: Headset,
     title: 'Dedicated Concierge Support',
+    image: '/media/membership/tenet-6.jpg',
+    alt: 'Ornate hotel reception desk',
     items: [
       '24/7 dedicated member support for all your travel and booking needs.',
       'Personalized itinerary planning and special request handling before your stay.',
@@ -254,26 +257,7 @@ export default function MembershipPage() {
             Key <span className="text-ink-muted">Tenets</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-          {TENETS.map((t) => (
-            <div key={t.title} className="card p-6 sm:p-8">
-              <div className="flex items-center gap-3">
-                <div className="flex size-11 items-center justify-center rounded-xl bg-ink text-accent">
-                  <t.icon className="size-5" />
-                </div>
-                <h3 className="text-xl font-semibold text-ink">{t.title}</h3>
-              </div>
-              <ul className="mt-5 space-y-3 text-sm leading-relaxed text-ink-muted">
-                {t.items.map((i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <Check className="mt-0.5 size-4 shrink-0 text-accent-strong" />
-                    <span>{i}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <TenetSlider tenets={TENETS} />
       </section>
 
       <section className="container-page section section-plain">
