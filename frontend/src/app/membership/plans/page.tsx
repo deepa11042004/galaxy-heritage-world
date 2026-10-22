@@ -15,11 +15,20 @@ export default function MembershipPlansPage() {
   return (
     <div>
       <PageHero
-        icon={Crown}
-        eyebrow="Galaxy Heritage Club"
+        image={{
+          src: '/media/hero/membership-plans-header.jpg',
+          alt: 'Two hands exchanging a membership card with a city skyline behind',
+          position: 'center 45%',
+        }}
+        meta={
+          <span className="pill-glass">
+            <Crown className="h-3.5 w-3.5" />
+            Galaxy Heritage Club
+          </span>
+        }
         title={
           <>
-            Choose Your <span className="text-ink-muted">Plan</span>
+            Choose Your <span className="text-white/70">Plan</span>
           </>
         }
         subtitle="Pick a Key and a tenure. Compare the total cost and EMI of every tenure, then tap Buy Now on the one you like."
