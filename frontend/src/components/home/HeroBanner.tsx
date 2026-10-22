@@ -6,14 +6,14 @@ import { Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const heroSlides = [
   {
-    src: '/media/galaxy-heritage-world/faq/images/177.jpg',
-    alt: 'Majestic Pagoda and Mount Fuji in Spring - International Escapes',
-    tag: 'Iconic Destinations',
+    src: '/media/hero/resort-pool-palms.jpg',
+    alt: 'Turquoise resort pool lined with loungers and palm trees - Tropical Escapes',
+    tag: 'Tropical Escapes',
   },
   {
-    src: '/media/galaxy-heritage-world/faq/images/1073.jpg',
-    alt: 'Golden Sunset Luxury Beach Resort Pool - Coastal Retreats',
-    tag: 'Coastal Luxury',
+    src: '/media/hero/tropical-pool-mountains.jpg',
+    alt: 'Tropical resort pool beneath green mountains - Coastal Retreats',
+    tag: 'Coastal Retreats',
   },
   {
     src: '/media/galaxy-heritage-world/faq/images/4900.jpg',
