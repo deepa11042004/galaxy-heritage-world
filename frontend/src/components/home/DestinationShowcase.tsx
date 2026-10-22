@@ -24,7 +24,10 @@ export function DestinationShowcase({ destinations }: { destinations: CityItem[]
   });
 
   return (
-    <section className="section bg-white">
+    <section
+      className="section bg-white bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/media/hero/section-pattern.jpg')" }}
+    >
       <div className="container-page">
         <SectionHeader
           icon={Sparkles}
