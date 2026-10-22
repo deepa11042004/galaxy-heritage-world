@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { MembershipHero } from '@/components/membership/MembershipHero';
 import { PrivilegeSlider } from '@/components/membership/PrivilegeSlider';
+import { RoomVideo } from '@/components/membership/RoomVideo';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -74,11 +75,17 @@ const ROOMS = [
   {
     guests: '2 Adults · 2 Children',
     name: 'Studio Standard Room',
+    video: '/media/membership/room-video-1.mp4',
+    poster: '/media/membership/room-video-1-poster.jpg',
+    label: 'Video tour of a studio room with a king bed, sofa and work desk',
     text: 'Our expansive studio suite, equivalent to two standard rooms, accommodates up to two adults and two children under six.',
   },
   {
     guests: '4 Adults · 2 Children',
     name: '1 BR Standard Room',
+    video: '/media/membership/room-video-2.mp4',
+    poster: '/media/membership/room-video-2-poster.jpg',
+    label: 'Video tour of a spacious bedroom with a king bed and seating area',
     text: 'A premium, spacious layout comfortably hosting up to four adults and two children under the age of six.',
   },
 ];
@@ -221,13 +228,16 @@ export default function MembershipPage() {
         </div>
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
           {ROOMS.map((r) => (
-            <div key={r.name} className="card p-7">
-              <span className="pill-accent">
-                <Users className="size-3.5" />
-                {r.guests}
-              </span>
-              <h3 className="mt-4 text-xl font-semibold text-ink">{r.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">{r.text}</p>
+            <div key={r.name} className="card overflow-hidden p-0">
+              <RoomVideo src={r.video} poster={r.poster} label={r.label} />
+              <div className="p-7">
+                <span className="pill-accent">
+                  <Users className="size-3.5" />
+                  {r.guests}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold text-ink">{r.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">{r.text}</p>
+              </div>
             </div>
           ))}
         </div>
