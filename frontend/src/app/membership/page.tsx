@@ -15,7 +15,7 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { PageHero } from '@/components/ui/PageHero';
+import { MembershipHero } from '@/components/membership/MembershipHero';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -146,29 +146,7 @@ const TENETS = [
 export default function MembershipPage() {
   return (
     <div>
-      <PageHero
-        icon={Crown}
-        eyebrow="Launching · Membership Ownership Tiers"
-        wide
-        title={
-          <>
-            Galaxy Heritage Club <br className="hidden sm:block" />
-            <span className="text-ink-muted">A World of Privileged Access</span>
-          </>
-        }
-        subtitle="Galaxy Heritage Club unlocks privileged access to 140+ premium resorts, offering 6 nights/7 days holidays every year, filled with cherished family moments and thoughtfully crafted experiences."
-      >
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-          {PLANS.map((p) => (
-            <span key={p.key} className="pill-muted !px-4 !py-1.5 !text-xs !font-bold tracking-wider">
-              {p.key}
-            </span>
-          ))}
-        </div>
-        <p className="mt-4 text-xs font-semibold tracking-wide text-ink-muted uppercase">
-          Five, Ten, Fifteen &amp; Twenty Year Memberships
-        </p>
-      </PageHero>
+      <MembershipHero />
 
       {/* Handpicked privileges */}
       <section className="container-page section">
@@ -180,6 +158,10 @@ export default function MembershipPage() {
           <h2 className="mt-4 text-3xl font-medium tracking-tight text-ink sm:text-4xl">
             Handpicked <span className="text-ink-muted">Privileges</span>
           </h2>
+          <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            Galaxy Heritage Club unlocks privileged access to 140+ premium resorts, offering 6 nights/7 days holidays every
+            year, filled with cherished family moments and thoughtfully crafted experiences.
+          </p>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {PRIVILEGES.map((p) => (
