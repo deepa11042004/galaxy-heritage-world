@@ -12,7 +12,14 @@ interface PageHeroProps {
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   /** When set, renders the photo variant used by detail pages. */
-  image?: { src: string; alt: string; /** CSS object-position, e.g. 'center 55%' (default: centre) */ position?: string };
+  image?: {
+    src: string;
+    alt: string;
+    /** CSS object-position, e.g. 'center 55%' (default: centre) */
+    position?: string;
+    /** Optional muted looping background video; `src` is then used as its poster / reduced-motion fallback. */
+    video?: string;
+  };
   /** Photo variant only: row of meta pills rendered above the title. */
   meta?: React.ReactNode;
   /** Extra content under the subtitle (filters, search). */
@@ -51,6 +58,21 @@ export function PageHero({
             style={image.position ? { objectPosition: image.position } : undefined}
             sizes="100vw"
           />
+          {image.video && (
+            // The still image above shows while the video loads and for visitors who prefer reduced motion.
+            <video
+              className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+              style={image.position ? { objectPosition: image.position } : undefined}
+              src={image.video}
+              poster={image.src}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          )}
           {/* Bottom-only scrim so the title stays legible on any photo */}
           <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
           <div className="container-page relative z-10 pb-10 sm:pb-14">
