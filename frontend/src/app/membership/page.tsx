@@ -208,7 +208,7 @@ export default function MembershipPage() {
               </ul>
 
               <Link
-                href={`/contact?membership=${p.key}`}
+                href={`/membership/plans#${p.key.toLowerCase()}`}
                 className={cn('mt-8 block rounded-xl px-4 py-3 text-center text-sm font-semibold transition-colors', p.button)}
               >
                 Join Now
@@ -269,7 +269,7 @@ export default function MembershipPage() {
             Talk to our team about the right Key for you and your family.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/contact?membership=enquiry" className={buttonVariants({ size: 'lg' })}>
+            <Link href="/membership/plans" className={buttonVariants({ size: 'lg' })}>
               <span>Join Now</span>
               <ArrowRight />
             </Link>
