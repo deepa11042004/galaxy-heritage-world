@@ -3,13 +3,16 @@ import Image from 'next/image';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** Soft dark shadow so white text stays readable on any photo. */
+const PHOTO_TEXT_SHADOW = '0 2px 6px rgba(0, 0, 0, 0.55), 0 8px 30px rgba(0, 0, 0, 0.5)';
+
 interface PageHeroProps {
   icon?: LucideIcon;
   eyebrow?: React.ReactNode;
   title: React.ReactNode;
   subtitle?: React.ReactNode;
   /** When set, renders the photo variant used by detail pages. */
-  image?: { src: string; alt: string };
+  image?: { src: string; alt: string; /** CSS object-position, e.g. 'center 55%' (default: centre) */ position?: string };
   /** Photo variant only: row of meta pills rendered above the title. */
   meta?: React.ReactNode;
   /** Extra content under the subtitle (filters, search). */
@@ -38,14 +41,27 @@ export function PageHero({
     return (
       <section className={cn('hero-frame-wrap', className)}>
         <div className="relative flex min-h-[440px] h-[62vh] items-end overflow-hidden rounded-hero bg-ink">
-          <Image src={image.src} alt={image.alt} fill priority className="object-cover" sizes="100vw" />
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority
+            quality={90}
+            className="object-cover"
+            style={image.position ? { objectPosition: image.position } : undefined}
+            sizes="100vw"
+          />
           {/* Bottom-only scrim so the title stays legible on any photo */}
-          <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/65 via-black/25 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/75 via-black/35 to-transparent" />
           <div className="container-page relative z-10 pb-10 sm:pb-14">
             {meta && <div className="mb-4 flex flex-wrap items-center gap-2">{meta}</div>}
-            <h1 className="heading-page max-w-4xl text-white">{title}</h1>
+            <h1 className="heading-page max-w-4xl text-white" style={{ textShadow: PHOTO_TEXT_SHADOW }}>
+              {title}
+            </h1>
             {subtitle && (
-              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">{subtitle}</p>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/90 sm:text-base" style={{ textShadow: PHOTO_TEXT_SHADOW }}>
+                {subtitle}
+              </p>
             )}
             {children}
           </div>

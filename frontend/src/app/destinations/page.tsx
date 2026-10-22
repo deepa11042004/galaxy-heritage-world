@@ -26,17 +26,29 @@ export default async function DestinationsPage({
   return (
     <div>
       <PageHero
-        icon={Compass}
-        eyebrow="Discover The World"
+        image={{
+          src: '/media/hero/hiker-mountain-summit.jpg',
+          alt: 'Hiker in a yellow jacket photographing a sea of clouds and snow-dusted mountains at sunrise',
+          position: '14% 38%',
+        }}
+        meta={
+          <span className="pill-glass">
+            <Compass className="h-3.5 w-3.5" />
+            Discover The World
+          </span>
+        }
         title={
           <>
-            Handpicked Holiday <span className="text-ink-muted">Destinations</span>
+            Handpicked Holiday <span className="text-white/70">Destinations</span>
           </>
         }
         subtitle="From tropical beaches and serene mountain retreats to royal heritage palaces and vibrant international destinations."
-      >
+      />
+
+      {/* Destinations Grid */}
+      <div className="container-page section">
         {/* Type Switcher Pills */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-2">
           <Link href="/destinations" data-active={!type} className="chip">
             All Destinations
           </Link>
@@ -51,10 +63,6 @@ export default async function DestinationsPage({
             International Holidays
           </Link>
         </div>
-      </PageHero>
-
-      {/* Destinations Grid */}
-      <div className="container-page section">
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {cities.map((city) => (
             <Link
