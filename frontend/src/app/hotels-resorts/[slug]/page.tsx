@@ -1,13 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Star, MapPin, Check, ArrowRight, PhoneCall, ShieldCheck, Sparkles } from 'lucide-react';
 import { getHotelBySlug } from '@/lib/api';
+import { getPublicImageSize } from '@/lib/image-size';
+import { PhotoGrid } from '@/components/ui/PhotoGrid';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
 
 export const revalidate = 60;
+
+/** Photos narrower than this are shown in a normal-sized card instead of a full-width banner. */
+const BANNER_MIN_WIDTH = 1400;
 
 export async function generateMetadata({
   params,
@@ -37,33 +41,53 @@ export default async function HotelDetailPage({
 
   const hotel = res.data;
 
+  const heroSrc: string = hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png';
+  const size = await getPublicImageSize(heroSrc);
+  // Photos not in /public (admin uploads, remote URLs) are treated as big: uploads are resized to at most 2000px.
+  const bigPhoto = !size || size.width >= BANNER_MIN_WIDTH;
+
+  // All photos of the property (the cover is the first one)
+  const photos: string[] = Array.isArray(hotel.gallery) && hotel.gallery.length > 0 ? hotel.gallery : [heroSrc];
+  // A hotel with no photos at all gets a text-only header (the generic placeholder would only look stretched)
+  const hasPhotos = Boolean(hotel.imageUrl) || (Array.isArray(hotel.gallery) && hotel.gallery.length > 0);
+  const mosaicShowsAll = !bigPhoto && photos.length <= 4;
+
+  const metaPills = (tone: 'glass' | 'light') => {
+    const pill = tone === 'glass' ? 'pill-glass' : 'pill-muted !px-3 !py-1 !text-xs';
+    return (
+      <>
+        <span className={pill}>
+          <MapPin className="h-3.5 w-3.5" />
+          {hotel.locationName}
+          {hotel.state ? `, ${hotel.state}` : ''}
+        </span>
+        <span className={pill}>{hotel.category === 'ASSOCIATED' ? 'Associated Partner Resort' : 'Luxury Internal'}</span>
+        <span className={pill}>
+          <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+          {hotel.ratingStars}.0 Star Rated
+        </span>
+      </>
+    );
+  };
+
   return (
     <div>
-      {/* Hero Header */}
-      <PageHero
-        image={{
-          src: hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png',
-          alt: hotel.name,
-        }}
-        meta={
-          <>
-            <span className="pill-glass">
-              <MapPin className="h-3.5 w-3.5" />
-              {hotel.locationName}{hotel.state ? `, ${hotel.state}` : ''}
-            </span>
-            <span className="text-white/60">&bull;</span>
-            <span className="pill-glass">
-              {hotel.category === 'ASSOCIATED' ? 'Associated Partner Resort' : 'Luxury Internal'}
-            </span>
-            <span className="text-white/60">&bull;</span>
-            <span className="pill-glass">
-              <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-              {hotel.ratingStars}.0 Star Rated
-            </span>
-          </>
-        }
-        title={hotel.name}
-      />
+      {/* Hero Header: a full-width banner only when the photo is big enough to stay sharp */}
+      {bigPhoto ? (
+        <PageHero image={{ src: heroSrc, alt: hotel.name }} meta={metaPills('glass')} title={hotel.name} />
+      ) : (
+        <section className="hero-frame-wrap">
+          <div className="rounded-hero bg-surface">
+            <div className="container-page pt-[calc(var(--nav-h)+2rem)] pb-8 sm:pb-10 lg:pt-[calc(var(--nav-h)+3rem)]">
+              <div className="mb-5 flex flex-wrap items-center gap-2">{metaPills('light')}</div>
+              <h1 className={`heading-page max-w-4xl ${hasPhotos ? 'mb-8' : ''}`}>{hotel.name}</h1>
+
+              {/* Photo mosaic: each photo is shown at about its real size, so small photos stay sharp */}
+              {hasPhotos && <PhotoGrid photos={photos} name={hotel.name} variant="mosaic" />}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Main Content */}
       <div className="container-page section">
@@ -80,23 +104,10 @@ export default async function HotelDetailPage({
             )}
 
             {/* Gallery */}
-            {Array.isArray(hotel.gallery) && hotel.gallery.length > 1 && (
+            {Array.isArray(hotel.gallery) && hotel.gallery.length > 1 && !mosaicShowsAll && (
               <div className="card p-6 sm:p-8">
                 <h3 className="mb-5 text-xl font-semibold text-ink">Photo Gallery</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {hotel.gallery.map((src: string, idx: number) => (
-                    <div key={idx} className="media-frame relative aspect-[4/3] rounded-xl">
-                      <Image
-                        src={src}
-                        alt={`${hotel.name} photo ${idx + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 50vw, 33vw"
-                        quality={90}
-                      />
-                    </div>
-                  ))}
-                </div>
+                <PhotoGrid photos={hotel.gallery} name={hotel.name} />
               </div>
             )}
 
