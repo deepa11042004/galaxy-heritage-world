@@ -6,16 +6,14 @@ import {
   CalendarCheck,
   Check,
   Crown,
-  Globe2,
-  HeartHandshake,
   Headset,
   PartyPopper,
   Percent,
   Sparkles,
-  TrendingUp,
   Users,
 } from 'lucide-react';
 import { MembershipHero } from '@/components/membership/MembershipHero';
+import { PrivilegeSlider } from '@/components/membership/PrivilegeSlider';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -26,11 +24,11 @@ export const metadata = {
 };
 
 const PRIVILEGES = [
-  { icon: CalendarCheck, text: '6N/7D a year, your way' },
-  { icon: TrendingUp, text: 'Future-proof pricing' },
-  { icon: BedDouble, text: 'Spacious suites for stays' },
-  { icon: HeartHandshake, text: 'Unique family experiences' },
-  { icon: Globe2, text: '140+ Premium Resorts Access' },
+  { text: '6N/7D a year, your way', image: '/media/membership/privilege-holiday.jpg', alt: 'Infinity pool and loungers beside a turquoise lagoon' },
+  { text: 'Future-proof pricing', image: '/media/membership/privilege-family.jpg', alt: 'A parent and child walking along the shoreline at sunset' },
+  { text: 'Spacious suites for stays', image: '/media/membership/privilege-suite.jpg', alt: 'Spacious suite with a canopy bed' },
+  { text: 'Unique family experiences', image: '/media/membership/privilege-tea-garden.jpg', alt: 'Green tea gardens below a rocky mountain in Munnar' },
+  { text: '140+ resorts in India and abroad', image: '/media/membership/privilege-resorts.jpg', alt: 'Overwater villas on a turquoise lagoon' },
 ];
 
 const COMMON = [
@@ -163,16 +161,7 @@ export default function MembershipPage() {
             year, filled with cherished family moments and thoughtfully crafted experiences.
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {PRIVILEGES.map((p) => (
-            <div key={p.text} className="card card-hover flex flex-col items-center p-6 text-center">
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-ink text-accent">
-                <p.icon className="size-6" />
-              </div>
-              <p className="mt-4 text-sm font-semibold text-ink">{p.text}</p>
-            </div>
-          ))}
-        </div>
+        <PrivilegeSlider slides={PRIVILEGES} />
       </section>
 
       {/* Plans */}
