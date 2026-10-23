@@ -122,7 +122,7 @@ export default async function DayActivitiesPage() {
                   <YouTubeEmbed videoId={farm.videoId} title={`${farm.title} video`} />
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  {(farm.gallery as string[]).slice(0, 6).map((src, i) => (
+                  {(farm.gallery as string[]).slice(0, 7).map((src, i) => (
                     <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
                       <Image src={src} alt={`${farm.title} ${i + 1}`} fill className="object-cover" sizes={i === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"} quality={92} />
                     </div>

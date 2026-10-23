@@ -5,6 +5,7 @@ import { Clock, MapPin, Check, PhoneCall, Sparkles, ArrowRight, Sun } from 'luci
 import { getActivityBySlug } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
+import { PhotoGrid } from '@/components/ui/PhotoGrid';
 
 export const revalidate = 60;
 
@@ -73,6 +74,14 @@ export default async function ActivityDetailPage({
                 {act.description}
               </p>
             </div>
+
+            {/* Photo gallery (click a photo to view it full screen) */}
+            {Array.isArray(act.gallery) && act.gallery.length > 0 && (
+              <div className="card p-6 sm:p-8">
+                <h3 className="mb-5 text-xl font-semibold text-ink">Photo Gallery</h3>
+                <PhotoGrid photos={act.gallery} name={act.title} />
+              </div>
+            )}
 
             {/* Highlights */}
             {Array.isArray(act.highlights) && act.highlights.length > 0 && (
