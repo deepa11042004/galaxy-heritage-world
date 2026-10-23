@@ -37,11 +37,20 @@ export default async function DayActivitiesPage() {
   return (
     <div>
       <PageHero
-        icon={Sun}
-        eyebrow="Weekend Escapes"
+        image={{
+          src: '/media/hero/water-park-slides.jpg',
+          alt: 'Colourful spiral water slides above a blue swimming pool on a sunny day',
+          position: 'center 42%',
+        }}
+        meta={
+          <span className="pill-glass">
+            <Sun className="h-3.5 w-3.5" />
+            Weekend Escapes
+          </span>
+        }
         title={
           <>
-            Day Outings, <span className="text-ink-muted">Picnics & Water Parks</span>
+            Day Outings, <span className="text-white/70">Picnics & Water Parks</span>
           </>
         }
         subtitle="Recharge with a full day of rural fun, cultural performances, pottery, tractor rides, adventure rope courses, and unlimited authentic food."
@@ -59,13 +68,30 @@ export default async function DayActivitiesPage() {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {D.ideas.map((idea, i) => {
             const Icon = [Mountain, Waves, Sparkles][i];
+            const photo = [
+              { src: '/media/day-outings/step-adventure.jpg', alt: 'Tent camp below snow-streaked mountains in Spiti, Himachal Pradesh' },
+              { src: '/media/day-outings/step-relax.jpg', alt: 'Lounge terrace with sofas and palm trees overlooking a long beach' },
+              { src: '/media/day-outings/step-offbeat.jpg', alt: 'Hot air balloons drifting over the rock formations of Cappadocia' },
+            ][i];
             return (
-              <div key={idea.title} className="card p-7">
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-accent">
-                  <Icon className="h-5 w-5" />
+              <div key={idea.title} className="card card-hover group overflow-hidden p-0">
+                <div className="media-frame relative aspect-[4/3] rounded-none">
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    quality={85}
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-ink">{idea.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-muted">{idea.text}</p>
+                <div className="relative px-7 pb-7">
+                  <div className="-mt-6 mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-accent shadow-[0_10px_24px_-10px_rgba(0,0,0,0.5)] ring-4 ring-white">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-semibold text-ink">{idea.title}</h3>
+                  <p className="text-sm leading-relaxed text-ink-muted">{idea.text}</p>
+                </div>
               </div>
             );
           })}
@@ -98,7 +124,7 @@ export default async function DayActivitiesPage() {
                 <div className="grid grid-cols-3 gap-2">
                   {(farm.gallery as string[]).slice(0, 6).map((src, i) => (
                     <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
-                      <Image src={src} alt={`${farm.title} ${i + 1}`} fill className="object-cover" sizes="(max-width: 1024px) 50vw, 25vw" quality={90} />
+                      <Image src={src} alt={`${farm.title} ${i + 1}`} fill className="object-cover" sizes={i === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"} quality={92} />
                     </div>
                   ))}
                 </div>
