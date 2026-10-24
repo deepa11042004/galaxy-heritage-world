@@ -94,6 +94,16 @@
   .section {
     @apply relative py-14 md:py-20;
   }
+  /* Patterned section. The pattern fades to white at the top and bottom edge so neighbouring sections blend instead of showing a hard seam. */
+  .section-pattern {
+    background-color: #fff;
+    background-image:
+      linear-gradient(to bottom, #fff 0, rgb(255 255 255 / 0) 9rem, rgb(255 255 255 / 0) calc(100% - 9rem), #fff 100%),
+      url('/media/hero/section-pattern.jpg');
+    background-size: 100% 100%, cover;
+    background-position: center, center;
+    background-repeat: no-repeat;
+  }
   /* Kept so existing markup stays valid; sections no longer draw a divider line */
   .section-plain {
     @apply relative;

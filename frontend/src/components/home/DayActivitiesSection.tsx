@@ -22,10 +22,7 @@ export function DayActivitiesSection({ activities }: { activities: ActivityItem[
   if (!activities || activities.length === 0) return null;
 
   return (
-    <section
-      className="section bg-white bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/media/hero/section-pattern.jpg')" }}
-    >
+    <section className="section section-pattern">
       <div className="container-page">
         <SectionHeader
           icon={Sun}

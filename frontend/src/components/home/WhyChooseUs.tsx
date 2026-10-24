@@ -69,10 +69,7 @@ const stats = [
 
 export function WhyChooseUs() {
   return (
-    <section
-      className="section bg-white bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/media/hero/section-pattern.jpg')" }}
-    >
+    <section className="section section-pattern">
       <div className="container-page">
         <SectionHeader
           icon={Sparkles}
