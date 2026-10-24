@@ -20,6 +20,8 @@ interface PageHeroProps {
     /** Optional muted looping background video; `src` is then used as its poster / reduced-motion fallback. */
     video?: string;
   };
+  /** Plain variant only: an illustration shown beside the text (text becomes left-aligned on wide screens). */
+  illustration?: { src: string; alt: string };
   /** Photo variant only: row of meta pills rendered above the title. */
   meta?: React.ReactNode;
   /** Extra content under the subtitle (filters, search). */
@@ -39,6 +41,7 @@ export function PageHero({
   title,
   subtitle,
   image,
+  illustration,
   meta,
   children,
   wide,
@@ -86,6 +89,40 @@ export function PageHero({
               </p>
             )}
             {children}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (illustration) {
+    return (
+      <section className={cn('hero-frame-wrap', className)}>
+        <div className="relative overflow-hidden rounded-hero bg-surface">
+          <div className="container-page grid items-center gap-8 pb-12 pt-[calc(var(--nav-h)+2rem)] sm:pb-16 sm:pt-[calc(var(--nav-h)+3rem)] lg:grid-cols-2 lg:gap-12">
+            <div className="text-center lg:text-left">
+              {eyebrow && (
+                <div className="eyebrow mb-5">
+                  {Icon && <Icon />}
+                  <span>{eyebrow}</span>
+                </div>
+              )}
+              <h1 className="heading-page">{title}</h1>
+              {subtitle && <p className="mt-5 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">{subtitle}</p>}
+              {children}
+            </div>
+            <div className="relative mx-auto aspect-[13/10] w-full max-w-lg">
+              {/* multiply drops the picture's white backdrop so it blends into the grey header */}
+              <Image
+                src={illustration.src}
+                alt={illustration.alt}
+                fill
+                priority
+                quality={90}
+                className="object-contain mix-blend-multiply"
+                sizes="(max-width: 1024px) 90vw, 40vw"
+              />
+            </div>
           </div>
         </div>
       </section>

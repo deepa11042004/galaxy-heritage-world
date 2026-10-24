@@ -65,17 +65,27 @@ export default function TestimonialsPage() {
       <PageHero
         icon={MessageSquareQuote}
         eyebrow="Client Reviews"
-        wide
+        illustration={{
+          src: '/media/testimonials/header-illustration.jpg',
+          alt: 'Two people exchanging a thumbs-up with speech bubbles between them',
+        }}
         title={
           <>
-            Before we talk about <br className="hidden sm:block" />
-            what&rsquo;s next, look at what&rsquo;s <br className="hidden sm:block" />
+            Before we talk about what&rsquo;s next, look at what&rsquo;s{' '}
             <span className="text-ink-muted">already delivered.</span>
           </>
         }
       />
 
       <section className="container-page section">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <h2 className="heading-section text-ink">
+            Stories from Our <span className="text-ink-muted">Happy Families</span>
+          </h2>
+          <p className="mt-3 text-sm text-ink-muted sm:text-base">
+            Hear it straight from the travellers who holidayed with Galaxy Heritage World.
+          </p>
+        </div>
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 sm:grid-cols-3">
           {REVIEWS.slice(0, 3).map((r) => (
             <figure key={r.name} className="card p-2.5">
