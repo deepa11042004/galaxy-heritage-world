@@ -147,7 +147,8 @@ export default async function DayActivitiesPage() {
             </div>
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {sec.items.map((act: any) => (
-                <Link key={act.id} href={`/day-activities/${act.slug}`} className="group flex flex-col">
+                <div key={act.id} className="group flex flex-col">
+                  <Link href={`/day-activities/${act.slug}`} className="block">
                   <div className="media-frame aspect-[4/3]">
                     <Image
                       src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
@@ -162,28 +163,33 @@ export default async function DayActivitiesPage() {
                     </div>
                   </div>
 
+                  </Link>
+
                   <div className="flex flex-1 flex-col pt-4">
-                    <div className="flex-1">
+                    <Link href={`/day-activities/${act.slug}`} className="block flex-1">
                       <div className="meta mb-1.5">
                         <MapPin />
                         <span>{act.locationLabel}</span>
                       </div>
                       <h3 className="text-xl font-semibold leading-snug tracking-tight text-ink">{act.title}</h3>
                       <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-ink-muted">{act.description}</p>
-                    </div>
+                    </Link>
 
                     <div className="mt-5 flex items-center justify-between border-t border-line pt-4 text-xs">
                       <div className="meta">
                         <Clock />
                         <span>{act.durationLabel}</span>
                       </div>
-                      <span className="link-arrow">
-                        <span>Details & Pass</span>
-                        <ArrowRight />
-                      </span>
+                      <Link
+                        href="/contact"
+                        className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-xs font-semibold text-ink transition-colors hover:bg-accent-hover"
+                      >
+                        <span>Contact Now</span>
+                        <ArrowRight className="size-3.5" />
+                      </Link>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </section>

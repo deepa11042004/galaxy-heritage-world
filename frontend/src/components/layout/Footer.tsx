@@ -32,7 +32,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="px-2 pb-2 sm:px-3 sm:pb-3">
+    <footer className="mt-6 px-2 pb-2 sm:mt-10 sm:px-3 sm:pb-3">
       <div className="rounded-hero bg-[#DBDBDB] pt-14 pb-8 sm:pt-20">
         <div className="container-page">
           <div className="grid grid-cols-1 gap-10 border-b border-line pb-12 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
