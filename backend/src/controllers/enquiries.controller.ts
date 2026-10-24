@@ -114,7 +114,7 @@ export async function subscribeNewsletter(req: Request, res: Response, next: Nex
 
 export async function getEnquiries(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    const { status, search, page = '1', limit = '20' } = req.query;
+    const { status, search, source, page = '1', limit = '20' } = req.query;
 
     const pageNum = Math.max(1, parseInt(String(page), 10) || 1);
     const take = Math.min(100, Math.max(1, parseInt(String(limit), 10) || 20));
@@ -124,6 +124,11 @@ export async function getEnquiries(req: Request, res: Response, next: NextFuncti
 
     if (status && Object.values(EnquiryStatus).includes(status as EnquiryStatus)) {
       where.status = status as EnquiryStatus;
+    }
+
+    // Which website form it came from (the page the form sits on)
+    if (typeof source === 'string' && source.startsWith('/')) {
+      where.sourcePage = source === '/' ? '/' : { startsWith: source };
     }
 
     if (typeof search === 'string' && search.trim()) {
@@ -229,6 +234,18 @@ export async function getVoucherRedemptions(req: Request, res: Response, next: N
     });
 
     res.json({ success: true, count: vouchers.length, data: vouchers });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getNewsletterSubscribers(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    const { search } = req.query;
+    const where: any = {};
+    if (typeof search === 'string' && search.trim()) where.email = { contains: search.trim() };
+    const data = await prisma.newsletterSubscription.findMany({ where, orderBy: { subscribedAt: 'desc' }, take: 500 });
+    res.json({ success: true, total: data.length, data });
   } catch (error) {
     next(error);
   }

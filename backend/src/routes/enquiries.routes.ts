@@ -3,6 +3,7 @@ import {
   createEnquiry,
   redeemVoucher,
   subscribeNewsletter,
+  getNewsletterSubscribers,
   getEnquiries,
   getEnquiryById,
   updateEnquiry,
@@ -20,5 +21,6 @@ enquiriesRouter.post('/newsletter', subscribeNewsletter);
 // Protected admin endpoints
 enquiriesRouter.get('/', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN', 'SALES', 'SUPPORT'), getEnquiries);
 enquiriesRouter.get('/vouchers/list', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN', 'SALES', 'SUPPORT'), getVoucherRedemptions);
+enquiriesRouter.get('/newsletter/list', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN', 'SALES', 'SUPPORT'), getNewsletterSubscribers);
 enquiriesRouter.get('/:id', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN', 'SALES', 'SUPPORT'), getEnquiryById);
 enquiriesRouter.patch('/:id', authenticate, authorizeRoles('ADMIN', 'SUPER_ADMIN', 'SALES', 'SUPPORT'), updateEnquiry);

@@ -17,6 +17,7 @@ import {
   X,
   ExternalLink,
   Inbox,
+  Mail,
   Ticket,
 } from 'lucide-react';
 import { adminFetch, ROLE_LABELS } from '@/lib/admin/api';
@@ -43,6 +44,13 @@ export function useAdmin(): AuthState {
   if (!ctx) throw new Error('useAdmin must be used inside <AdminShell>');
   return ctx;
 }
+
+/** Everything customers submit on the website (leads data, so admins only). */
+const LEADS: { href: string; label: string; icon: React.ElementType; exact?: boolean }[] = [
+  { href: '/admin/enquiries', label: 'Enquiries', icon: Inbox },
+  { href: '/admin/vouchers', label: 'Vouchers', icon: Ticket },
+  { href: '/admin/newsletter', label: 'Newsletter', icon: Mail },
+];
 
 const PANEL_ROLES = ['SUPER_ADMIN', 'ADMIN', 'EDITOR'];
 
@@ -134,9 +142,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   const items = NAV.filter((n) => !n.superOnly || auth.can.manageUsers);
   const roleLabel = ROLE_LABELS[user.roles[0]] ?? user.roles[0];
-  const current = items.find((n) => (n.exact ? pathname === n.href : pathname.startsWith(n.href)));
+  const leads = auth.can.delete ? LEADS : [];
+  const current = [...items, ...leads].find((n) => (n.exact ? pathname === n.href : pathname.startsWith(n.href)));
 
-  const link = (n: (typeof NAV)[number]) => {
+  const link = (n: { href: string; label: string; icon: React.ElementType; exact?: boolean }) => {
     const active = n.exact ? pathname === n.href : pathname.startsWith(n.href);
     return (
       <Link
@@ -163,13 +172,12 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-3" aria-label="Admin">
         {items.map(link)}
-        <p className="px-3 pt-5 pb-1 text-[11px] font-semibold tracking-wide text-ink-subtle uppercase">Existing tools</p>
-        <Link href="/admin/enquiries" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface hover:text-ink">
-          <Inbox className="size-4.5" /> Enquiries
-        </Link>
-        <Link href="/admin/vouchers" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface hover:text-ink">
-          <Ticket className="size-4.5" /> Vouchers
-        </Link>
+        {leads.length > 0 && (
+          <>
+            <p className="px-3 pt-5 pb-1 text-[11px] font-semibold tracking-wide text-ink-subtle uppercase">Website forms</p>
+            {leads.map(link)}
+          </>
+        )}
       </nav>
       <div className="border-t border-line p-3">
         <Link href="/" target="_blank" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface hover:text-ink">

@@ -3,25 +3,32 @@
 import { API_BASE } from '@/lib/admin/api';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import {
   Users,
   Search,
   Filter,
   CheckCircle,
   Clock,
-  ArrowLeft,
   RefreshCw,
   Phone,
   Mail,
   MapPin,
 } from 'lucide-react';
 
+const FORMS: { label: string; path: string }[] = [
+  { label: 'Home page enquiry', path: '/' },
+  { label: 'Contact page', path: '/contact' },
+  { label: 'Travel Desk', path: '/travel-desk' },
+  { label: 'Complaints & feedback', path: '/reviews-and-complaints' },
+];
+const formName = (src?: string | null) => FORMS.find((f) => (f.path === '/' ? src === '/' : src?.startsWith(f.path)))?.label ?? (src || 'Website');
+
 export default function AdminEnquiriesPage() {
   const [enquiries, setEnquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [sourceFilter, setSourceFilter] = useState('');
   const [selectedEnquiry, setSelectedEnquiry] = useState<any | null>(null);
   const [newStatus, setNewStatus] = useState('');
   const [notes, setNotes] = useState('');
@@ -35,6 +42,7 @@ export default function AdminEnquiriesPage() {
 
     const query = new URLSearchParams();
     if (statusFilter) query.set('status', statusFilter);
+    if (sourceFilter) query.set('source', sourceFilter);
     if (search) query.set('search', search);
 
     fetch(`${API_BASE}/enquiries?${query.toString()}`, {
@@ -51,7 +59,7 @@ export default function AdminEnquiriesPage() {
 
   useEffect(() => {
     fetchEnquiries();
-  }, [statusFilter]);
+  }, [statusFilter, sourceFilter]);
 
   const handleUpdateStatus = async (id: string) => {
     try {
@@ -79,17 +87,11 @@ export default function AdminEnquiriesPage() {
   };
 
   return (
-    <div className="page-offset min-h-screen pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div>
+      <div>
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-3">
-            <Link
-              href="/admin"
-              className="p-2 bg-white rounded-xl border border-line text-gray-600 hover:text-ink"
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </Link>
             <div>
               <h1 className="text-2xl font-bold text-ink">
                 Customer Enquiries & Leads Management
@@ -124,6 +126,17 @@ export default function AdminEnquiriesPage() {
           </div>
 
           <select
+            value={sourceFilter}
+            onChange={(e) => setSourceFilter(e.target.value)}
+            className="px-3 py-2 text-xs border border-line rounded-xl bg-white focus:outline-none text-gray-700"
+          >
+            <option value="">All forms</option>
+            {FORMS.map((f) => (
+              <option key={f.path} value={f.path}>{f.label}</option>
+            ))}
+          </select>
+
+          <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="px-3 py-2 text-xs border border-line rounded-xl bg-white focus:outline-none text-gray-700"
@@ -146,6 +159,7 @@ export default function AdminEnquiriesPage() {
                   <th className="py-3.5 px-4">Reference</th>
                   <th className="py-3.5 px-4">Customer</th>
                   <th className="py-3.5 px-4">Destination / Requirement</th>
+                  <th className="py-3.5 px-4">Form</th>
                   <th className="py-3.5 px-4">Location</th>
                   <th className="py-3.5 px-4">Status</th>
                   <th className="py-3.5 px-4">Date</th>
@@ -177,6 +191,7 @@ export default function AdminEnquiriesPage() {
                           </div>
                         )}
                       </td>
+                      <td className="py-3.5 px-4 text-gray-600">{formName(enq.sourcePage)}</td>
                       <td className="py-3.5 px-4 text-gray-600">
                         {enq.city}
                       </td>
@@ -214,7 +229,7 @@ export default function AdminEnquiriesPage() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7} className="py-8 text-center text-gray-500">
+                    <td colSpan={8} className="py-8 text-center text-gray-500">
                       {loading ? 'Loading enquiries...' : 'No enquiries found.'}
                     </td>
                   </tr>
@@ -243,6 +258,10 @@ export default function AdminEnquiriesPage() {
               <div className="space-y-1 text-xs">
                 <div>
                   <strong className="text-gray-700">Name:</strong> {selectedEnquiry.name}
+                </div>
+                <div>
+                  <strong className="text-gray-700">Form:</strong> {formName(selectedEnquiry.sourcePage)} |{' '}
+                  <strong className="text-gray-700">Email:</strong> {selectedEnquiry.email}
                 </div>
                 <div>
                   <strong className="text-gray-700">Phone:</strong> {selectedEnquiry.phone} |{' '}
