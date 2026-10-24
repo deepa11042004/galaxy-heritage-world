@@ -168,7 +168,7 @@ test.describe('mobile layout', () => {
 
   test('sidebar becomes a drawer and nothing overflows horizontally', async ({ page }) => {
     await login(page);
-    for (const path of ['/admin', '/admin/hotels', '/admin/packages', '/admin/destinations/new', '/admin/settings']) {
+    for (const path of ['/admin', '/admin/hotels', '/admin/destinations/new', '/admin/settings']) {
       await page.goto(path);
       await page.waitForLoadState('networkidle');
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { prisma } from '../config/database.js';
-import { DestinationSchema, HotelSchema, PackageSchema, ActivitySchema, ItinerarySchema } from '../shared/index.js';
+import { DestinationSchema, HotelSchema, ActivitySchema, ItinerarySchema } from '../shared/index.js';
 
 export interface ResourceConfig {
   /** URL segment under /api/v1/admin */
@@ -69,23 +69,6 @@ export const resources: Record<string, ResourceConfig> = {
     sortable: ['name', 'locationName', 'updatedAt', 'createdAt', 'ratingStars'],
     defaultSort: { updatedAt: 'desc' },
     nullifyEmpty: ['hotelCode', 'hotelType', 'locationType', 'destinationId', 'state', 'address', 'mapLink'],
-    include: { destination: { select: { id: true, name: true } } },
-    destinationField: 'destinationId',
-  },
-  packages: {
-    key: 'packages',
-    entity: 'Package',
-    delegate: prisma.package,
-    schema: PackageSchema,
-    titleField: 'title',
-    searchFields: ['title', 'locationLabel', 'category', 'slug'],
-    filters: {
-      category: eq('category'),
-      destinationId: eq('destinationId'),
-    },
-    sortable: ['title', 'updatedAt', 'createdAt', 'priceStarting'],
-    defaultSort: { updatedAt: 'desc' },
-    nullifyEmpty: ['destinationId', 'subtitle', 'priceLabel'],
     include: { destination: { select: { id: true, name: true } } },
     destinationField: 'destinationId',
   },

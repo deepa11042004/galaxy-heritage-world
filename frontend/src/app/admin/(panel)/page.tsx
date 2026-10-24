@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Compass, Hotel, Map as MapIcon, Package, Plus, Sun, Users } from 'lucide-react';
+import { Compass, Hotel, Map as MapIcon, Plus, Sun, Users } from 'lucide-react';
 import { adminFetch } from '@/lib/admin/api';
 import { useAdmin } from '@/components/admin/AdminShell';
 import { EmptyState, ErrorState, PageHeader, Spinner } from '@/components/admin/ui';
@@ -15,7 +15,6 @@ interface ModuleStat {
 interface Stats {
   destinations: ModuleStat;
   hotels: ModuleStat;
-  packages: ModuleStat;
   activities: ModuleStat;
   itineraries: ModuleStat;
   destinationsByType: { domestic: number; international: number };
@@ -24,7 +23,6 @@ interface Stats {
 }
 
 const MODULES = [
-  { key: 'packages', label: 'Vacation Packages', href: '/admin/packages', icon: Package },
   { key: 'hotels', label: 'Hotels & Resorts', href: '/admin/hotels', icon: Hotel },
   { key: 'destinations', label: 'Destinations', href: '/admin/destinations', icon: Compass },
   { key: 'itineraries', label: 'Itineraries', href: '/admin/itineraries', icon: MapIcon },

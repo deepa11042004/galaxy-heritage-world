@@ -116,10 +116,9 @@ describe('authentication & authorization', () => {
   });
 });
 
-describe('destinations, hotels, packages: CRUD, relations and publishing', () => {
+describe('destinations and hotels: CRUD, relations and publishing', () => {
   let destId: string;
   let hotelId: string;
-  let packageId: string;
 
   it('validates input', async () => {
     const res = await api('EDITOR', 'POST', '/admin/destinations', { name: 'x', heroImageUrl: 'javascript:alert(1)' });
@@ -196,28 +195,8 @@ describe('destinations, hotels, packages: CRUD, relations and publishing', () =>
     expect((await pub.json()).data.map((h: any) => h.id)).toContain(hotelId);
   });
 
-  it('creates a package, updates it, and filters the admin list', async () => {
-    const res = await api('EDITOR', 'POST', '/admin/packages', {
-      title: `${PREFIX} Package`,
-      locationLabel: 'Atlantis',
-      durationDays: 4,
-      durationNights: 3,
-      priceStarting: 12999,
-      heroImageUrl: '/media/test.webp',
-      overview: 'A fictional package used by automated tests.',
-      inclusions: ['Breakfast'],
-      destinationId: destId,
-    });
-    expect(res.status).toBe(201);
-    packageId = (await res.json()).data.id;
-
-    const upd = await api('EDITOR', 'PUT', `/admin/packages/${packageId}`, { subtitle: 'Updated subtitle', priceStarting: 15000 });
-    expect(upd.status).toBe(200);
-    expect((await upd.json()).data.subtitle).toBe('Updated subtitle');
-
-    const list = await (await api('EDITOR', 'GET', `/admin/packages?search=${PREFIX}&destinationId=${destId}`)).json();
-    expect(list.total).toBe(1);
-    expect(list.pages).toBe(1);
+  it('no longer exposes vacation packages in the admin API', async () => {
+    expect((await api('EDITOR', 'GET', '/admin/packages')).status).toBe(404);
   });
 
   it('paginates and ignores unknown sort fields', async () => {
@@ -234,7 +213,6 @@ describe('destinations, hotels, packages: CRUD, relations and publishing', () =>
     expect((await api('ADMIN', 'DELETE', `/admin/destinations/${destId}`)).status).toBe(409);
 
     expect((await api('ADMIN', 'DELETE', `/admin/hotels/${hotelId}`)).status).toBe(200);
-    expect((await api('ADMIN', 'DELETE', `/admin/packages/${packageId}`)).status).toBe(200);
     expect((await api('ADMIN', 'DELETE', `/admin/destinations/${destId}`)).status).toBe(200);
 
     expect((await api('EDITOR', 'GET', `/admin/hotels/${hotelId}`)).status).toBe(404);

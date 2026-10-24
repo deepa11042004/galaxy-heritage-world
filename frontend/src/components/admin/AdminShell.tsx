@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
-  Package,
   Hotel,
   Compass,
   Map as MapIcon,
@@ -49,7 +48,6 @@ const PANEL_ROLES = ['SUPER_ADMIN', 'ADMIN', 'EDITOR'];
 
 const NAV = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/admin/packages', label: 'Vacation Packages', icon: Package },
   { href: '/admin/hotels', label: 'Hotels & Resorts', icon: Hotel },
   { href: '/admin/destinations', label: 'Destinations', icon: Compass },
   { href: '/admin/itineraries', label: 'Itineraries', icon: MapIcon },

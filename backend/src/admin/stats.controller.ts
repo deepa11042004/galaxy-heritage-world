@@ -17,16 +17,15 @@ function summarise(groups: { isPublished: boolean; _count: { _all: number } }[])
 export async function getStats(_req: Request, res: Response): Promise<void> {
   const live = { deletedAt: null };
 
-  const [destinations, hotels, packages, activities, itineraries, byType, activeUsers, recent] = await Promise.all([
+  const [destinations, hotels, activities, itineraries, byType, activeUsers, recent] = await Promise.all([
     prisma.destination.groupBy({ by: ['isPublished'], where: live, _count: { _all: true } }),
     prisma.hotel.groupBy({ by: ['isPublished'], where: live, _count: { _all: true } }),
-    prisma.package.groupBy({ by: ['isPublished'], where: live, _count: { _all: true } }),
     prisma.activity.groupBy({ by: ['isPublished'], where: live, _count: { _all: true } }),
     prisma.itinerary.groupBy({ by: ['isPublished'], where: live, _count: { _all: true } }),
     prisma.destination.groupBy({ by: ['type'], where: live, _count: { _all: true } }),
     prisma.user.count({ where: { isActive: true } }),
     prisma.auditLog.findMany({
-      where: { entityType: { in: ['Destination', 'Hotel', 'Package', 'Activity', 'Itinerary', 'User'] } },
+      where: { entityType: { in: ['Destination', 'Hotel', 'Activity', 'Itinerary', 'User'] } },
       orderBy: { createdAt: 'desc' },
       take: 10,
       include: { user: { select: { name: true } } },
@@ -40,7 +39,6 @@ export async function getStats(_req: Request, res: Response): Promise<void> {
     data: {
       destinations: summarise(destinations),
       hotels: summarise(hotels),
-      packages: summarise(packages),
       activities: summarise(activities),
       itineraries: summarise(itineraries),
       destinationsByType: { domestic: typeCount('DOMESTIC'), international: typeCount('INTERNATIONAL') },

@@ -76,7 +76,6 @@ export const destinations: ResourceConfig = {
     { label: 'Destination', render: (r) => (<><p className="font-semibold text-ink">{r.name}</p><p className="text-xs text-ink-muted">{r.region}, {r.country}</p></>) },
     { label: 'Type', className: 'hidden md:table-cell', render: (r) => <Muted>{r.type === 'DOMESTIC' ? 'Domestic' : 'International'}</Muted> },
     { label: 'Hotels', className: 'hidden lg:table-cell', render: (r) => <Muted>{r._count?.hotels ?? 0}</Muted> },
-    { label: 'Packages', className: 'hidden lg:table-cell', render: (r) => <Muted>{r._count?.packages ?? 0}</Muted> },
   ],
   filters: [{ param: 'type', label: 'All types', options: DOMESTIC_INTL }],
   defaults: { type: 'DOMESTIC', country: 'India', isPublished: false, featured: false, gallery: [], highlights: [] },
@@ -186,65 +185,6 @@ export const hotels: ResourceConfig = {
       title: 'Visibility',
       fields: [
         { kind: 'switch', name: 'isPublished', label: 'Published', help: 'Unpublished hotels are hidden from the website.' },
-        { kind: 'switch', name: 'featured', label: 'Featured' },
-      ],
-    },
-  ],
-};
-
-// ---------------------------------------------------------------- packages
-export const packages: ResourceConfig = {
-  key: 'packages',
-  route: 'packages',
-  singular: 'Package',
-  plural: 'Vacation Packages',
-  titleField: 'title',
-  folder: 'packages',
-  publicPath: (r) => `/vacation-packages/${r.slug}`,
-  imageOf: (r) => r.heroImageUrl,
-  columns: [
-    { label: 'Package', render: (r) => (<><p className="font-semibold text-ink">{r.title}</p><p className="text-xs text-ink-muted">{r.locationLabel}</p></>) },
-    { label: 'Duration', className: 'hidden md:table-cell', render: (r) => <Muted>{r.durationNights}N / {r.durationDays}D</Muted> },
-    { label: 'Price from', className: 'hidden md:table-cell', render: (r) => <Muted>{r.priceLabel || money(r.priceStarting)}</Muted> },
-    { label: 'Destination', className: 'hidden xl:table-cell', render: (r) => <Muted>{r.destination?.name ?? '—'}</Muted> },
-  ],
-  filters: [],
-  defaults: { category: 'Holiday Package', durationDays: 3, durationNights: 2, isPublished: false, featured: false, inclusions: [], exclusions: [], highlights: [] },
-  sections: [
-    {
-      title: 'Basics',
-      fields: [
-        { kind: 'text', name: 'title', label: 'Title', required: true, half: true },
-        { kind: 'slug', name: 'slug', label: 'URL slug', from: 'title', half: true, help: 'Used in the page address. Changing it breaks existing links.' },
-        { kind: 'text', name: 'subtitle', label: 'Subtitle', maxLength: 255 },
-        { kind: 'text', name: 'locationLabel', label: 'Location label', required: true, half: true, placeholder: 'Goa, India' },
-        { kind: 'combo', name: 'category', label: 'Category', half: true, required: true, suggestions: ['Holiday Package', 'Honeymoon Package', 'Family Package', 'Adventure Package', 'International Package'] },
-        { kind: 'select', name: 'destinationId', label: 'Linked destination', options: 'destinations', emptyLabel: 'None' },
-        { kind: 'textarea', name: 'overview', label: 'Overview', required: true, rows: 6 },
-      ],
-    },
-    {
-      title: 'Duration & pricing',
-      fields: [
-        { kind: 'number', name: 'durationDays', label: 'Days', required: true, half: true, min: 1 },
-        { kind: 'number', name: 'durationNights', label: 'Nights', required: true, half: true, min: 0 },
-        { kind: 'number', name: 'priceStarting', label: 'Starting price (₹)', half: true, min: 0, help: 'Leave blank to show only the label.' },
-        { kind: 'text', name: 'priceLabel', label: 'Price label', half: true, maxLength: 100, placeholder: 'On request' },
-      ],
-    },
-    {
-      title: 'Details',
-      fields: [
-        { kind: 'list', name: 'highlights', label: 'Highlights', help: 'One per line.' },
-        { kind: 'list', name: 'inclusions', label: 'Inclusions', help: 'One per line.' },
-        { kind: 'list', name: 'exclusions', label: 'Exclusions', help: 'One per line.' },
-      ],
-    },
-    { title: 'Images', fields: [{ kind: 'image', name: 'heroImageUrl', label: 'Cover image', required: true }] },
-    {
-      title: 'Visibility',
-      fields: [
-        { kind: 'switch', name: 'isPublished', label: 'Published', help: 'Unpublished packages are hidden from the website.' },
         { kind: 'switch', name: 'featured', label: 'Featured' },
       ],
     },
@@ -375,4 +315,4 @@ export const itineraries: ResourceConfig = {
   ],
 };
 
-export const RESOURCES = { destinations, hotels, packages, activities, itineraries };
+export const RESOURCES = { destinations, hotels, activities, itineraries };
