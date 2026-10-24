@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, CalendarDays, Check, Clock, MapPin, PhoneCall, Sparkles, Tag } from 'lucide-react';
-import { getItineraryBySlug } from '@/lib/api';
+import { getItineraries, getItineraryBySlug } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
 
@@ -30,6 +30,14 @@ export default async function ItineraryDetailPage({ params }: { params: Promise<
   const highlights: string[] = Array.isArray(it.highlights) ? it.highlights : [];
   const inclusions: string[] = Array.isArray(it.inclusions) ? it.inclusions : [];
   const gallery: string[] = Array.isArray(it.gallery) ? it.gallery : [];
+
+  // Suggestions: same kind of trip (domestic / international) first, then the rest.
+  const allRes = await getItineraries().catch(() => ({ data: [] as any[] }));
+  const others: any[] = (allRes.data ?? []).filter((o: any) => o.slug !== it.slug);
+  const related = [
+    ...others.filter((o) => o.locationType === it.locationType),
+    ...others.filter((o) => o.locationType !== it.locationType),
+  ].slice(0, 3);
 
   const facts = [
     { icon: Clock, label: 'Duration', value: `${it.durationDays} Days / ${it.durationNights} Nights` },
@@ -182,6 +190,55 @@ export default async function ItineraryDetailPage({ params }: { params: Promise<
             </div>
           </div>
         </div>
+
+        {related.length > 0 && (
+          <section className="mt-16 border-t border-line pt-12">
+            <div className="mx-auto mb-10 max-w-3xl text-center">
+              <h2 className="heading-section text-ink">
+                You May Also <span className="text-ink-muted">Like</span>
+              </h2>
+              <p className="mt-3 text-sm text-ink-muted sm:text-base">More handpicked journeys from our travel desk.</p>
+            </div>
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((o) => (
+                <Link key={o.id} href={`/itineraries/${o.slug}`} className="group flex flex-col">
+                  <div className="media-frame aspect-[4/3]">
+                    <Image
+                      src={o.heroImageUrl}
+                      alt={o.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      quality={90}
+                    />
+                    {o.badgeText && (
+                      <div className="absolute top-4 left-4">
+                        <span className="pill">{o.badgeText}</span>
+                      </div>
+                    )}
+                    <div className="absolute right-4 bottom-4">
+                      <span className="pill-dark">
+                        {o.durationDays}D / {o.durationNights}N
+                      </span>
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <div className="meta mb-1.5">
+                      <MapPin />
+                      <span>{o.locationLabel}</span>
+                    </div>
+                    <h3 className="text-xl leading-snug font-semibold tracking-tight text-ink">{o.title}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-muted">{o.summary}</p>
+                    <span className="link-arrow mt-4">
+                      <span>View Itinerary</span>
+                      <ArrowRight />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

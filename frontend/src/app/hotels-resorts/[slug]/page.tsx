@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Star, MapPin, Check, ArrowRight, PhoneCall, ShieldCheck, Sparkles } from 'lucide-react';
-import { getHotelBySlug } from '@/lib/api';
+import { getHotelBySlug, getHotels } from '@/lib/api';
 import { getPublicImageSize } from '@/lib/image-size';
 import { PhotoGrid } from '@/components/ui/PhotoGrid';
 import { PageHero } from '@/components/ui/PageHero';
@@ -40,6 +41,20 @@ export default async function HotelDetailPage({
   }
 
   const hotel = res.data;
+
+  // Suggested stays: same destination first, then the same kind of destination (domestic / international).
+  const [sameRes, kindRes] = await Promise.all([
+    hotel.locationName ? getHotels({ location: hotel.locationName, limit: 8 }).catch(() => null) : null,
+    getHotels({ locationType: hotel.locationType, limit: 12 }).catch(() => null),
+  ]);
+  const seen = new Set<string>([hotel.slug]);
+  const related: any[] = [];
+  for (const h of [...(sameRes?.data ?? []), ...(kindRes?.data ?? [])]) {
+    if (related.length >= 3) break;
+    if (seen.has(h.slug) || !h.imageUrl) continue;
+    seen.add(h.slug);
+    related.push(h);
+  }
 
   const heroSrc: string = hotel.imageUrl || '/media/galaxy-heritage-world/homepage/images/3-2.png';
   const size = await getPublicImageSize(heroSrc);
@@ -186,6 +201,55 @@ export default async function HotelDetailPage({
             </div>
           </div>
         </div>
+
+        {related.length > 0 && (
+          <section className="mt-16 border-t border-line pt-12">
+            <div className="mx-auto mb-10 max-w-3xl text-center">
+              <h2 className="heading-section text-ink">
+                More Stays <span className="text-ink-muted">You May Like</span>
+              </h2>
+              <p className="mt-3 text-sm text-ink-muted sm:text-base">Other verified properties picked for you.</p>
+            </div>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+              {related.map((h) => (
+                <Link key={h.id} href={`/hotels-resorts/${h.slug}`} className="card card-hover group flex flex-col p-2.5">
+                  <div className="media-frame aspect-[4/3] rounded-[0.9rem]">
+                    <Image
+                      src={h.imageUrl}
+                      alt={h.name}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      quality={90}
+                    />
+                    {h.ratingStars ? (
+                      <div className="absolute top-3 right-3">
+                        <span className="pill">
+                          <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                          <span>{h.ratingStars}.0</span>
+                        </span>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="flex flex-1 flex-col px-2.5 pt-4 pb-2">
+                    <div className="meta mb-1.5">
+                      <MapPin />
+                      <span>
+                        {h.locationName}
+                        {h.state ? `, ${h.state}` : ''}
+                      </span>
+                    </div>
+                    <h3 className="text-xl leading-snug font-semibold tracking-tight text-ink">{h.name}</h3>
+                    <span className="link-arrow mt-4">
+                      <span>View Property</span>
+                      <ArrowRight />
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

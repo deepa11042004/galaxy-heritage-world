@@ -90,24 +90,13 @@
   .container-narrow {
     @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8;
   }
-  /* Content section with a divider line along its bottom edge */
+  /* Content section */
   .section {
     @apply relative py-14 md:py-20;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: min(calc(100% - 2rem), 80rem);
-      height: 2px;
-      transform: translateX(-50%);
-      background-color: var(--color-divider);
-    }
   }
-
-  /* Opt a section out of its divider line */
-  .section-plain::after {
-    display: none;
+  /* Kept so existing markup stays valid; sections no longer draw a divider line */
+  .section-plain {
+    @apply relative;
   }
   /* Wrapper for rounded hero frames: inset from the edges, starts under the utility bar */
   .hero-frame-wrap {
