@@ -22,7 +22,7 @@ import { buttonVariants } from '@/components/ui/button';
 
 const navLinkClass = (active: boolean) =>
   cn(
-    'flex items-center gap-1 rounded-full px-1.5 xl:px-3.5 py-2 transition-colors duration-150',
+    'flex items-center gap-1 rounded-full px-1.5 xl:px-2 min-[1500px]:px-3.5 py-2 transition-colors duration-150',
     active ? 'bg-surface text-ink' : 'text-ink-muted hover:text-ink hover:bg-surface/70'
   );
 
@@ -111,7 +111,7 @@ export function Navbar() {
               aria-label="Galaxy Heritage World Home"
               className="group flex h-10 shrink-0 items-center transition-transform duration-200 hover:scale-[1.03]"
             >
-              <div className="relative h-10 w-24 xl:w-36">
+              <div className="relative h-10 w-24 xl:w-28 min-[1500px]:w-36">
                 <Image
                   src="/media/galaxy-heritage-world/shared/logos/ghw-logo-transparent.png"
                   alt="Galaxy Heritage World"
@@ -233,7 +233,7 @@ export function Navbar() {
               <Link href="/itineraries" className={navLinkClass(pathname.startsWith('/itineraries'))}>
                 Itineraries
               </Link>
-              <Link href="/testimonials" className={cn(navLinkClass(pathname === '/testimonials'), 'hidden min-[1400px]:flex')}>
+              <Link href="/testimonials" className={cn(navLinkClass(pathname === '/testimonials'), 'hidden min-[1200px]:flex')}>
                 Testimonials
               </Link>
 
