@@ -9,11 +9,11 @@ import { QueryProvider } from '@/components/providers/QueryProvider';
 export const metadata: Metadata = {
   metadataBase: new URL('https://galaxyheritageworld.com'),
   title: {
-    default: 'Galaxy Heritage World | Luxury Holidays & 43+ Associated Resorts',
+    default: 'Galaxy Heritage World | Luxury Holidays & 420+ Associated Resorts',
     template: '%s | Galaxy Heritage World',
   },
   description:
-    'Experience bespoke vacations, 43+ handpicked 4-star and 5-star partner resorts, and 100% transparent holiday memberships across Goa, Rajasthan, Himachal, Uttarakhand, and South India.',
+    'Experience bespoke vacations, 420+ handpicked 4-star and 5-star partner resorts, and 100% transparent holiday memberships across Goa, Rajasthan, Himachal, Uttarakhand, and South India.',
   keywords: [
     'Galaxy Heritage World',
     'luxury holidays India',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Galaxy Heritage World' }],
   openGraph: {
-    title: 'Galaxy Heritage World | Luxury Holidays & 43+ Associated Resorts',
+    title: 'Galaxy Heritage World | Luxury Holidays & 420+ Associated Resorts',
     description:
       'Discover handpicked luxury resorts, bespoke holiday packages, and dedicated travel desk concierge support.',
     url: 'https://galaxyheritageworld.com',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Galaxy Heritage World | Luxury Holidays & 43+ Associated Resorts',
+    title: 'Galaxy Heritage World | Luxury Holidays & 420+ Associated Resorts',
     description:
       'Discover handpicked luxury resorts, bespoke holiday packages, and dedicated travel desk concierge support.',
     images: ['/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg'],

@@ -19,7 +19,7 @@ import { StatCard } from '@/components/ui/StatCard';
 const pillars = [
   {
     icon: Palmtree,
-    title: '43+ Audited Associated Resorts',
+    title: '420+ Audited Associated Resorts',
     description:
       'Verified accommodations in prime tourist corridors across Goa, Rajasthan, Uttarakhand, Himachal, and South India with strict quality standards.',
   },
@@ -46,7 +46,7 @@ const pillars = [
 
 const stats = [
   {
-    value: '43+',
+    value: '420+',
     title: 'Associated Resorts',
     description: 'Handpicked partner retreats across India & abroad',
   },

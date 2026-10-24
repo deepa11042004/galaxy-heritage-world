@@ -6,9 +6,9 @@ import { getHotels, getHotelFilters } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
-  title: 'Hotels & 43+ Associated Resorts | Galaxy Heritage World',
+  title: 'Hotels & 420+ Associated Resorts | Galaxy Heritage World',
   description:
-    'Explore 43+ associated 4-star and 5-star partner resorts and internal properties across India and abroad with Galaxy Heritage World.',
+    'Explore 420+ associated 4-star and 5-star partner resorts and internal properties across India and abroad with Galaxy Heritage World.',
 };
 
 export const revalidate = 60;
@@ -69,7 +69,7 @@ export default async function HotelsResortsPage({
         }
         title={
           <>
-            43+ Associated <span className="text-white/70">Resorts & Hotels</span>
+            420+ Associated <span className="text-white/70">Resorts & Hotels</span>
           </>
         }
         subtitle="Every property in our network is audited for star-quality comfort, family-friendly amenities, scenic locations, and authentic hospitality."
@@ -81,7 +81,7 @@ export default async function HotelsResortsPage({
           {/* Category Switcher Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <Link href={buildHref(sp, { category: '', page: '' })} data-active={!category} className="chip">
-              All 43+ Resorts
+              All 420+ Resorts
             </Link>
             <Link
               href={buildHref(sp, { category: 'ASSOCIATED', page: '' })}

@@ -48,7 +48,7 @@ export default function TermsConditionsPage() {
           <section>
             <h2>4. Associated Partner Properties</h2>
             <p>
-              While Galaxy Heritage World conducts periodic hygiene and star-quality audits of our 43+ associated partner properties, specific hotel operational policies (pet rules, check-in/out times, room service hours) remain determined by each respective resort management.
+              While Galaxy Heritage World conducts periodic hygiene and star-quality audits of our 420+ associated partner properties, specific hotel operational policies (pet rules, check-in/out times, room service hours) remain determined by each respective resort management.
             </p>
           </section>
 
