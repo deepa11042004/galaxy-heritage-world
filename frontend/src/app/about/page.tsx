@@ -32,49 +32,11 @@ export default function AboutPage() {
       />
 
       <div className="container-page section section-plain space-y-16 md:space-y-20">
-        {/* Corporate Profile Card */}
-        <div className="card p-3 sm:p-4">
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            <div className="space-y-6 p-4 sm:p-8 lg:pr-0">
-              <div className="eyebrow">
-                <Building />
-                <span>Corporate Registration</span>
-              </div>
-              <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
-                GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED
-              </h2>
-              <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
-                We are a legally registered Indian private limited entity incorporated under the Companies Act. With our corporate identification number <strong className="font-semibold text-ink">U74999DL2022PTC407515</strong>, we operate with full regulatory compliance, registered taxation, and corporate governance.
-              </p>
-              <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
-                <div className="rounded-xl bg-surface p-4">
-                  <div className="text-xs font-medium text-ink-muted">Corporate CIN</div>
-                  <div className="mt-1 font-mono text-xs font-bold text-ink">U74999DL2022PTC407515</div>
-                </div>
-                <div className="rounded-xl bg-surface p-4">
-                  <div className="text-xs font-medium text-ink-muted">Head Office</div>
-                  <div className="mt-1 text-xs font-bold text-ink">Kaushambi, Ghaziabad, UP</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="media-frame h-80 w-full sm:h-[28rem]">
-              <Image
-                src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg"
-                alt="Galaxy Heritage World Luxury Hospitality"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-          </div>
-        </div>
-
         {/* About Us Story */}
-        <div className="rounded-hero border-4 border-divider bg-white p-7 sm:p-10 lg:p-12">
+        <div className="card p-7 sm:p-10 lg:p-12">
           <div className="mx-auto max-w-4xl space-y-6 text-sm leading-relaxed text-ink-muted sm:text-base">
             <div className="space-y-2">
-              <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">About Us – Galaxy Heritage World</h2>
+              <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">Galaxy Heritage World</h2>
               <h3 className="text-base font-semibold text-ink sm:text-lg">A Unit of GHW Hospitality Private Limited</h3>
             </div>
 
@@ -119,6 +81,44 @@ export default function AboutPage() {
             <p className="font-semibold text-ink">
               Welcome to Galaxy Heritage World – Where Every Journey Creates a Memory, Every Destination Inspires Discovery, and Every Holiday Becomes a Celebration of Life.
             </p>
+          </div>
+        </div>
+
+        {/* Corporate Profile Card */}
+        <div className="card p-3 sm:p-4">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12">
+            <div className="space-y-6 p-4 sm:p-8 lg:pr-0">
+              <div className="eyebrow">
+                <Building />
+                <span>Corporate Registration</span>
+              </div>
+              <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
+                GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED
+              </h2>
+              <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
+                We are a legally registered Indian private limited entity incorporated under the Companies Act. With our corporate identification number <strong className="font-semibold text-ink">U74999DL2022PTC407515</strong>, we operate with full regulatory compliance, registered taxation, and corporate governance.
+              </p>
+              <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
+                <div className="rounded-xl bg-surface p-4">
+                  <div className="text-xs font-medium text-ink-muted">Corporate CIN</div>
+                  <div className="mt-1 font-mono text-xs font-bold text-ink">U74999DL2022PTC407515</div>
+                </div>
+                <div className="rounded-xl bg-surface p-4">
+                  <div className="text-xs font-medium text-ink-muted">Head Office</div>
+                  <div className="mt-1 text-xs font-bold text-ink">Kaushambi, Ghaziabad, UP</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="media-frame h-80 w-full sm:h-[28rem]">
+              <Image
+                src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg"
+                alt="Galaxy Heritage World Luxury Hospitality"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           </div>
         </div>
 
