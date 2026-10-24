@@ -127,10 +127,10 @@ export default function AboutPage() {
 
             <div className="media-frame h-80 w-full sm:h-[28rem]">
               <Image
-                src="/media/about/couple-beach.jpg"
-                alt="A couple walking arm in arm along a beach at sunset"
+                src="/media/about/corporate.jpg"
+                alt="A couple relaxing at the edge of an infinity pool and smiling at each other"
                 fill
-                className="object-cover"
+                className="object-cover object-[50%_70%]"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 quality={90}
               />

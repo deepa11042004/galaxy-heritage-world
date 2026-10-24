@@ -51,11 +51,16 @@ export default function ContactPage() {
   return (
     <div>
       <PageHero
+        image={{
+          src: '/media/hero/contact-header.jpg',
+          alt: 'A smiling woman with an earbud video-calling on her laptop at an outdoor cafe',
+          position: 'center 30%',
+        }}
         icon={MapPin}
         eyebrow="Contact Us"
         title={
           <>
-            Get in Touch <span className="text-ink-muted">with Us</span>
+            Get in Touch <span className="text-white/70">with Us</span>
           </>
         }
         subtitle="Have questions, need assistance, or want to explore our services? We're here to help! Contact us today"
