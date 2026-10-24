@@ -1,18 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PhoneCall, Mail, MapPin, Send, CheckCircle2, AlertCircle, Building2, Clock } from 'lucide-react';
+import Image from 'next/image';
+import { PhoneCall, Mail, MapPin, Send, CheckCircle2, AlertCircle, Building2 } from 'lucide-react';
 import { submitEnquiry } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { PageHero } from '@/components/ui/PageHero';
 import { buttonVariants } from '@/components/ui/button';
 
 const BRANCHES = [
-  { city: 'Mumbai', address: '309 New Link Road Andheri West mumbai 400053' },
-  { city: 'Chennai', address: '1,766 Shakti Tower Anna Salai Thousand Light, Chennai 600002' },
-  { city: 'Ghaziabad', address: 'C-33, Kaushambi, Ghaziabad, U.P. 201012' },
-  { city: 'Lucknow', address: 'Upcoming Office', upcoming: true },
-  { city: 'Pune', address: 'Upcoming Office', upcoming: true },
+  { city: 'Mumbai', image: '/media/contact/mumbai.jpg', alt: 'The Gateway of India arch in Mumbai', address: '309 New Link Road Andheri West mumbai 400053' },
+  { city: 'Chennai', image: '/media/contact/chennai.jpg', alt: 'Kapaleeshwarar Temple tower beside its tank in Chennai', address: '1,766 Shakti Tower Anna Salai Thousand Light, Chennai 600002' },
+  { city: 'Ghaziabad', image: '/media/contact/ghaziabad.jpg', alt: 'Apartment towers along a street in Ghaziabad', address: 'C-33, Kaushambi, Ghaziabad, U.P. 201012' },
+  { city: 'Lucknow', image: '/media/contact/lucknow.jpg', alt: 'The Bara Imambara gateway and gardens in Lucknow', address: 'Upcoming Office', upcoming: true },
+  { city: 'Pune', image: '/media/contact/pune.jpg', alt: 'The fortified gate of Shaniwar Wada in Pune', address: 'Upcoming Office', upcoming: true },
 ];
 
 const EMPTY_FORM = { firstName: '', lastName: '', email: '', phone: '', message: '' };
@@ -244,15 +245,24 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {BRANCHES.map((b) => (
-            <div
-              key={b.city}
-              className={cn('card p-6', b.upcoming && 'border-dashed bg-surface')}
-            >
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-ink text-accent">
-                {b.upcoming ? <Clock className="h-4 w-4" /> : <MapPin className="h-4 w-4" />}
+            <div key={b.city} className={cn('card overflow-hidden p-0', b.upcoming && 'border-dashed bg-surface')}>
+              <div className="media-frame relative aspect-[4/3] rounded-none">
+                <Image
+                  src={b.image}
+                  alt={b.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                  quality={90}
+                />
+                {b.upcoming && (
+                  <span className="pill absolute top-3 left-3">Opening soon</span>
+                )}
               </div>
-              <h3 className="text-lg font-semibold text-ink">{b.city}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-ink-muted">{b.address}</p>
+              <div className="p-5">
+                <h3 className="text-lg font-semibold text-ink">{b.city}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-ink-muted">{b.address}</p>
+              </div>
             </div>
           ))}
         </div>
