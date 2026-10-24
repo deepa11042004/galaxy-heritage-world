@@ -18,7 +18,7 @@ import { cn } from '@/lib/utils';
 export const metadata = {
   title: 'Membership | Galaxy Heritage World',
   description:
-    'Galaxy Heritage Club gives privileged access to 140+ premium resorts with 6 nights / 7 days of holidays every year. Choose the Ebony, Ivory or Jade Key.',
+    'Galaxy Heritage Club gives privileged access to 140+ premium resorts with 6 nights / 7 days of holidays every year. Choose the Silver, Gold or Platinum Key.',
 };
 
 const PRIVILEGES = [
@@ -37,7 +37,7 @@ const COMMON = [
 
 const PLANS = [
   {
-    key: 'EBONY',
+    key: 'SILVER',
     tagline: 'Your year-round access to unforgettable family gateways',
     weeks: '6N/7D holidays every year across 52 weeks',
     card: 'bg-ink text-white border-ink',
@@ -47,7 +47,7 @@ const PLANS = [
     button: 'bg-accent text-ink hover:bg-accent-hover',
   },
   {
-    key: 'IVORY',
+    key: 'GOLD',
     tagline: 'Experience destinations during the peak of their popularity',
     weeks: '6N/7D holidays every year across 46 weeks',
     card: 'bg-white text-ink border-accent',
@@ -57,7 +57,7 @@ const PLANS = [
     button: 'bg-ink text-white hover:bg-ink/85',
   },
   {
-    key: 'JADE',
+    key: 'PLATINUM',
     tagline: 'Enjoy your favourite destinations during quieter seasons',
     weeks: '6N/7D holidays every year across 24 weeks',
     card: 'bg-emerald-50 text-ink border-emerald-200',
@@ -104,7 +104,7 @@ const TENETS = [
     image: '/media/membership/tenet-2.jpg',
     alt: 'Private plunge pool on a terrace above the ocean',
     items: [
-      'Avail 52, 46, and 24 weeks of holiday access across applicable seasons for EBONY, IVORY, and JADE Keys respectively.',
+      'Avail 52, 46, and 24 weeks of holiday access across applicable seasons for SILVER, GOLD, and PLATINUM Keys respectively.',
       'Enjoy 25% discounts on eligible in-resort spends.',
       'Nominate up to 7 family members.',
     ],
@@ -185,7 +185,7 @@ export default function MembershipPage() {
             Your Key to Unlock <span className="text-ink-muted">Privileged Experiences</span>
           </h2>
           <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
-            Select from Ebony, Ivory, and Jade Keys and enter a world of seamless vacations
+            Select from Silver, Gold, and Platinum Keys and enter a world of seamless vacations
           </p>
         </div>
 

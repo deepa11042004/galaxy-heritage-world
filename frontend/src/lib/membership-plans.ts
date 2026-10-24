@@ -5,7 +5,7 @@
  * real Galaxy Heritage World prices are decided. Replace `total` and `emi` (in rupees) here and every card, the compare
  * table and the page update automatically.
  */
-export type TierKey = 'EBONY' | 'IVORY' | 'JADE';
+export type TierKey = 'SILVER' | 'GOLD' | 'PLATINUM';
 
 export interface Plan {
   id: string;
@@ -30,7 +30,7 @@ export interface TierStyle {
 
 export const TIERS: TierStyle[] = [
   {
-    key: 'EBONY',
+    key: 'SILVER',
     card: 'bg-[#0c0c0d] text-white',
     muted: 'text-white/65',
     divider: 'bg-white/25',
@@ -38,7 +38,7 @@ export const TIERS: TierStyle[] = [
     buttonOn: 'border-accent bg-accent text-ink',
   },
   {
-    key: 'IVORY',
+    key: 'GOLD',
     card: 'bg-[#e9e4d3] text-ink',
     muted: 'text-ink/60',
     divider: 'bg-ink/20',
@@ -46,7 +46,7 @@ export const TIERS: TierStyle[] = [
     buttonOn: 'border-ink bg-ink text-white',
   },
   {
-    key: 'JADE',
+    key: 'PLATINUM',
     card: 'bg-[#1b6b62] text-white',
     muted: 'text-white/70',
     divider: 'bg-white/25',
@@ -65,18 +65,18 @@ const plan = (tier: TierKey, years: number, total: number, emi: number): Plan =>
 });
 
 export const PLANS: Plan[] = [
-  plan('EBONY', 20, 1165000, 26414),
-  plan('EBONY', 15, 975000, 22106),
-  plan('EBONY', 10, 740000, 21959),
-  plan('EBONY', 5, 575000, 20850), // invented placeholder (not in the reference)
-  plan('IVORY', 20, 775000, 17571),
-  plan('IVORY', 15, 660000, 14964),
-  plan('IVORY', 10, 510000, 15134),
-  plan('IVORY', 5, 410000, 15904),
-  plan('JADE', 20, 555000, 11797),
-  plan('JADE', 15, 485000, 10309),
-  plan('JADE', 10, 395000, 10342),
-  plan('JADE', 5, 325000, 10810), // invented placeholder (not in the reference)
+  plan('SILVER', 20, 1165000, 26414),
+  plan('SILVER', 15, 975000, 22106),
+  plan('SILVER', 10, 740000, 21959),
+  plan('SILVER', 5, 575000, 20850), // invented placeholder (not in the reference)
+  plan('GOLD', 20, 775000, 17571),
+  plan('GOLD', 15, 660000, 14964),
+  plan('GOLD', 10, 510000, 15134),
+  plan('GOLD', 5, 410000, 15904),
+  plan('PLATINUM', 20, 555000, 11797),
+  plan('PLATINUM', 15, 485000, 10309),
+  plan('PLATINUM', 10, 395000, 10342),
+  plan('PLATINUM', 5, 325000, 10810), // invented placeholder (not in the reference)
 ];
 
 /** Indian digit grouping, e.g. 1165000 -> "₹11,65,000/-" */

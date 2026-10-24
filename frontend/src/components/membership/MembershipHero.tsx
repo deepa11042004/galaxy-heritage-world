@@ -26,25 +26,25 @@ interface CardStyle {
   rim: string;
 }
 
-const CARDS: Record<'ivory' | 'ebony' | 'jade', CardStyle> = {
-  ivory: {
-    name: 'IVORY',
+const CARDS: Record<'gold' | 'silver' | 'platinum', CardStyle> = {
+  gold: {
+    name: 'GOLD',
     surface: 'linear-gradient(135deg, #f6efe2 0%, #e9dcc3 55%, #f3ead9 100%)',
     text: 'linear-gradient(180deg, #c9ac74 0%, #9c7e4b 100%)',
     tier: '#9c7e4b',
     line: 'rgba(160,124,70,0.55)',
     rim: 'rgba(255,255,255,0.7)',
   },
-  ebony: {
-    name: 'EBONY',
+  silver: {
+    name: 'SILVER',
     surface: 'linear-gradient(135deg, #2b2b2e 0%, #0d0d0f 55%, #1d1d20 100%)',
     text: 'linear-gradient(180deg, #e8e8ea 0%, #8c8c93 100%)',
     tier: '#b9b9bf',
     line: 'rgba(255,255,255,0.28)',
     rim: 'rgba(255,255,255,0.25)',
   },
-  jade: {
-    name: 'JADE',
+  platinum: {
+    name: 'PLATINUM',
     surface: 'linear-gradient(135deg, #2fa79b 0%, #0f6f6c 55%, #1b8c86 100%)',
     text: 'linear-gradient(180deg, #d8fbf4 0%, #8fd6cb 100%)',
     tier: '#bfeee6',
@@ -84,7 +84,7 @@ function MembershipCard({ kind, className }: { kind: keyof typeof CARDS; classNa
 
 /**
  * Dark launch banner for the membership page: contour-line background, headline and the three membership cards
- * (Ivory, Ebony, Jade) overlapping with Ebony in front.
+ * (Gold, Silver, Platinum) overlapping with Silver in front.
  */
 export function MembershipHero() {
   return (
@@ -101,11 +101,11 @@ export function MembershipHero() {
           <h1 className="mt-2 text-[1.5rem] leading-none font-light tracking-[0.08em] sm:mt-3 sm:text-4xl lg:text-[2.6rem]">GALAXY HERITAGE CLUB</h1>
           <p className="mt-3 text-[10px] font-medium tracking-[0.28em] text-white/90 sm:mt-4 sm:text-xs">PRIVILEGED ACCESS</p>
 
-          {/* Cards: Ebony in front, Ivory and Jade tucked behind it */}
+          {/* Cards: Silver in front, Gold and Platinum tucked behind it */}
           <div className="mt-6 flex w-full items-center justify-center sm:mt-8">
-            <MembershipCard kind="ivory" className="relative z-0 w-[28%] max-w-[min(300px,33vh)] -mr-[3%]" />
-            <MembershipCard kind="ebony" className="relative z-10 w-[34%] max-w-[min(380px,42vh)] -translate-y-[6%]" />
-            <MembershipCard kind="jade" className="relative z-0 w-[28%] max-w-[min(300px,33vh)] -ml-[3%]" />
+            <MembershipCard kind="gold" className="relative z-0 w-[28%] max-w-[min(300px,33vh)] -mr-[3%]" />
+            <MembershipCard kind="silver" className="relative z-10 w-[34%] max-w-[min(380px,42vh)] -translate-y-[6%]" />
+            <MembershipCard kind="platinum" className="relative z-0 w-[28%] max-w-[min(300px,33vh)] -ml-[3%]" />
           </div>
 
           <p className="mt-7 text-[9px] tracking-[0.3em] text-white/70 sm:mt-9 sm:text-[11px] sm:tracking-[0.4em]">

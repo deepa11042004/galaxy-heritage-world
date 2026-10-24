@@ -8,7 +8,7 @@ import { buttonVariants } from '@/components/ui/button';
 export const metadata = {
   title: 'Membership Plans | Galaxy Heritage World',
   description:
-    'Compare every Galaxy Heritage Club plan: Ebony, Ivory and Jade Keys across 5, 10, 15 and 20 year tenures, with total cost and EMI.',
+    'Compare every Galaxy Heritage Club plan: Silver, Gold and Platinum Keys across 5, 10, 15 and 20 year tenures, with total cost and EMI.',
 };
 
 export default function MembershipPlansPage() {

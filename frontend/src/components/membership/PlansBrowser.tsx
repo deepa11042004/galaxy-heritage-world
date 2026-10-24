@@ -40,9 +40,9 @@ function Waves({ stroke }: { stroke: string }) {
 }
 
 const WAVE: Record<string, string> = {
-  EBONY: 'rgba(255,255,255,0.34)',
-  IVORY: 'rgba(110,98,70,0.42)',
-  JADE: 'rgba(255,255,255,0.34)',
+  SILVER: 'rgba(255,255,255,0.34)',
+  GOLD: 'rgba(110,98,70,0.42)',
+  PLATINUM: 'rgba(255,255,255,0.34)',
 };
 
 function PlanCard({ plan, style }: { plan: Plan; style: TierStyle }) {
