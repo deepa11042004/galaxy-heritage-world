@@ -6,6 +6,7 @@ import { YouTubeEmbed } from '@/components/ui/YouTubeEmbed';
 import { DAY_OUTINGS as D } from '@/lib/day-outings';
 import { getActivities } from '@/lib/api';
 import { PageHero } from '@/components/ui/PageHero';
+import { PhotoGrid } from '@/components/ui/PhotoGrid';
 
 export const metadata = {
   title: 'Day Activities & Family Picnics | Galaxy Heritage World',
@@ -101,8 +102,17 @@ export default async function DayActivitiesPage() {
       {/* Featured outings with gallery and video */}
       {featured.length > 0 && (
         <section className="container-page section space-y-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="heading-section text-ink">
+              Most Lovable <span className="text-ink-muted">Farms</span>
+            </h2>
+            <p className="mt-3 text-sm text-ink-muted sm:text-base">
+              Step away from the city for a day of open fields, camel and bullock-cart rides, zip lines, pottery, bonfires and
+              freshly cooked farm meals. These are the farms our families come back to again and again.
+            </p>
+          </div>
           {featured.map((farm) => (
-            <div key={farm.id} className="card p-3 sm:p-4">
+            <div key={farm.id} className="card border-2 !border-accent p-3 sm:p-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <div className="space-y-4 p-4 sm:p-6">
                   <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
@@ -121,13 +131,7 @@ export default async function DayActivitiesPage() {
                   )}
                   <YouTubeEmbed videoId={farm.videoId} title={`${farm.title} video`} />
                 </div>
-                <div className="grid grid-cols-3 gap-2">
-                  {(farm.gallery as string[]).slice(0, 7).map((src, i) => (
-                    <div key={src} className={`media-frame relative aspect-[4/3] rounded-xl ${i === 0 ? 'col-span-3 aspect-[16/9]' : ''}`}>
-                      <Image src={src} alt={`${farm.title} ${i + 1}`} fill className="object-cover" sizes={i === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"} quality={92} />
-                    </div>
-                  ))}
-                </div>
+                <PhotoGrid photos={(farm.gallery as string[]).slice(0, 7)} name={farm.title} variant="feature" />
               </div>
             </div>
           ))}

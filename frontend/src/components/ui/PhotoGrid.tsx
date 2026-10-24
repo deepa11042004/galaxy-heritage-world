@@ -18,6 +18,7 @@ function mosaicCell(i: number, count: number): string {
  * A grid of photos that open in a full-screen viewer when clicked.
  * - "mosaic": one big photo plus up to three smaller ones (the viewer still has every photo)
  * - "gallery": a plain two-column grid of every photo
+ * - "feature": a wide first photo above rows of three
  */
 export function PhotoGrid({
   photos,
@@ -26,7 +27,7 @@ export function PhotoGrid({
 }: {
   photos: string[];
   name: string;
-  variant?: 'mosaic' | 'gallery';
+  variant?: 'mosaic' | 'gallery' | 'feature';
 }) {
   const [open, setOpen] = useState<number | null>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -67,7 +68,11 @@ export function PhotoGrid({
       <div
         className={cn(
           'grid gap-2 sm:gap-3',
-          variant === 'mosaic' ? 'grid-cols-2 lg:h-[30rem] lg:grid-cols-4 lg:grid-rows-2' : 'grid-cols-2'
+          variant === 'mosaic'
+            ? 'grid-cols-2 lg:h-[30rem] lg:grid-cols-4 lg:grid-rows-2'
+            : variant === 'feature'
+              ? 'grid-cols-3 gap-2'
+              : 'grid-cols-2'
         )}
       >
         {shown.map((src, i) => (
@@ -81,7 +86,8 @@ export function PhotoGrid({
             }}
             className={cn(
               'media-frame group relative aspect-[4/3] cursor-zoom-in rounded-xl',
-              variant === 'mosaic' && `lg:aspect-auto ${mosaicCell(i, Math.min(photos.length, 4))}`
+              variant === 'mosaic' && `lg:aspect-auto ${mosaicCell(i, Math.min(photos.length, 4))}`,
+              variant === 'feature' && i === 0 && 'col-span-3 aspect-[16/9]'
             )}
           >
             <Image
@@ -96,7 +102,11 @@ export function PhotoGrid({
                   ? i === 0
                     ? '(max-width: 1024px) 100vw, 50vw'
                     : '(max-width: 1024px) 50vw, 25vw'
-                  : '(max-width: 640px) 50vw, 33vw'
+                  : variant === 'feature'
+                    ? i === 0
+                      ? '(max-width: 1024px) 100vw, 50vw'
+                      : '(max-width: 1024px) 50vw, 25vw'
+                    : '(max-width: 640px) 50vw, 33vw'
               }
             />
             <span className="pointer-events-none absolute inset-0 bg-ink/0 transition-colors group-hover:bg-ink/10" />
