@@ -127,11 +127,12 @@ export default function AboutPage() {
 
             <div className="media-frame h-80 w-full sm:h-[28rem]">
               <Image
-                src="/media/galaxy-heritage-world/homepage/images/gettyimages-149353949_wide-5bf3b36fc9e77c005175cfc2.jpg"
-                alt="Galaxy Heritage World Luxury Hospitality"
+                src="/media/about/couple-beach.jpg"
+                alt="A couple walking arm in arm along a beach at sunset"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={90}
               />
             </div>
           </div>
@@ -171,7 +172,7 @@ export default function AboutPage() {
         </div>
 
         {/* CTA Section */}
-        <div className="flex flex-col items-center rounded-hero bg-ink px-6 py-12 text-center text-white sm:px-12 sm:py-16">
+        <div className="flex flex-col items-center rounded-hero bg-[#575547] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
           <h2 className="heading-section mb-4 text-white">Ready to Plan Your Next Family Holiday?</h2>
           <p className="mb-8 max-w-lg text-sm text-white/70 sm:text-base">
             Speak to our travel desk specialists or explore Galaxy Heritage Club membership today.
