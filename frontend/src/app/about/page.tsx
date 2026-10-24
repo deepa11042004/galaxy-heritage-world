@@ -34,7 +34,8 @@ export default function AboutPage() {
       <div className="container-page section section-plain space-y-16 md:space-y-20">
         {/* About Us Story */}
         <div className="card p-7 sm:p-10 lg:p-12">
-          <div className="mx-auto max-w-4xl space-y-6 text-sm leading-relaxed text-ink-muted sm:text-base">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+          <div className="space-y-6 text-sm leading-relaxed text-ink-muted sm:text-base lg:col-span-7">
             <div className="space-y-2">
               <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">Galaxy Heritage World</h2>
               <h3 className="text-base font-semibold text-ink sm:text-lg">A Unit of GHW Hospitality Private Limited</h3>
@@ -81,6 +82,20 @@ export default function AboutPage() {
             <p className="font-semibold text-ink">
               Welcome to Galaxy Heritage World – Where Every Journey Creates a Memory, Every Destination Inspires Discovery, and Every Holiday Becomes a Celebration of Life.
             </p>
+          </div>
+
+          <div className="lg:col-span-5">
+            <div className="media-frame relative mx-auto aspect-[937/799] w-full max-w-xl lg:sticky lg:top-[calc(var(--header-h)+1.5rem)]">
+              <Image
+                src="/media/about/travellers.jpg"
+                alt="A smiling couple in yellow with a suitcase, camera and passport, ready to travel"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 90vw, 42vw"
+                quality={90}
+              />
+            </div>
+          </div>
           </div>
         </div>
 
