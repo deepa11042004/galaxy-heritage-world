@@ -22,11 +22,16 @@ export default async function ItinerariesPage({ searchParams }: { searchParams: 
   return (
     <div>
       <PageHero
+        image={{
+          src: '/media/hero/itineraries-header.jpg',
+          alt: 'A traveller in a pink dress and sun hat on a longtail boat between green limestone cliffs',
+          position: 'center 55%',
+        }}
         icon={MapIcon}
         eyebrow="Curated Journeys"
         title={
           <>
-            Holiday <span className="text-ink-muted">Itineraries</span>
+            Holiday <span className="text-white/70">Itineraries</span>
           </>
         }
         subtitle="Plan with confidence. Every itinerary comes with a clear day-by-day schedule, handpicked highlights and everything that is included."
