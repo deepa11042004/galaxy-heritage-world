@@ -53,7 +53,7 @@ Before any risky change, take a backup (read-only, writes JSON per table to `bac
 cd backend && npx tsx scripts/backup-db.ts
 ```
 
-`scripts/import-day-outings.ts` was the one-off import of the old static day-outings content (idempotent, never overwrites).
+`scripts/one-off/import-day-outings.ts` was the one-off import of the old static day-outings content (idempotent, never overwrites).
 
 ## Tests
 
