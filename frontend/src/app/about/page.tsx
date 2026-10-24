@@ -16,11 +16,16 @@ export default function AboutPage() {
     <div>
       {/* Hero Section */}
       <PageHero
+        image={{
+          src: '/media/hero/about-header.jpg',
+          alt: 'A travel map with a compass, passport, vintage camera and model aeroplane',
+          position: 'center 45%',
+        }}
         icon={Sparkles}
         eyebrow="Our Heritage & Vision"
         title={
           <>
-            Redefining Luxury & Family <span className="text-ink-muted">Holidays Across India</span>
+            Redefining Luxury & Family <span className="text-white/70">Holidays Across India</span>
           </>
         }
         subtitle="Galaxy Heritage World was founded on a simple principle: every Indian family deserves world-class hospitality, audited accommodations, and complete booking transparency."
