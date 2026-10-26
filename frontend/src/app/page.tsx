@@ -5,6 +5,7 @@ import { PackageCards } from '@/components/home/PackageCards';
 import { ResortShowcase } from '@/components/home/ResortShowcase';
 import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { DayActivitiesSection } from '@/components/home/DayActivitiesSection';
+import { TravelPartners } from '@/components/home/TravelPartners';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
 import { FaqSection } from '@/components/home/FaqSection';
 import { EnquiryFormSection } from '@/components/home/EnquiryFormSection';
@@ -58,6 +59,7 @@ export default async function HomePage() {
       {packages.length > 0 && <PackageCards packages={packages} />}
       <ResortShowcase hotels={hotels} />
       <DayActivitiesSection activities={activities} />
+      <TravelPartners />
       <TestimonialsSection testimonials={testimonials} />
       <FaqSection faqs={faqs} />
       <EnquiryFormSection />
