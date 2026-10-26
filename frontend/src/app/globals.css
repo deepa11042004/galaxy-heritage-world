@@ -90,9 +90,27 @@
   .container-narrow {
     @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8;
   }
-  /* Content section */
+  /* Content section with a grey divider line along its bottom edge */
   .section {
     @apply relative py-14 md:py-20;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: min(calc(100% - 2rem), 80rem);
+      height: 1px;
+      transform: translateX(-50%);
+      background-color: #d4d4d4;
+    }
+  }
+  /* The home page has no section dividers */
+  .home-page .section::after {
+    display: none;
+  }
+  /* Opt a section out of its divider line */
+  .section-plain::after {
+    display: none;
   }
   /* Patterned section. The pattern fades to white at the top and bottom edge so neighbouring sections blend instead of showing a hard seam. */
   .section-pattern {
@@ -104,7 +122,7 @@
     background-position: center, center;
     background-repeat: no-repeat;
   }
-  /* Kept so existing markup stays valid; sections no longer draw a divider line */
+  /* Keeps the section positioned when it opts out of the divider line */
   .section-plain {
     @apply relative;
   }

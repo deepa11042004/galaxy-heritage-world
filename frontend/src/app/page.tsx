@@ -41,7 +41,7 @@ export default async function HomePage() {
     activitiesRes.status === 'fulfilled' ? activitiesRes.value.data || [] : [];
 
   return (
-    <div className="flex flex-col">
+    <div className="home-page flex flex-col">
       <HeroBanner />
       <WhyChooseUs />
       <DestinationShowcase destinations={destinations} />
