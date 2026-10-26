@@ -217,7 +217,7 @@ export function Navbar() {
                             href="/hotels-resorts"
                             className="block px-3 py-2 text-xs font-semibold text-accent-strong hover:underline"
                           >
-                            View All 420+ Properties &rarr;
+                            View All 1000+ Properties &rarr;
                           </Link>
                         </div>
                       </div>
@@ -294,7 +294,7 @@ export function Navbar() {
                   </Link>
                 </div>
                 <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Hotels & Resorts (420+ Properties)
+                  Hotels & Resorts (1000+ Properties)
                 </Link>
                 <Link href="/membership" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Membership

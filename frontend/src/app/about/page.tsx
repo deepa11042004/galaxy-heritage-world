@@ -8,7 +8,7 @@ import { buttonVariants } from '@/components/ui/button';
 export const metadata = {
   title: 'About Us | Galaxy Heritage World',
   description:
-    'Learn about Galaxy Heritage World, our corporate background, mission, 420+ associated resort network, and commitment to transparent hospitality.',
+    'Learn about Galaxy Heritage World, our corporate background, mission, 1000+ associated resort network, and commitment to transparent hospitality.',
 };
 
 export default function AboutPage() {
@@ -144,7 +144,7 @@ export default function AboutPage() {
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-ink text-accent">
               <Award className="h-5 w-5" />
             </div>
-            <h3 className="mb-2 text-xl font-semibold text-ink">420+ Associated Resorts</h3>
+            <h3 className="mb-2 text-xl font-semibold text-ink">1000+ Associated Resorts</h3>
             <p className="text-sm leading-relaxed text-ink-muted">
               We partner with recognized 4-star and 5-star properties across Goa, Rajasthan, Uttarakhand, Himachal Pradesh, and international tourist hubs, ensuring certified hygiene and comfort.
             </p>

@@ -80,7 +80,7 @@ export function Footer() {
                 </li>
                 <li>
                   <Link href="/hotels-resorts" className={footerLink}>
-                    Hotels & 420+ Resorts
+                    Hotels & 1000+ Resorts
                   </Link>
                 </li>
                 <li>

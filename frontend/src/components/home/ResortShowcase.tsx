@@ -30,13 +30,13 @@ export function ResortShowcase({ hotels }: { hotels: HotelItem[] }) {
             eyebrow="Hospitality Network"
             title={
               <>
-                420+ Associated <span className="text-ink-muted">Resorts & Hotels</span>
+                1000+ Associated <span className="text-ink-muted">Resorts & Hotels</span>
               </>
             }
             description="Stay in verified, quality-audited properties providing world-class comfort, scenic views, and authentic warm Indian hospitality."
             actions={
               <Link href="/hotels-resorts" className={buttonVariants({ size: 'sm' })}>
-                <span>Explore All 420+ Resorts</span>
+                <span>Explore All 1000+ Resorts</span>
                 <ArrowRight />
               </Link>
             }
