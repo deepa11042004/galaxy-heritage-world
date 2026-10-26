@@ -93,7 +93,8 @@ export function TestimonialsSection() {
           eyebrow="Verified Customer Feedback"
           title={
             <>
-              Memories Made With <span className="text-ink-muted">Galaxy Heritage</span>
+              Before we talk about what&rsquo;s next, look at what&rsquo;s{' '}
+              <span className="text-ink-muted">already delivered.</span>
             </>
           }
           description="Authentic experiences shared by our holiday guests across India."
@@ -115,7 +116,7 @@ export function TestimonialsSection() {
               <figure
                 key={v.src}
                 data-slide
-                className="card shrink-0 basis-[80%] snap-start p-2.5 sm:basis-[calc((100%-1.25rem)/2)] lg:basis-[calc((100%-2.5rem)/3)]"
+                className="card border-4 !border-divider shrink-0 basis-[80%] snap-start p-2.5 sm:basis-[calc((100%-1.25rem)/2)] lg:basis-[calc((100%-2.5rem)/3)]"
               >
                 <Video src={v.src} label={`Review by ${v.name}`} className="aspect-[9/16]" />
               </figure>

@@ -233,9 +233,6 @@ export function Navbar() {
               <Link href="/itineraries" className={navLinkClass(pathname.startsWith('/itineraries'))}>
                 Itineraries
               </Link>
-              <Link href="/testimonials" className={cn(navLinkClass(pathname === '/testimonials'), 'hidden min-[1200px]:flex')}>
-                Testimonials
-              </Link>
 
               <Link href="/about" className={navLinkClass(pathname === '/about')}>
                 About Us
@@ -308,9 +305,6 @@ export function Navbar() {
 
                 <Link href="/itineraries" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Itineraries
-                </Link>
-                <Link href="/testimonials" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Client Testimonials
                 </Link>
                 <Link
                   href="/reviews-and-complaints"

@@ -1,75 +1,88 @@
 import React from 'react';
-import Link from 'next/link';
 import { IndianRupee } from 'lucide-react';
 import { PageHero } from '@/components/ui/PageHero';
 
 export const metadata = {
   title: 'Pricing Policy | Galaxy Heritage World',
   description:
-    'Transparent pricing policy, tariff schedules, seasonal classifications, and utility fee details for Galaxy Heritage World.',
+    'Pricing policy of Galaxy Heritage World: pricing transparency, price changes, inclusions and exclusions, payment terms, cancellations, discounts and errors.',
 };
+
+const SECTIONS: { title: string; text?: string; items?: string[] }[] = [
+  {
+    title: 'Pricing Transparency',
+    text: 'At Galaxy Heritage World, we strive to offer competitive and transparent pricing for all our travel packages, and holiday services. Our prices are inclusive of applicable taxes, fees, and service charges unless stated otherwise.',
+  },
+  {
+    title: 'Price Changes & Updates',
+    items: [
+      'Prices may vary based on seasonality, availability, and demand.',
+      'Any promotional discounts or limited-time offers will be clearly mentioned.',
+      'Prices are subject to change without prior notice; however, confirmed bookings will not be affected.',
+    ],
+  },
+  {
+    title: 'Inclusions & Exclusions',
+    items: [
+      'Package prices include only the services listed in the itinerary (e.g., accommodation, transportation, meals).',
+      'Additional services such as visa fees, travel insurance, and optional tours are charged separately unless stated otherwise.',
+    ],
+  },
+  {
+    title: 'Payment Terms',
+    items: [
+      'A minimum deposit (as per package terms) is required to confirm bookings.',
+      'Full payment must be made before departure as per our booking policy.',
+      'Payments can be made via credit/debit cards, bank transfers, UPI, or online payment gateways.',
+    ],
+  },
+  {
+    title: 'Cancellation & Refunds',
+    items: ['All bookings are non-refundable unless specified under a special offer or package.'],
+  },
+  {
+    title: 'Discounts & Offers',
+    items: [
+      'Discounts cannot be combined unless specified.',
+      'Special offers are subject to availability and valid for a limited period.',
+    ],
+  },
+  {
+    title: 'Errors & Omissions',
+    text: 'Galaxy Heritage World reserves the right to correct any pricing errors or omissions, and in such cases, we will notify customers before proceeding with their booking.',
+  },
+];
 
 export default function PricingPolicyPage() {
   return (
     <div>
       <PageHero
+        tone="orange"
         icon={IndianRupee}
         eyebrow="Billing & Tariffs"
         title={
           <>
-            Pricing & <span className="text-ink-muted">Tariff Policy</span>
+            Pricing <span className="text-ink/70">Policy</span>
           </>
         }
-        subtitle="Galaxy Heritage World operates with 100% price transparency across all holiday packages and voucher redemptions."
       />
 
       <div className="container-narrow section">
         <div className="card prose-legal p-6 sm:p-12">
-          <section>
-            <h2>1. Currency & Taxes</h2>
-            <p>
-              All package tariffs and administrative charges quoted on this website and in official communication are in <strong>Indian Rupees (INR)</strong>. Applicable Government Goods and Services Tax (GST) is levied in accordance with current statutory rates and explicitly itemized on official invoices.
-            </p>
-          </section>
-
-          <section>
-            <h2>2. Holiday Package Pricing</h2>
-            <p>
-              Package prices shown as &ldquo;Starting From&rdquo; are based on per-person twin-sharing occupancy in base category rooms at our associated 4-star partner resorts during regular seasons. Tariffs are subject to adjustment during designated peak periods (e.g., Diwali, Christmas/New Year, regional festival weeks) or based on room upgrades.
-            </p>
-          </section>
-
-          <section>
-            <h2>3. Promotional Voucher Redemptions</h2>
-            <p>
-              For complimentary or promotional holiday gift vouchers:
-            </p>
-            <ul>
-              <li>The base room accommodation entitlement is complimentary for eligible adult travelers as specified on the voucher.</li>
-              <li>Statutory government taxes, resort utility maintenance charges (where applicable), and personal consumables (food, beverages, laundry, excursions) remain payable by the beneficiary.</li>
-              <li>A booking lead time of 15 to 21 business days is mandatory for voucher validation.</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>4. Payment Methods & Verification</h2>
-            <p>
-              Authorized payments to Galaxy Heritage World are accepted exclusively through registered corporate banking channels: NEFT/RTGS/IMPS, UPI, and official payment links to GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED accounts. Cash payments without an official receipt are strictly prohibited.
-            </p>
-          </section>
-
-          <section>
-            <h2>5. Refund & Cancellation Terms</h2>
-            <p>
-              Refunds and cancellations are governed by the specific terms signed in your vacation agreement. In all eligible cases, approved refunds are processed via direct bank transfer within 14 to 21 business days following receipt of complete verification documentation.
-            </p>
-          </section>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link href="/contact" className="link-arrow text-sm">
-            <span>Have a billing or pricing query? Contact our finance desk &rarr;</span>
-          </Link>
+          {SECTIONS.map((s) => (
+            <section key={s.title}>
+              <h2>{s.title}</h2>
+              {s.text && <p>{s.text}</p>}
+              {s.items && (
+                <ul>
+                  {s.items.map((i) => (
+                    <li key={i}>{i}</li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          ))}
+          <p>For any pricing inquiries, feel free to contact our customer support team.</p>
         </div>
       </div>
     </div>
