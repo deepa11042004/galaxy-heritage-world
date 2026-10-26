@@ -40,25 +40,6 @@ const Video = ({ src, label, className }: { src: string; label: string; classNam
   </div>
 );
 
-const Caption = ({ r }: { r: Review }) => (
-  <figcaption className="px-2.5 pt-4 pb-2">
-    <div className="flex flex-wrap items-center gap-2">
-      <h3 className="text-lg font-semibold tracking-tight text-ink">{r.name}</h3>
-      {r.note && <span className="pill-accent">{r.note}</span>}
-    </div>
-    <dl className="mt-2 space-y-1 text-xs text-ink-muted">
-      <div className="flex gap-1.5">
-        <dt className="font-semibold text-ink">Joined:</dt>
-        <dd>{r.joined}</dd>
-      </div>
-      <div className="flex gap-1.5">
-        <dt className="font-semibold text-ink">Consultant:</dt>
-        <dd>{r.consultant}</dd>
-      </div>
-    </dl>
-  </figcaption>
-);
-
 export default function TestimonialsPage() {
   return (
     <div>
@@ -90,7 +71,6 @@ export default function TestimonialsPage() {
           {REVIEWS.slice(0, 3).map((r) => (
             <figure key={r.name} className="card p-2.5">
               <Video src={r.video} label={`Review by ${r.name}`} className="aspect-[9/16]" />
-              <Caption r={r} />
             </figure>
           ))}
         </div>
@@ -98,7 +78,6 @@ export default function TestimonialsPage() {
         {REVIEWS.slice(3).map((r) => (
           <figure key={r.name} className="card mx-auto mt-5 max-w-5xl p-2.5">
             <Video src={r.video} label={`Review by ${r.name}`} className="aspect-video" />
-            <Caption r={r} />
           </figure>
         ))}
 

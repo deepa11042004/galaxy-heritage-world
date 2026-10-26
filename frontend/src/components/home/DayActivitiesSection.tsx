@@ -43,7 +43,7 @@ export function DayActivitiesSection({ activities }: { activities: ActivityItem[
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {activities.slice(0, 4).map((act) => (
-            <Link key={act.id} href={`/day-activities/${act.slug}`} className="card card-hover group flex flex-col p-2.5">
+            <Link key={act.id} href={`/day-activities#${act.slug}`} className="card card-hover group flex flex-col p-2.5">
               <div className="media-frame aspect-[4/3] rounded-[0.9rem]">
                 <Image
                   src={act.imageUrl || '/media/galaxy-heritage-world/day-activities/images/madhavgarh.webp'}
@@ -73,7 +73,7 @@ export function DayActivitiesSection({ activities }: { activities: ActivityItem[
                     <span>{act.durationLabel}</span>
                   </div>
                   <span className="font-semibold text-ink transition-colors group-hover:text-accent-strong">
-                    Book &rarr;
+                    View &rarr;
                   </span>
                 </div>
               </div>

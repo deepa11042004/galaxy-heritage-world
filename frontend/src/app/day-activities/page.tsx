@@ -112,7 +112,7 @@ export default async function DayActivitiesPage() {
             </p>
           </div>
           {featured.map((farm) => (
-            <div key={farm.id} className="card border-2 !border-accent p-3 sm:p-4">
+            <div key={farm.id} id={farm.slug} className="scroll-mt-32 card border-2 !border-accent p-3 sm:p-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <div className="space-y-4 p-4 sm:p-6">
                   <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
@@ -151,7 +151,7 @@ export default async function DayActivitiesPage() {
             </div>
             <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
               {sec.items.map((act: any) => (
-                <div key={act.id} className="group flex flex-col">
+                <div key={act.id} id={act.slug} className="group flex scroll-mt-32 flex-col">
                   <Link href={`/day-activities/${act.slug}`} className="block">
                   <div className="media-frame aspect-[4/3]">
                     <Image
