@@ -23,11 +23,12 @@ export default function ReferralProgramPage() {
   return (
     <div>
       <PageHero
+        tone="orange"
         icon={Gift}
         eyebrow="Rewards"
         title={
           <>
-            Referral <span className="text-ink-muted">Program</span>
+            Referral <span className="text-ink/70">Program</span>
           </>
         }
       />

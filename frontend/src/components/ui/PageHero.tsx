@@ -28,6 +28,8 @@ interface PageHeroProps {
   children?: React.ReactNode;
   /** Plain variant only: allow a wider title block for long headlines. */
   wide?: boolean;
+  /** Plain / illustration variants: background tint of the header block. */
+  tone?: 'grey' | 'orange';
   className?: string;
 }
 
@@ -45,8 +47,10 @@ export function PageHero({
   meta,
   children,
   wide,
+  tone = 'grey',
   className,
 }: PageHeroProps) {
+  const toneBg = tone === 'orange' ? 'bg-[#FFA500]' : 'bg-surface';
   if (image) {
     return (
       <section className={cn('hero-frame-wrap', className)}>
@@ -98,7 +102,7 @@ export function PageHero({
   if (illustration) {
     return (
       <section className={cn('hero-frame-wrap', className)}>
-        <div className="relative overflow-hidden rounded-hero bg-surface">
+        <div className={cn('relative overflow-hidden rounded-hero', toneBg)}>
           <div className="container-page grid items-center gap-8 pb-12 pt-[calc(var(--nav-h)+2rem)] sm:pb-16 sm:pt-[calc(var(--nav-h)+3rem)] lg:grid-cols-2 lg:gap-12">
             <div className="text-center lg:text-left">
               {eyebrow && (
@@ -108,7 +112,7 @@ export function PageHero({
                 </div>
               )}
               <h1 className="heading-page">{title}</h1>
-              {subtitle && <p className="mt-5 max-w-2xl text-sm leading-relaxed text-ink-muted sm:text-base">{subtitle}</p>}
+              {subtitle && <p className={cn('mt-5 max-w-2xl text-sm leading-relaxed sm:text-base', tone === 'orange' ? 'text-ink/80' : 'text-ink-muted')}>{subtitle}</p>}
               {children}
             </div>
             <div className="relative mx-auto aspect-[13/10] w-full max-w-lg">
@@ -131,7 +135,7 @@ export function PageHero({
 
   return (
     <section className={cn('hero-frame-wrap', className)}>
-      <div className="relative overflow-hidden rounded-hero bg-surface">
+      <div className={cn('relative overflow-hidden rounded-hero', toneBg)}>
         <div className="container-page pb-14 pt-[calc(var(--nav-h)+2rem)] text-center sm:pb-20 sm:pt-[calc(var(--nav-h)+3.5rem)]">
           <div className={cn('mx-auto', wide ? 'max-w-5xl' : 'max-w-3xl')}>
             {eyebrow && (
