@@ -229,7 +229,7 @@ export default function MembershipPage() {
             Your home <span className="text-ink-muted">away from home</span>
           </h2>
         </div>
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2">
           {ROOMS.map((r) => (
             <div key={r.name} className="card overflow-hidden p-0">
               <RoomVideo src={r.video} poster={r.poster} label={r.label} />

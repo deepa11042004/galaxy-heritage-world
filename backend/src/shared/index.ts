@@ -116,7 +116,7 @@ export const DestinationSchema = z.object({
 
 /** Stay categories a property can be listed under (mirrors frontend/src/lib/stays.ts). */
 export const STAY_TYPE_SLUGS = [
-  'villas', 'treehouses', 'domes', 'igloos', 'cabins', 'tenthouses', 'hotels', 'resorts', 'apartments', 'vacation-homes',
+  'villas', 'treehouses', 'domes', 'igloos', 'cabins', 'tenthouses', 'cottages', 'boathouses', 'camp-nights', 'hotels', 'resorts', 'apartments', 'vacation-homes',
   'beach-houses', 'glass-cabins', 'houseboats', 'overwater-bungalows', 'glamping', 'eco-lodges', 'farm-stays',
   'desert-camps', 'cave-hotels', 'heritage-homes', 'castles', 'tiny-homes', 'floating-villas', 'wellness-retreats',
 ] as const;

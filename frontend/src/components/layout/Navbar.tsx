@@ -227,7 +227,7 @@ export function Navbar() {
               </div>
 
               <Link href="/day-activities" className={navLinkClass(pathname.startsWith('/day-activities'))}>
-                Day Outings
+                Daycations
               </Link>
 
               <Link href="/itineraries" className={navLinkClass(pathname.startsWith('/itineraries'))}>
@@ -300,7 +300,7 @@ export function Navbar() {
                   Stays
                 </Link>
                 <Link href="/day-activities" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Day Outings & Water Parks
+                  Daycations & Water Parks
                 </Link>
 
                 <Link href="/itineraries" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">

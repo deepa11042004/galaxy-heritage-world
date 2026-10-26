@@ -10,12 +10,15 @@ import type { StayType } from '@/lib/stays';
 /** Filter chips: a chip shows only the stay type with the same slug. */
 const FILTERS = [
   { label: 'All Stays', slug: '' },
-  { label: 'Villas', slug: 'villas' },
+  { label: 'Hotel', slug: 'hotels' },
+  { label: 'Resort', slug: 'resorts' },
+  { label: 'Cottage', slug: 'cottages' },
+  { label: 'Villa', slug: 'villas' },
   { label: 'Treehouse', slug: 'treehouses' },
+  { label: 'Boathouse', slug: 'boathouses' },
   { label: 'Domes', slug: 'domes' },
-  { label: 'Igloos', slug: 'igloos' },
-  { label: 'Cabin', slug: 'cabins' },
-  { label: 'Tenthouse', slug: 'tenthouses' },
+  { label: 'Farm House', slug: 'farm-stays' },
+  { label: 'Camp Night', slug: 'camp-nights' },
 ];
 
 export function StaysExplorer({ stays, counts }: { stays: StayType[]; counts: Record<string, number> }) {
