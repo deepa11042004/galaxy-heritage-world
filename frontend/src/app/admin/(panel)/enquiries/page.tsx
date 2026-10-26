@@ -19,6 +19,7 @@ const FORMS: { label: string; path: string }[] = [
   { label: 'Home page enquiry', path: '/' },
   { label: 'Contact page', path: '/contact' },
   { label: 'Travel Desk', path: '/travel-desk' },
+  { label: 'Referral program', path: '/referral-program' },
   { label: 'Complaints & feedback', path: '/reviews-and-complaints' },
 ];
 const formName = (src?: string | null) => FORMS.find((f) => (f.path === '/' ? src === '/' : src?.startsWith(f.path)))?.label ?? (src || 'Website');

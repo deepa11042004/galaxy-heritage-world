@@ -113,6 +113,11 @@ export function Footer() {
                     Client Testimonials
                   </Link>
                 </li>
+                <li>
+                  <Link href="/referral-program" className={footerLink}>
+                    Referral Program
+                  </Link>
+                </li>
               </ul>
             </div>
 
