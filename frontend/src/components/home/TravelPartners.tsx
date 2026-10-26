@@ -18,6 +18,9 @@ const PARTNERS = [
   { name: 'IndiGo', logo: 'indigo' },
 ];
 
+const ROW_ONE = PARTNERS.slice(0, 6);
+const ROW_TWO = PARTNERS.slice(6);
+
 export function TravelPartners() {
   return (
     <section className="section section-pattern">
@@ -35,22 +38,33 @@ export function TravelPartners() {
           description="Our strong partnerships with leading travel, airline, and hospitality brands enable us to deliver reliable services and exceptional experiences at every step of your journey."
         />
 
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4">
-          {PARTNERS.map((p) => (
-            <li key={p.name} className="card flex items-center justify-center p-4">
-              <div className="relative h-16 w-full sm:h-20">
-                <Image
-                  src={`/media/partners/${p.logo}.png`}
-                  alt={p.name}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 16vw"
-                  quality={90}
-                />
+        <div className="space-y-4 [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]">
+          {[ROW_ONE, ROW_TWO].map((row, r) => (
+            <div key={r} className="overflow-hidden">
+              <div className={r === 0 ? 'animate-marquee' : 'animate-marquee-reverse'}>
+                {/* The strip is rendered four times (two per half) so the -50% loop is seamless on wide screens; copies are hidden from screen readers */}
+                {[0, 1, 2, 3].map((copy) => (
+                  <ul key={copy} className="flex shrink-0 gap-4 pr-4" aria-hidden={copy > 0 || undefined}>
+                    {row.map((p) => (
+                      <li key={p.name} className="card flex h-24 w-44 shrink-0 items-center justify-center p-3 sm:h-28 sm:w-52">
+                        <div className="relative h-full w-full">
+                          <Image
+                            src={`/media/partners/${p.logo}.png`}
+                            alt={copy === 0 ? p.name : ''}
+                            fill
+                            className="object-contain"
+                            sizes="208px"
+                            quality={90}
+                          />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

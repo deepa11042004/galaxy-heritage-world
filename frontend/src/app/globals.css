@@ -353,6 +353,17 @@
   animation-play-state: paused;
 }
 
+/* Same strip running the other way (second row of the partner slider) */
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite reverse;
+}
+
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
