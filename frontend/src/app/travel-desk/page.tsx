@@ -190,7 +190,7 @@ export default function TravelDeskPage() {
       <section className="container-page section section-plain">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-medium tracking-tight text-ink sm:text-4xl">
-            Expeditions Expertise <span className="text-ink-muted">at Your Service</span>
+            Being a package holder <span className="text-ink-muted">get a special discount</span>
           </h2>
           <Link href="/contact" className={cn(buttonVariants({ size: 'lg' }), 'mt-7')}>
             <span>Contact Us</span>

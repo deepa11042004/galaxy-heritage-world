@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AlertCircle, Building2, Car, CheckCircle2, FileText, MapPin, Plane, Search, Truck, Calendar } from 'lucide-react';
+import { AlertCircle, Car, CheckCircle2, FileText, MapPin, Plane, Search, Truck, Calendar } from 'lucide-react';
 import { submitEnquiry } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
@@ -47,23 +47,6 @@ const TABS: Tab[] = [
       { name: 'return', label: 'Return', type: 'date', icon: 'date' },
       { name: 'passengers', label: 'Passengers', type: 'number', min: 1, placeholder: '1' },
       { name: 'cabin', label: 'Cabin', type: 'select', options: ['Economy', 'Premium Economy', 'Business', 'First'] },
-    ],
-  },
-  {
-    id: 'hotels',
-    label: 'Hotels',
-    icon: Building2,
-    heading: 'Find Hotels & Resorts',
-    button: 'Search Hotels',
-    destination: 'city',
-    dates: ['checkin', 'checkout'],
-    travelers: 'guests',
-    fields: [
-      { name: 'city', label: 'City / Destination', placeholder: 'Where are you staying?', icon: 'pin', required: true },
-      { name: 'checkin', label: 'Check-in', type: 'date', icon: 'date', required: true },
-      { name: 'checkout', label: 'Check-out', type: 'date', icon: 'date', required: true },
-      { name: 'guests', label: 'Guests', type: 'number', min: 1, placeholder: '2' },
-      { name: 'rooms', label: 'Rooms', type: 'number', min: 1, placeholder: '1' },
     ],
   },
   {
