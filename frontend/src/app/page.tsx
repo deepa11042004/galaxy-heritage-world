@@ -13,7 +13,6 @@ import {
   getHotels,
   getHotelFilters,
   getActivities,
-  getTestimonials,
 } from '@/lib/api';
 
 export const revalidate = 60; // ISR cache every 60 seconds
@@ -25,13 +24,11 @@ export default async function HomePage() {
     packagesRes,
     hotelsRes,
     activitiesRes,
-    testimonialsRes,
   ] = await Promise.allSettled([
     getHotelFilters(),
     getPackages(),
     getHotels({ limit: 6, imported: true }),
     getActivities(),
-    getTestimonials(),
   ]);
 
   const destinations =
@@ -42,8 +39,6 @@ export default async function HomePage() {
     hotelsRes.status === 'fulfilled' ? hotelsRes.value.data || [] : [];
   const activities =
     activitiesRes.status === 'fulfilled' ? activitiesRes.value.data || [] : [];
-  const testimonials =
-    testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data || [] : [];
 
   return (
     <div className="flex flex-col">
@@ -54,7 +49,7 @@ export default async function HomePage() {
       <ResortShowcase hotels={hotels} />
       <DayActivitiesSection activities={activities} />
       <TravelPartners />
-      <TestimonialsSection testimonials={testimonials} />
+      <TestimonialsSection />
       <EnquiryFormSection />
     </div>
   );
