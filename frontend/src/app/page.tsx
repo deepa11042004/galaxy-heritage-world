@@ -7,14 +7,12 @@ import { WhyChooseUs } from '@/components/home/WhyChooseUs';
 import { DayActivitiesSection } from '@/components/home/DayActivitiesSection';
 import { TravelPartners } from '@/components/home/TravelPartners';
 import { TestimonialsSection } from '@/components/home/TestimonialsSection';
-import { FaqSection } from '@/components/home/FaqSection';
 import { EnquiryFormSection } from '@/components/home/EnquiryFormSection';
 import {
   getPackages,
   getHotels,
   getHotelFilters,
   getActivities,
-  getFaqs,
   getTestimonials,
 } from '@/lib/api';
 
@@ -27,14 +25,12 @@ export default async function HomePage() {
     packagesRes,
     hotelsRes,
     activitiesRes,
-    faqsRes,
     testimonialsRes,
   ] = await Promise.allSettled([
     getHotelFilters(),
     getPackages(),
     getHotels({ limit: 6, imported: true }),
     getActivities(),
-    getFaqs(),
     getTestimonials(),
   ]);
 
@@ -46,8 +42,6 @@ export default async function HomePage() {
     hotelsRes.status === 'fulfilled' ? hotelsRes.value.data || [] : [];
   const activities =
     activitiesRes.status === 'fulfilled' ? activitiesRes.value.data || [] : [];
-  const faqs =
-    faqsRes.status === 'fulfilled' ? faqsRes.value.data || [] : [];
   const testimonials =
     testimonialsRes.status === 'fulfilled' ? testimonialsRes.value.data || [] : [];
 
@@ -61,7 +55,6 @@ export default async function HomePage() {
       <DayActivitiesSection activities={activities} />
       <TravelPartners />
       <TestimonialsSection testimonials={testimonials} />
-      <FaqSection faqs={faqs} />
       <EnquiryFormSection />
     </div>
   );
