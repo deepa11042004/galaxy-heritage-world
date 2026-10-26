@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, ArrowRight, Sparkles } from 'lucide-react';
@@ -15,13 +15,11 @@ interface CityItem {
   imageUrl: string | null;
 }
 
-export function DestinationShowcase({ destinations }: { destinations: CityItem[] }) {
-  const [filter, setFilter] = useState<'ALL' | 'DOMESTIC' | 'INTERNATIONAL'>('ALL');
+/** The three destinations featured on the home page, in this order (live hotel data: count, photo, link). */
+const FEATURED = ['Dubai', 'Bali', 'Switzerland'] as const;
 
-  const filtered = destinations.filter((d) => {
-    if (filter === 'ALL') return true;
-    return d.locationType === filter;
-  });
+export function DestinationShowcase({ destinations }: { destinations: CityItem[] }) {
+  const featured = FEATURED.map((name) => destinations.find((d) => d.location === name)).filter((d): d is CityItem => Boolean(d));
 
   return (
     <section className="section section-pattern">
@@ -34,40 +32,12 @@ export function DestinationShowcase({ destinations }: { destinations: CityItem[]
               Featured Travel <span className="text-ink-muted">Destinations</span>
             </>
           }
-          description="From sun-kissed beaches in Goa to the royal palaces of Rajasthan and snow-capped peaks of Himachal Pradesh."
-          actions={
-            <div className="segmented">
-              <button
-                type="button"
-                onClick={() => setFilter('ALL')}
-                data-active={filter === 'ALL'}
-                className="segmented-item"
-              >
-                All
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilter('DOMESTIC')}
-                data-active={filter === 'DOMESTIC'}
-                className="segmented-item"
-              >
-                Domestic
-              </button>
-              <button
-                type="button"
-                onClick={() => setFilter('INTERNATIONAL')}
-                data-active={filter === 'INTERNATIONAL'}
-                className="segmented-item"
-              >
-                International
-              </button>
-            </div>
-          }
+          description="From the glittering skyline of Dubai to the temples and beaches of Bali and the Alpine peaks of Switzerland."
         />
 
         {/* Destination Grid */}
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {[...filtered].sort((x, y) => y.count - x.count).slice(0, 6).map((dest) => (
+          {featured.map((dest) => (
             <Link
               key={`${dest.locationType}-${dest.location}`}
               href={`/hotels-resorts?type=${dest.locationType ?? ''}&location=${encodeURIComponent(dest.location)}`}
