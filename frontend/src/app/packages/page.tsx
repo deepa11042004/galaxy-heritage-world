@@ -68,6 +68,15 @@ const PLANS = [
   },
 ];
 
+const PACKAGE_TERMS = [
+  'All govt taxes are levied extra.',
+  'Additional Package cost applicable for availing Internal and International Exchange System. Exchange fees as applicable.',
+  'All prices are for the respective seasons that varies based on the place and time of travel.',
+  'Prices are subject to change without prior notice.',
+  'Mode of payment Draft, Cheque or Credit Card in Favor of GHW Hospitality Private Limited.',
+  'In addition to the prices mentioned above, the purchaser would have to pay variable charge every year (irrespective of the usage). Variable Charges fee is inclusive of GST 18%.',
+];
+
 const ROOMS = [
   {
     guests: '2 Adults · 2 Children',
@@ -215,6 +224,20 @@ export default function MembershipPage() {
               </Link>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Package terms */}
+      <section className="container-page section">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+            Terms &amp; Conditions <span className="text-ink-muted">of GHW Travel</span>
+          </h2>
+          <ul className="mt-6 list-disc space-y-2 pl-5 text-sm leading-relaxed text-ink-muted sm:text-base">
+            {PACKAGE_TERMS.map((t) => (
+              <li key={t}>{t}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
