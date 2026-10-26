@@ -15,8 +15,8 @@ interface CityItem {
   imageUrl: string | null;
 }
 
-/** The three destinations featured on the home page, in this order (live hotel data: count, photo, link). */
-const FEATURED = ['Dubai', 'Bali', 'Switzerland'] as const;
+/** Destinations featured on the home page, in this order (live hotel data: count, photo, link). */
+const FEATURED = ['Dubai', 'Bali', 'Switzerland', 'Goa', 'Kerala', 'Manali'] as const;
 
 export function DestinationShowcase({ destinations }: { destinations: CityItem[] }) {
   const featured = FEATURED.map((name) => destinations.find((d) => d.location === name)).filter((d): d is CityItem => Boolean(d));
@@ -32,7 +32,7 @@ export function DestinationShowcase({ destinations }: { destinations: CityItem[]
               Featured Travel <span className="text-ink-muted">Destinations</span>
             </>
           }
-          description="From the glittering skyline of Dubai to the temples and beaches of Bali and the Alpine peaks of Switzerland."
+          description="From the skyline of Dubai and the Alpine peaks of Switzerland to the beaches of Goa, the backwaters of Kerala and the Himalayan valleys of Manali."
         />
 
         {/* Destination Grid */}
