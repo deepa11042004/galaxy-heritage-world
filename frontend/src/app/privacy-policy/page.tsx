@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
             <ul>
               <li>Contact details: Name, Email Address, Mobile/Telephone Number, City of Residence.</li>
               <li>Vacation preferences: Destination interests, travel dates, travelers count, special requests.</li>
-              <li>Verification identifiers: Voucher codes, membership numbers, and reservation reference numbers.</li>
+              <li>Verification identifiers: Voucher codes, booking numbers, and reservation reference numbers.</li>
             </ul>
           </section>
 

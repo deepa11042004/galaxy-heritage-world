@@ -5,7 +5,7 @@ import { PageHero } from '@/components/ui/PageHero';
 export const metadata = {
   title: 'Terms & Conditions | Galaxy Heritage World',
   description:
-    'Terms of service, membership rules, booking conditions, and legal terms of Galaxy Heritage World.',
+    'Terms of service, package rules, booking conditions, and legal terms of Galaxy Heritage World.',
 };
 
 export default function TermsConditionsPage() {
@@ -27,7 +27,7 @@ export default function TermsConditionsPage() {
           <section>
             <h2>1. Acceptance of Terms</h2>
             <p>
-              By accessing this website (galaxyheritageworld.com) or availing any travel booking, membership, voucher redemption, or concierge services offered by <strong>GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED</strong> (CIN: U74999DL2022PTC407515), you agree to be bound by these Terms and Conditions and our Grievance Escalation Policy.
+              By accessing this website (galaxyheritageworld.com) or availing any travel booking, package, voucher redemption, or concierge services offered by <strong>GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED</strong> (CIN: U74999DL2022PTC407515), you agree to be bound by these Terms and Conditions and our Grievance Escalation Policy.
             </p>
           </section>
 

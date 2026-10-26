@@ -27,7 +27,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
               Memories Made With <span className="text-ink-muted">Galaxy Heritage</span>
             </>
           }
-          description="Authentic experiences shared by our holiday members across India."
+          description="Authentic experiences shared by our holiday guests across India."
         />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
@@ -54,7 +54,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
               <div className="mt-8 flex flex-wrap items-end justify-between gap-3 border-t border-ink/15 pt-5">
                 <div>
                   <h4 className="text-sm font-semibold text-ink">{item.customerName}</h4>
-                  <div className="text-xs text-ink/70">{item.customerLocation || 'Member, India'}</div>
+                  <div className="text-xs text-ink/70">{item.customerLocation || 'Traveller, India'}</div>
                 </div>
 
                 {item.tripTitle && (

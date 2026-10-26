@@ -16,7 +16,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export const metadata = {
-  title: 'Membership | Galaxy Heritage World',
+  title: 'Packages | Galaxy Heritage World',
   description:
     'Galaxy Heritage Club gives privileged access to 140+ premium resorts with 6 nights / 7 days of holidays every year. Choose the Silver, Gold or Platinum Key.',
 };
@@ -24,7 +24,7 @@ export const metadata = {
 const PRIVILEGES = [
   { text: '6N/7D a year, your way', image: '/media/membership/privilege-holiday.jpg', alt: 'Infinity pool and loungers beside a turquoise lagoon' },
   { text: 'Future-proof pricing', image: '/media/membership/privilege-family.jpg', alt: 'A parent and child walking along the shoreline at sunset' },
-  { text: 'Spacious suites for stays', image: '/media/membership/privilege-suite.jpg', alt: 'Spacious suite with a canopy bed' },
+  { text: 'Spacious family rooms for stays', image: '/media/membership/privilege-suite.jpg', alt: 'Spacious suite with a canopy bed' },
   { text: 'Unique family experiences', image: '/media/membership/privilege-tea-garden.jpg', alt: 'Green tea gardens below a rocky mountain in Munnar' },
   { text: '140+ resorts in India and abroad', image: '/media/membership/privilege-resorts.jpg', alt: 'Overwater villas on a turquoise lagoon' },
 ];
@@ -93,7 +93,7 @@ const TENETS = [
     image: '/media/membership/tenet-1.jpg',
     alt: 'Cottages and a restaurant among palm trees at a Goa beach resort',
     items: [
-      'Your membership gives you 6 nights/7 days of holidays every year. If you miss your vacation, you can carry forward up to 14 nights.',
+      'Your package gives you 6 nights/7 days of holidays every year. If you miss your vacation, you can carry forward up to 14 nights.',
       'Breakfast is on us. Other meals come with special savings.',
       'Protect your long-term holiday goals with future-proof pricing.',
       'Pick a plan based on your preferences with three unique Keys and flexible tenures.',
@@ -115,8 +115,8 @@ const TENETS = [
     alt: 'Resort pool surrounded by forest',
     items: [
       'You can start booking your holidays up to 4 months in advance. All bookings are confirmed on a first-come, first-served basis.',
-      'The number of rooms you can book and the seasons you travel in are based on your membership plan.',
-      'Your membership unlocks thoughtfully crafted experiences for you and your loved ones.',
+      'The number of rooms you can book and the seasons you travel in are based on your package plan.',
+      'Your package unlocks thoughtfully crafted experiences for you and your loved ones.',
     ],
   },
   {
@@ -126,15 +126,15 @@ const TENETS = [
     items: [
       'Book your stays up to 4 months in advance with guaranteed confirmation.',
       'Flexible carry-forward options for unused nights, ensuring your time is never wasted.',
-      'Easy modification and cancellation policies tailored specifically for members.',
+      'Easy modification and cancellation policies tailored specifically for our guests.',
     ],
   },
   {
-    title: 'Exclusive Member Events',
+    title: 'Exclusive Guest Events',
     image: '/media/membership/tenet-5.jpg',
     alt: 'Grand ballroom set with round banquet tables',
     items: [
-      'Invitations to private, members-only events and exclusive culinary experiences.',
+      'Invitations to private, guest-only events and exclusive culinary experiences.',
       'Early access to new resort openings and special seasonal holiday packages.',
       'Curated local experiences and guided tours at select premium destinations.',
     ],
@@ -144,7 +144,7 @@ const TENETS = [
     image: '/media/membership/tenet-6.jpg',
     alt: 'Ornate hotel reception desk',
     items: [
-      '24/7 dedicated member support for all your travel and booking needs.',
+      '24/7 dedicated guest support for all your travel and booking needs.',
       'Personalized itinerary planning and special request handling before your stay.',
       'Priority assistance for flight, transfer, and premium activity bookings.',
     ],
@@ -179,7 +179,7 @@ export default function MembershipPage() {
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <div className="eyebrow mx-auto">
             <Crown />
-            <span>Membership Plans</span>
+            <span>Package Plans</span>
           </div>
           <h2 className="mt-4 text-3xl font-medium tracking-tight text-ink sm:text-4xl">
             Your Key to Unlock <span className="text-ink-muted">Privileged Experiences</span>
@@ -208,7 +208,7 @@ export default function MembershipPage() {
               </ul>
 
               <Link
-                href={`/membership/plans#${p.key.toLowerCase()}`}
+                href={`/packages/plans#${p.key.toLowerCase()}`}
                 className={cn('mt-8 block rounded-xl px-4 py-3 text-center text-sm font-semibold transition-colors', p.button)}
               >
                 Join Now
@@ -251,7 +251,7 @@ export default function MembershipPage() {
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <div className="eyebrow mx-auto">
             <Sparkles />
-            <span>Memberships | Key Tenets</span>
+            <span>Packages | Key Tenets</span>
           </div>
           <h2 className="mt-4 text-3xl font-medium tracking-tight text-ink sm:text-4xl">
             Key <span className="text-ink-muted">Tenets</span>
@@ -269,7 +269,7 @@ export default function MembershipPage() {
             Talk to our team about the right Key for you and your family.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/membership/plans" className={buttonVariants({ size: 'lg' })}>
+            <Link href="/packages/plans" className={buttonVariants({ size: 'lg' })}>
               <span>Join Now</span>
               <ArrowRight />
             </Link>

@@ -6,7 +6,7 @@ import { PlansBrowser } from '@/components/membership/PlansBrowser';
 import { buttonVariants } from '@/components/ui/button';
 
 export const metadata = {
-  title: 'Membership Plans | Galaxy Heritage World',
+  title: 'Package Plans | Galaxy Heritage World',
   description:
     'Compare every Galaxy Heritage Club plan: Silver, Gold and Platinum Keys across 5, 10, 15 and 20 year tenures, with total cost and EMI.',
 };
@@ -17,7 +17,7 @@ export default function MembershipPlansPage() {
       <PageHero
         image={{
           src: '/media/hero/membership-plans-header.jpg',
-          alt: 'Two hands exchanging a membership card with a city skyline behind',
+          alt: 'Two hands exchanging a package card with a city skyline behind',
           position: 'center 45%',
         }}
         meta={
@@ -35,8 +35,8 @@ export default function MembershipPlansPage() {
       />
 
       <section className="container-page section pb-28">
-        <Link href="/membership" className="mb-6 inline-flex items-center gap-1.5 text-xs font-semibold text-ink-muted hover:text-ink">
-          <ArrowLeft className="size-3.5" /> Back to membership
+        <Link href="/packages" className="mb-6 inline-flex items-center gap-1.5 text-xs font-semibold text-ink-muted hover:text-ink">
+          <ArrowLeft className="size-3.5" /> Back to packages
         </Link>
 
         <div className="mx-auto max-w-5xl rounded-hero bg-white p-4 sm:p-8 lg:p-10">
@@ -54,7 +54,7 @@ export default function MembershipPlansPage() {
           <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
             Talk to our team and we will recommend the right plan for your family.
           </p>
-          <Link href="/contact?membership=enquiry" className={`${buttonVariants({ size: 'lg' })} mt-6`}>
+          <Link href="/contact?package=enquiry" className={`${buttonVariants({ size: 'lg' })} mt-6`}>
             <span>Talk to Us</span>
             <ArrowRight />
           </Link>

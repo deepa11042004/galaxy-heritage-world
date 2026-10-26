@@ -88,7 +88,7 @@ export function Navbar() {
               className="flex items-center gap-1 font-semibold text-ink transition-colors hover:text-accent-strong"
             >
               <User className="h-3.5 w-3.5" />
-              <span>Member Login</span>
+              <span>Customer Login</span>
             </Link>
           </div>
         </div>
@@ -167,8 +167,8 @@ export function Navbar() {
                 )}
               </div>
 
-              <Link href="/membership" className={navLinkClass(pathname.startsWith('/membership'))}>
-                Membership
+              <Link href="/packages" className={navLinkClass(pathname.startsWith('/packages'))}>
+                Packages
               </Link>
 
               {/* Hotels & Resorts Dropdown */}
@@ -296,8 +296,8 @@ export function Navbar() {
                 <Link href="/hotels-resorts" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Hotels & Resorts (1000+ Properties)
                 </Link>
-                <Link href="/membership" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
-                  Membership
+                <Link href="/packages" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
+                  Packages
                 </Link>
                 <Link href="/stays" className="rounded-xl px-3 py-2.5 transition-colors hover:bg-surface">
                   Stays

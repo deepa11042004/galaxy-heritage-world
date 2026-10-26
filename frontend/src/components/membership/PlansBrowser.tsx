@@ -75,7 +75,7 @@ function PlanCard({ plan, style }: { plan: Plan; style: TierStyle }) {
         </div>
 
         <Link
-          href={`/contact?membership=${plan.id}`}
+          href={`/contact?package=${plan.id}`}
           className={cn('mt-6 flex w-full items-center justify-center rounded-full border px-4 py-2.5 text-xs font-semibold transition-colors', style.button)}
         >
           Buy Now

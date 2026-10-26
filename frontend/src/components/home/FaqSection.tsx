@@ -32,7 +32,7 @@ export function FaqSection({ faqs }: { faqs: FaqItem[] }) {
               Frequently Asked <span className="text-ink-muted">Questions</span>
             </>
           }
-          description="Clear, transparent answers to questions regarding your holiday bookings, memberships, and resort stays."
+          description="Clear, transparent answers to questions regarding your holiday bookings, packages, and resort stays."
         />
 
         <div className="space-y-3">

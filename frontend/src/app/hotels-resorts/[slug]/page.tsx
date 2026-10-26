@@ -167,7 +167,7 @@ export default async function HotelDetailPage({
             <div className="card sticky top-[calc(var(--header-h)+1rem)] p-6 shadow-[0_24px_60px_-36px_rgba(14,14,14,0.3)] sm:p-7">
               <div className="eyebrow mb-4">
                 <Sparkles />
-                <span>Member Privileges</span>
+                <span>Guest Privileges</span>
               </div>
               <h3 className="mb-2 text-xl font-semibold text-ink">Reserve Stay at {hotel.name}</h3>
               <p className="mb-6 text-sm leading-relaxed text-ink-muted">

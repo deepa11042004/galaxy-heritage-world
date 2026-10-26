@@ -48,7 +48,7 @@ export function Footer() {
                 />
               </span></Link>
               <p className="max-w-sm text-sm leading-relaxed text-ink-muted">
-                Galaxy Heritage World is India&apos;s premier luxury holiday and hospitality membership provider, delivering bespoke vacations, verified 4-star and 5-star associated resorts, and memorable family getaways across India and international destinations.
+                Galaxy Heritage World is India&apos;s premier luxury holiday and hospitality package provider, delivering bespoke vacations, verified 4-star and 5-star associated resorts, and memorable family getaways across India and international destinations.
               </p>
               <div className="card max-w-sm space-y-1 bg-transparent p-4 text-xs text-ink-muted">
                 <div>
@@ -84,8 +84,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/membership" className={footerLink}>
-                    Membership
+                  <Link href="/packages" className={footerLink}>
+                    Packages
                   </Link>
                 </li>
                 <li>

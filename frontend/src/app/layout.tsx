@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     template: '%s | Galaxy Heritage World',
   },
   description:
-    'Experience bespoke vacations, 1000+ handpicked 4-star and 5-star partner resorts, and 100% transparent holiday memberships across Goa, Rajasthan, Himachal, Uttarakhand, and South India.',
+    'Experience bespoke vacations, 1000+ handpicked 4-star and 5-star partner resorts, and 100% transparent holiday packages across Goa, Rajasthan, Himachal, Uttarakhand, and South India.',
   keywords: [
     'Galaxy Heritage World',
     'luxury holidays India',
-    'resort membership',
+    'holiday packages',
     'Goa vacation packages',
     'Rajasthan heritage holidays',
     'associated resorts',

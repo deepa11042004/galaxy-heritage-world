@@ -12,7 +12,7 @@ export interface Plan {
   tier: TierKey;
   years: number;
   room: string;
-  /** total membership cost in rupees */
+  /** total package cost in rupees */
   total: number;
   /** EMI starting amount per month in rupees */
   emi: number;

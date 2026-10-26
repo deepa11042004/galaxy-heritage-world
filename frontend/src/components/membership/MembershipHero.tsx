@@ -60,7 +60,7 @@ function MembershipCard({ kind, className }: { kind: keyof typeof CARDS; classNa
       className={cn('relative aspect-[1.586/1] shrink-0 overflow-hidden rounded-[5%/8%] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)]', className)}
       style={{ background: c.surface, boxShadow: `inset 0 0 0 1px ${c.rim}, 0 30px 60px -20px rgba(0,0,0,0.85)`, containerType: 'inline-size' }}
       role="img"
-      aria-label={`Galaxy Heritage Club ${c.name} membership card`}
+      aria-label={`Galaxy Heritage Club ${c.name} package card`}
     >
       <Contours className="absolute inset-0 h-full w-full" lines={26} opacity={1} stroke={c.line} width={0.6} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(115deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 40%)' }} />
@@ -83,7 +83,7 @@ function MembershipCard({ kind, className }: { kind: keyof typeof CARDS; classNa
 }
 
 /**
- * Dark launch banner for the membership page: contour-line background, headline and the three membership cards
+ * Dark launch banner for the packages page: contour-line background, headline and the three package cards
  * (Gold, Silver, Platinum) overlapping with Silver in front.
  */
 export function MembershipHero() {
@@ -109,7 +109,7 @@ export function MembershipHero() {
           </div>
 
           <p className="mt-7 text-[9px] tracking-[0.3em] text-white/70 sm:mt-9 sm:text-[11px] sm:tracking-[0.4em]">
-            FIVE, TEN, FIFTEEN &amp; TWENTY YEAR MEMBERSHIPS
+            FIVE, TEN, FIFTEEN &amp; TWENTY YEAR PACKAGES
           </p>
           <div className="mt-4 h-px w-1/3 max-w-sm bg-gradient-to-r from-transparent via-white/70 to-transparent" />
         </div>

@@ -66,7 +66,7 @@ export default function LoginPage() {
             </div>
             <h1 className="text-2xl font-medium tracking-tight text-ink sm:text-3xl">Sign In to Portal</h1>
             <p className="mt-2 text-sm text-ink-muted">
-              Access staff administration, enquiries management, or member services
+              Access staff administration, enquiries management, or guest services
             </p>
           </div>
 

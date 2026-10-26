@@ -123,7 +123,7 @@ export default async function ActivityDetailPage({
               </div>
               <h3 className="mb-2 text-xl font-semibold text-ink">Book Entry Pass for {act.title}</h3>
               <p className="mb-6 text-sm leading-relaxed text-ink-muted">
-                Enjoy special member privileges, family package discounts, and guaranteed pass confirmation.
+                Enjoy special guest privileges, family package discounts, and guaranteed pass confirmation.
               </p>
 
               <div className="mb-6 space-y-3">

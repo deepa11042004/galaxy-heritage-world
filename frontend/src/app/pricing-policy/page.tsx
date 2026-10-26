@@ -20,7 +20,7 @@ export default function PricingPolicyPage() {
             Pricing & <span className="text-ink-muted">Tariff Policy</span>
           </>
         }
-        subtitle="Galaxy Heritage World operates with 100% price transparency across all holiday packages, memberships, and voucher redemptions."
+        subtitle="Galaxy Heritage World operates with 100% price transparency across all holiday packages and voucher redemptions."
       />
 
       <div className="container-narrow section">
@@ -28,7 +28,7 @@ export default function PricingPolicyPage() {
           <section>
             <h2>1. Currency & Taxes</h2>
             <p>
-              All package tariffs, membership fees, and administrative charges quoted on this website and in official communication are in <strong>Indian Rupees (INR)</strong>. Applicable Government Goods and Services Tax (GST) is levied in accordance with current statutory rates and explicitly itemized on official invoices.
+              All package tariffs and administrative charges quoted on this website and in official communication are in <strong>Indian Rupees (INR)</strong>. Applicable Government Goods and Services Tax (GST) is levied in accordance with current statutory rates and explicitly itemized on official invoices.
             </p>
           </section>
 

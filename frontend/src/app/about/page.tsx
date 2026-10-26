@@ -57,7 +57,7 @@ export default function AboutPage() {
 
             <ul className="space-y-4">
               <li>
-                <strong className="font-semibold text-ink">People</strong> – Dedicated professionals who believe in delivering warm, personalised service and building lasting relationships with our members.
+                <strong className="font-semibold text-ink">People</strong> – Dedicated professionals who believe in delivering warm, personalised service and building lasting relationships with our guests.
               </li>
               <li>
                 <strong className="font-semibold text-ink">Experiences</strong> – Thoughtfully curated holidays designed to inspire exploration, create meaningful connections, and turn every journey into a cherished memory.
@@ -175,11 +175,11 @@ export default function AboutPage() {
         <div className="flex flex-col items-center rounded-hero bg-[#575547] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
           <h2 className="heading-section mb-4 text-white">Ready to Plan Your Next Family Holiday?</h2>
           <p className="mb-8 max-w-lg text-sm text-white/70 sm:text-base">
-            Speak to our travel desk specialists or explore Galaxy Heritage Club membership today.
+            Speak to our travel desk specialists or explore Galaxy Heritage Club packages today.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Link href="/membership" className={buttonVariants({ size: 'lg' })}>
-              Explore Membership
+            <Link href="/packages" className={buttonVariants({ size: 'lg' })}>
+              Explore Packages
             </Link>
             <Link href="/contact" className={buttonVariants({ variant: 'ghostLight', size: 'lg' })}>
               Contact Travel Desk

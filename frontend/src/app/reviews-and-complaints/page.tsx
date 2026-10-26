@@ -55,7 +55,7 @@ const escalationLevels = [
 const grievanceFaqs = [
   {
     q: 'How do I lodge a formal complaint regarding my holiday booking?',
-    a: 'You can submit the online complaint form below or email us directly at info@galaxyheritageworld.com with your member ID, booking voucher code, and description. A unique reference code will be generated immediately.',
+    a: 'You can submit the online complaint form below or email us directly at info@galaxyheritageworld.com with your booking ID, booking voucher code, and description. A unique reference code will be generated immediately.',
   },
   {
     q: 'What is the required advance notice for voucher holiday reservations?',
