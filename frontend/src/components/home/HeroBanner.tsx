@@ -11,9 +11,21 @@ const heroSlides = [
     tag: 'Tropical Escapes',
   },
   {
+    src: '/media/hero/family-beach.jpg',
+    alt: 'A family holding hands and walking along a sunny beach with high-rise towers behind - Family Beach Holidays',
+    tag: 'Family Beach Holidays',
+    // keep the family's feet in frame: the wide header crops this photo top and bottom
+    position: 'center 92%',
+  },
+  {
     src: '/media/hero/tropical-pool-mountains.jpg',
     alt: 'Tropical resort pool beneath green mountains - Coastal Retreats',
     tag: 'Coastal Retreats',
+  },
+  {
+    src: '/media/hero/friends-hiking.jpg',
+    alt: 'Four friends laughing together on a mountain hike beneath rocky peaks - Adventure Escapes',
+    tag: 'Adventure Escapes',
   },
   {
     src: '/media/galaxy-heritage-world/faq/images/4900.jpg',
@@ -102,6 +114,7 @@ export function HeroBanner() {
                   className={`object-cover object-center transition-transform duration-[6000ms] ease-out ${
                     isActive ? 'scale-105' : 'scale-100'
                   }`}
+                  style={slide.position ? { objectPosition: slide.position } : undefined}
                   sizes="100vw"
                 />
               </div>
