@@ -155,7 +155,10 @@ export function HeroBanner() {
             <span className="text-accent" style={{ textShadow: headingShadow }}>
               India
             </span>{' '}
-            & The World
+            &amp;{' '}
+            <span className="text-accent" style={{ textShadow: headingShadow }}>
+              The World
+            </span>
           </h1>
 
           {/* Subtitle */}
