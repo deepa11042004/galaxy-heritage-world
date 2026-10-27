@@ -31,7 +31,7 @@ const Video = ({ src, label, className }: { src: string; label: string; classNam
   };
 
   return (
-    <div className={`group relative overflow-hidden rounded-2xl bg-ink ${className}`}>
+    <div className={`group relative overflow-hidden bg-ink ${className}`}>
       <video
         ref={ref}
         className="h-full w-full cursor-pointer object-contain"
@@ -118,7 +118,7 @@ export function TestimonialsSection() {
               <figure
                 key={v.src}
                 data-slide
-                className="card border-4 !border-divider shrink-0 basis-[80%] snap-start p-2.5 sm:basis-[calc((100%-1.25rem)/2)] lg:basis-[calc((100%-2.5rem)/3)]"
+                className="card shrink-0 basis-[68%] snap-start overflow-hidden border-4 !border-divider p-0 sm:basis-[calc((100%-1.25rem)/2)] md:basis-[calc((100%-2.5rem)/3)] lg:basis-[calc((100%-3.75rem)/4)]"
               >
                 <Video src={v.src} label={`Review by ${v.name}`} className="aspect-[9/16]" />
               </figure>
