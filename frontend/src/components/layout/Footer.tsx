@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Phone, Mail, MapPin, Send, ShieldCheck, CheckCircle, AlertCircle } from 'lucide-react';
 import { submitNewsletter } from '@/lib/api';
+import { PAY_NOW_URL } from '@/lib/payments';
 
 const footerLink = 'text-ink-muted transition-colors hover:text-ink';
 
@@ -117,6 +118,11 @@ export function Footer() {
                   <Link href="/referral-program" className={footerLink}>
                     Referral Program
                   </Link>
+                </li>
+                <li>
+                  <a href={PAY_NOW_URL} target="_blank" rel="noopener noreferrer" className={footerLink}>
+                    Pay Now
+                  </a>
                 </li>
               </ul>
             </div>

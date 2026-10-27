@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
+import { PAY_NOW_URL } from '@/lib/payments';
 
 const navLinkClass = (active: boolean) =>
   cn(
@@ -244,7 +245,10 @@ export function Navbar() {
             </div>
 
             {/* Right: primary CTA */}
-            <div className="ml-auto hidden shrink-0 items-center sm:flex lg:ml-0">
+            <div className="ml-auto hidden shrink-0 items-center gap-2 sm:flex lg:ml-0">
+              <a href={PAY_NOW_URL} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: 'dark', size: 'sm' })}>
+                <span>Pay Now</span>
+              </a>
               <Link href="/contact" className={buttonVariants({ variant: 'primary', size: 'sm' })}>
                 <span>Enquire Now</span>
                 <ArrowRight />
@@ -327,6 +331,9 @@ export function Navbar() {
                 <Link href="/contact" className={buttonVariants({ variant: 'primary', block: true })}>
                   Enquire Now
                 </Link>
+                <a href={PAY_NOW_URL} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: 'dark', block: true })}>
+                  Pay Now
+                </a>
                 <a
                   href="tel:18008436114"
                   className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-semibold text-ink-muted hover:text-ink"
