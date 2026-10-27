@@ -10,7 +10,7 @@ export const metadata = {
 
 /** Terms & conditions, in the order published on galaxyheritageworld.com. */
 const TERMS: string[] = [
-  '“GHWHPL” means GHW Private Limited, incorporated under the provisions of the Companies Act, 2013, This term shall, where applicable, include its successors-in-interest and assigns.',
+  '“GHWHPL” means GHW Hospitality Private Limited, incorporated under the provisions of the Companies Act, 2013, This term shall, where applicable, include its successors-in-interest and assigns.',
   '“GHW” means Galaxy Heritage World A unit of GHW Hospitality Private Limited.',
   '“Day” refers to the time interval between the check in time of a specified calendar date and the check-out time of the subsequent calendar date, as defined by the specific Resort.',
   '“Week” means any Six “Nights” & Seven “Days”.',

@@ -18,7 +18,7 @@ export function TravelDeskFloat() {
         </div>
 
         <div className="hidden text-left sm:block">
-          <div className="text-[10px] font-semibold tracking-wider text-accent uppercase">Travel Desk 24/7</div>
+          <div className="text-[10px] font-semibold tracking-wider text-accent uppercase">Travel Desk</div>
           <div className="text-sm font-semibold text-white">1800-843-6114</div>
         </div>
       </Link>

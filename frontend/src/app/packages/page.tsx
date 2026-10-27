@@ -153,7 +153,7 @@ const TENETS = [
     image: '/media/membership/tenet-6.jpg',
     alt: 'Ornate hotel reception desk',
     items: [
-      '24/7 dedicated guest support for all your travel and booking needs.',
+      'Dedicated guest support for all your travel and booking needs.',
       'Personalized itinerary planning and special request handling before your stay.',
       'Priority assistance for flight, transfer, and premium activity bookings.',
     ],

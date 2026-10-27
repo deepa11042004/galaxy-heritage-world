@@ -56,9 +56,9 @@ const stats = [
     description: 'Dedicated customer care & direct resolution',
   },
   {
-    value: '24/7',
+    value: 'Mon–Sat',
     title: 'Travel Concierge',
-    description: 'Round-the-clock bespoke holiday planning',
+    description: 'Bespoke holiday planning, 10:00 AM – 6:30 PM',
   },
   {
     value: '1800-843',

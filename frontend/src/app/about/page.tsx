@@ -108,7 +108,7 @@ export default function AboutPage() {
                 <span>Corporate Registration</span>
               </div>
               <h2 className="text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
-                GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED
+                GHW Hospitality Private Limited
               </h2>
               <p className="text-sm leading-relaxed text-ink-muted sm:text-base">
                 We are a legally registered Indian private limited entity incorporated under the Companies Act. With our corporate identification number <strong className="font-semibold text-ink">U74999DL2022PTC407515</strong>, we operate with full regulatory compliance, registered taxation, and corporate governance.
@@ -146,7 +146,7 @@ export default function AboutPage() {
             </div>
             <h3 className="mb-2 text-xl font-semibold text-ink">1000+ Associated Resorts</h3>
             <p className="text-sm leading-relaxed text-ink-muted">
-              We partner with recognized 4-star and 5-star properties across Goa, Rajasthan, Uttarakhand, Himachal Pradesh, and international tourist hubs, ensuring certified hygiene and comfort.
+              We partner with recognized 4-star properties across Goa, Rajasthan, Uttarakhand, Himachal Pradesh, and international tourist hubs, ensuring certified hygiene and comfort.
             </p>
           </div>
 

@@ -52,7 +52,7 @@ export function Footer() {
               </p>
               <div className="card max-w-sm space-y-1 bg-transparent p-4 text-xs text-ink-muted">
                 <div>
-                  <strong className="font-semibold text-ink">Corporate Entity:</strong> GALAXY HERITAGE WORLD RESORTS PRIVATE LIMITED
+                  <strong className="font-semibold text-ink">Corporate Entity:</strong> GHW Hospitality Private Limited
                 </div>
                 <div>
                   <strong className="font-semibold text-ink">Corporate CIN:</strong> U74999DL2022PTC407515

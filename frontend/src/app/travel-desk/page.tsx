@@ -3,7 +3,6 @@ import React from 'react';
 import Link from 'next/link';
 import {
   PhoneCall,
-  MessageCircle,
   Clock,
   CheckCircle2,
   Headphones,
@@ -59,7 +58,7 @@ const CAPABILITIES = [
   { icon: ShieldCheck, title: 'Secure Transactions', text: 'End-to-end tokenized payment routing structures shielding high-volume accounts.' },
   { icon: CheckCircle2, title: 'Instant Confirmations', text: 'Automated notifications dispatched to SMS and corporate emails within seconds.' },
   { icon: SlidersHorizontal, title: 'Full Lifecycle Control', text: 'Robust native tools designed to monitor, track, modify car rentals, or process cancellations.' },
-  { icon: Globe2, title: '24/7 Global Helpline', text: 'Always available routing lines maintaining around-the-clock emergency support.' },
+  { icon: Globe2, title: 'Global Helpline', text: 'Dedicated routing lines for quick support wherever you travel.' },
   { icon: BellRing, title: 'Proactive Travel Alerts', text: 'Live flight delays, weather tracking, and ground transportation updates.' },
   { icon: Briefcase, title: 'Strategic Corporate Deals', text: 'Unlocks special pre-negotiated volume benefits and custom car rental enterprise discounts.' },
 ];
@@ -69,11 +68,16 @@ export default function TravelDeskPage() {
     <div>
       {/* Header */}
       <PageHero
+        image={{
+          src: '/media/hero/travel-desk-header.jpg',
+          alt: 'A passport, vintage camera, sunglasses, coffee and a leather notebook on a dark desk',
+          position: 'center 20%',
+        }}
         icon={Headphones}
         eyebrow="Corporate & Leisure Travel Desk"
         title={
           <>
-            Your Complete Journey, <span className="text-ink-muted">Simplified</span>
+            Your Complete Journey, <span className="text-white/70">Simplified</span>
           </>
         }
         subtitle="Book flights, reserve stays, manage car rentals, arrange transfers, and get visa support, all in one premium ecosystem."
@@ -132,7 +136,7 @@ export default function TravelDeskPage() {
 
       <div className="container-page section">
         {/* Quick Contact Banners */}
-        <div className="mb-12 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mb-16 lg:gap-5">
+        <div className="mb-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:mb-16 lg:gap-5">
           <div className="flex flex-col justify-between rounded-card bg-accent p-7 sm:p-8">
             <div>
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-ink text-accent">
@@ -150,32 +154,12 @@ export default function TravelDeskPage() {
 
           <div className="card flex flex-col justify-between p-7 sm:p-8">
             <div>
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white">
-                <MessageCircle className="h-5 w-5" />
-              </div>
-              <h3 className="mb-1.5 text-xl font-semibold text-ink">WhatsApp Concierge</h3>
-              <p className="mb-6 text-sm text-ink-muted">
-                Chat with our desk for quick voucher queries and photos.
-              </p>
-            </div>
-            <a
-              href="https://wa.me/919999001122?text=Hello%20Galaxy%20Heritage%20World%20Travel%20Desk"
-              target="_blank"
-              rel="noreferrer"
-              className={cn(buttonVariants({ block: true }), 'bg-emerald-600 text-white hover:bg-emerald-700')}
-            >
-              Start WhatsApp Chat
-            </a>
-          </div>
-
-          <div className="card flex flex-col justify-between p-7 sm:p-8">
-            <div>
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-ink">
                 <Clock className="h-5 w-5" />
               </div>
               <h3 className="mb-1.5 text-xl font-semibold text-ink">Desk Working Hours</h3>
               <p className="mb-6 text-sm text-ink-muted">
-                Monday to Saturday: 10:00 AM - 6:30 PM IST (Emergency helpline 24/7 on-trip).
+                Monday to Saturday: 10:00 AM - 6:30 PM IST.
               </p>
             </div>
             <div className="flex items-center justify-center gap-2 rounded-full bg-surface px-4 py-2.5 text-center text-sm font-semibold text-ink">

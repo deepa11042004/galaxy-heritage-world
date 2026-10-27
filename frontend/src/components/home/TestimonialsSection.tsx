@@ -4,13 +4,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Pause, Play } from 'lucide-react';
 import { SectionHeader } from '@/components/ui/SectionHeader';
 
-// The same client review videos as the Testimonials page (the first three are portrait phone recordings,
-// the fourth is landscape and is letterboxed inside the same card).
+// Client review videos (the Testimonials page shows the first four). All but the fourth are portrait phone recordings;
+// the landscape fourth is letterboxed inside the same card.
 const VIDEOS = [
   { name: 'Puneet Garg', src: '/media/testimonials/client-review-1.mp4' },
   { name: 'Navneet Kaur', src: '/media/testimonials/client-review-2.mp4' },
   { name: 'Dushyant Mishra', src: '/media/testimonials/client-review-3.mp4' },
   { name: 'Sumit Sharma', src: '/media/testimonials/client-review-4.mp4' },
+  { name: 'a happy guest', src: '/media/testimonials/client-review-5.mp4' },
+  { name: 'a happy guest (2)', src: '/media/testimonials/client-review-6.mp4' },
 ];
 
 /**

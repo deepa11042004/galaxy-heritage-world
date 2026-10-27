@@ -43,7 +43,7 @@ const escalationLevels = [
       { label: 'Grievance Desk Email', value: 'grievance@galaxyheritageworld.com' },
       {
         label: 'Postal Address',
-        value: 'GALAXY HERITAGE WORLD RESORTS PVT LTD, Lower Ground, C-33, Ram Nagar, Kaushambi, Ghaziabad, UP 201012',
+        value: 'GHW Hospitality Private Limited, Lower Ground, C-33, Ram Nagar, Kaushambi, Ghaziabad, UP 201012',
       },
       { label: 'Corporate CIN', value: 'U74999DL2022PTC407515' },
     ],
