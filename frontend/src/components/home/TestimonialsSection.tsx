@@ -9,17 +9,23 @@ import { SectionHeader } from '@/components/ui/SectionHeader';
 const VIDEOS = [
   { name: 'Puneet Garg', src: '/media/testimonials/client-review-1.mp4' },
   { name: 'Navneet Kaur', src: '/media/testimonials/client-review-2.mp4' },
-  { name: 'Dushyant Mishra', src: '/media/testimonials/client-review-3.mp4' },
-  { name: 'Sumit Sharma', src: '/media/testimonials/client-review-4.mp4' },
+  { name: 'Dushyant Mishra', src: '/media/testimonials/client-review-3.mp4', poster: '/media/testimonials/client-review-3-poster.jpg' },
+  { name: 'Sumit Sharma', src: '/media/testimonials/client-review-4.mp4', poster: '/media/testimonials/client-review-4-poster.jpg' },
   { name: 'a happy guest', src: '/media/testimonials/client-review-5.mp4' },
-  { name: 'a happy guest (2)', src: '/media/testimonials/client-review-6.mp4' },
+  { name: 'a happy guest (2)', src: '/media/testimonials/client-review-6.mp4', poster: '/media/testimonials/client-review-6-poster.jpg' },
 ];
+
+// The landscape fourth review sits below the slider in a wide frame; the rest rotate in the slider.
+const LANDSCAPE_VIDEO = VIDEOS[3];
+const PORTRAIT_VIDEOS = VIDEOS.filter((v) => v !== LANDSCAPE_VIDEO);
+// Slider order: reviews 1, 2, 6, 5, 3 (the sixth review is in the third slot).
+PORTRAIT_VIDEOS.splice(2, 0, ...PORTRAIT_VIDEOS.splice(4, 1), ...PORTRAIT_VIDEOS.splice(3, 1));
 
 /**
  * Review video with a single play / pause button instead of the browser's full control bar.
  * `#t=0.1` makes browsers (notably Safari) show a real frame instead of a black box before play.
  */
-const Video = ({ src, label, className }: { src: string; label: string; className: string }) => {
+const Video = ({ src, label, className, poster }: { src: string; label: string; className: string; poster?: string }) => {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -38,7 +44,8 @@ const Video = ({ src, label, className }: { src: string; label: string; classNam
         playsInline
         preload="metadata"
         aria-label={label}
-        src={`${src}#t=0.1`}
+        poster={poster}
+        src={poster ? src : `${src}#t=0.1`}
         onClick={toggle}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
@@ -114,13 +121,13 @@ export function TestimonialsSection() {
             ref={track}
             className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            {VIDEOS.map((v) => (
+            {PORTRAIT_VIDEOS.map((v) => (
               <figure
                 key={v.src}
                 data-slide
                 className="card shrink-0 basis-[68%] snap-start overflow-hidden border-4 !border-divider p-0 sm:basis-[calc((100%-1.25rem)/2)] md:basis-[calc((100%-2.5rem)/3)] lg:basis-[calc((100%-3.75rem)/4)]"
               >
-                <Video src={v.src} label={`Review by ${v.name}`} className="aspect-[9/16]" />
+                <Video src={v.src} poster={v.poster} label={`Review by ${v.name}`} className="aspect-[9/16]" />
               </figure>
             ))}
           </div>
@@ -134,6 +141,10 @@ export function TestimonialsSection() {
             </button>
           </div>
         </div>
+
+        <figure className="card mx-auto mt-10 max-w-3xl overflow-hidden border-4 !border-divider p-0">
+          <Video src={LANDSCAPE_VIDEO.src} poster={LANDSCAPE_VIDEO.poster} label={`Review by ${LANDSCAPE_VIDEO.name}`} className="aspect-video" />
+        </figure>
       </div>
     </section>
   );
