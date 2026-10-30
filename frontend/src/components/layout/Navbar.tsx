@@ -84,13 +84,15 @@ export function Navbar() {
             <span className="hidden xl:inline">
               CIN: <strong className="font-semibold text-ink">U74999DL2022PTC407515</strong>
             </span>
-            <Link
-              href="/login"
+            <a
+              href="https://member.galaxyheritageworld.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-1 font-semibold text-ink transition-colors hover:text-accent-strong"
             >
               <User className="h-3.5 w-3.5" />
               <span>Customer Login</span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

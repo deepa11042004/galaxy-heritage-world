@@ -124,6 +124,21 @@ export function Footer() {
                     Pay Now
                   </Link>
                 </li>
+                <li>
+                  <a
+                    href="https://crm.galaxyheritageworld.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={footerLink}
+                  >
+                    Employee Login
+                  </a>
+                </li>
+                <li>
+                  <Link href="/admin" className={footerLink}>
+                    Admin Login
+                  </Link>
+                </li>
               </ul>
             </div>
 
