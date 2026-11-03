@@ -3,11 +3,20 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, MapPin, Send, ShieldCheck, CheckCircle, AlertCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Send, ShieldCheck, CheckCircle, AlertCircle, Facebook, Instagram, Twitter, Youtube, Linkedin } from 'lucide-react';
 import { submitNewsletter } from '@/lib/api';
 import { PAY_NOW_PATH } from '@/lib/payments';
 
 const footerLink = 'text-ink-muted transition-colors hover:text-ink';
+
+// Display-only for now: not links until the profile URLs are provided.
+const socialIcons = [
+  { Icon: Facebook, label: 'Facebook' },
+  { Icon: Instagram, label: 'Instagram' },
+  { Icon: Twitter, label: 'Twitter' },
+  { Icon: Youtube, label: 'YouTube' },
+  { Icon: Linkedin, label: 'LinkedIn' },
+];
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -229,6 +238,14 @@ export function Footer() {
                 <div className="flex items-start gap-2.5">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent-strong" />
                   <span>Lower Ground, C-33, Ram Nagar, Kaushambi, Ghaziabad, UP 201012</span>
+                </div>
+
+                <div className="flex items-center gap-3 pt-1 text-ink">
+                  {socialIcons.map(({ Icon, label }) => (
+                    <span key={label} role="img" aria-label={label} className="flex h-9 w-9 items-center justify-center rounded-full border border-line bg-white">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                  ))}
                 </div>
               </div>
 
