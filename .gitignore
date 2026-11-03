@@ -49,3 +49,6 @@ backend/.env
 # Playwright output
 frontend/test-results/
 frontend/playwright-report/
+
+# generated data exports
+/exports/
