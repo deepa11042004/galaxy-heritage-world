@@ -2,14 +2,15 @@
 export const PAY_NOW_PATH = '/pay-now';
 
 export const PAYMENT_OPTIONS = [
-  {
-    id: 'razorpay',
-    name: 'Razorpay',
-    logo: '/media/payments/razorpay.svg',
-    logoSize: { width: 1896, height: 401 },
-    url: 'https://pages.razorpay.com/pl_TfnPKNHuWwO1UY/view',
-    text: 'Pay securely with UPI, cards, net banking and wallets through the Razorpay payment page.',
-  },
+  // Razorpay is hidden for now; restore this entry to show it again on /pay-now.
+  // {
+  //   id: 'razorpay',
+  //   name: 'Razorpay',
+  //   logo: '/media/payments/razorpay.svg',
+  //   logoSize: { width: 1896, height: 401 },
+  //   url: 'https://pages.razorpay.com/pl_TfnPKNHuWwO1UY/view',
+  //   text: 'Pay securely with UPI, cards, net banking and wallets through the Razorpay payment page.',
+  // },
   {
     id: 'cashfree',
     name: 'Cashfree',

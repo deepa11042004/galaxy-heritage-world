@@ -7,7 +7,7 @@ import { PAYMENT_OPTIONS } from '@/lib/payments';
 
 export const metadata = {
   title: 'Pay Now | Galaxy Heritage World',
-  description: 'Pay Galaxy Heritage World online, securely, with Razorpay or Cashfree.',
+  description: 'Pay Galaxy Heritage World online, securely, with Cashfree.',
 };
 
 const UPI_ID = 'ghwaccount@kotak';
@@ -43,9 +43,9 @@ export default function PayNowPage() {
             Welcome to the official payment page of <strong className="font-semibold text-ink">Galaxy Heritage World</strong>.
           </p>
         </div>
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-6">
           {PAYMENT_OPTIONS.map((o) => (
-            <div key={o.id} className="card flex flex-col p-7 sm:p-8">
+            <div key={o.id} className="card flex w-full flex-col p-7 sm:p-8 md:w-[calc(50%-0.75rem)]">
               <div className="flex h-24 items-center justify-center rounded-2xl bg-surface px-6">
                 <Image
                   src={o.logo}
