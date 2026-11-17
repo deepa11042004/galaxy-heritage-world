@@ -27,7 +27,7 @@ const escalationLevels = [
     description:
       'If your concern is not addressed within 48 hours or you are not satisfied with the resolution from Level 1.',
     contacts: [
-      { label: 'Direct Escalation Line', value: '+91 99990 01122' },
+      { label: 'Direct Escalation Line', value: '+91 93554 40328' },
       { label: 'Operations Email', value: 'support@galaxyheritageworld.com' },
       { label: 'Escalation Mode', value: 'Written Ticket Reference' },
     ],

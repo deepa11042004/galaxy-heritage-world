@@ -229,8 +229,8 @@ export function Footer() {
                     <a href="tel:18008436114" className="block text-sm font-semibold text-ink hover:text-accent-strong">
                       1800-843-6114 (Toll-Free)
                     </a>
-                    <a href="tel:+919999001122" className="block hover:text-ink">
-                      +91 99990 01122
+                    <a href="tel:+919355440328" className="block hover:text-ink">
+                      +91 93554 40328
                     </a>
                   </div>
                 </div>
